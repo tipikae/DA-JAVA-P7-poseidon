@@ -25,32 +25,37 @@ public class Rating {
 	 */
 	@Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "Id", columnDefinition = "TINYINT")
+    @Column(name = "id", columnDefinition = "TINYINT")
 	private Integer id;
 	
 	/**
 	 * Moodys rating.
 	 */
 	@Size(max=125, message="{validation.name.size.too_long}")
+    @Column(name = "moodys_rating")
 	private String moodysRating;
 	
 	/**
 	 * Sand Prating.
 	 */
 	@Size(max=125, message="{validation.name.size.too_long}")
+    @Column(name = "sandp_rating")
 	private String sandPRating;
 
 	/**
 	 * Fitch rating.
 	 */
+    @Column(name = "fitch_rating")
 	@Size(max=125, message="{validation.name.size.too_long}")
 	private String fitchRating;
 
 	/**
 	 * Order number.
 	 */
-	@Column(name = "orderNumber", columnDefinition = "TINYINT")
+	@Column(name = "order_number", columnDefinition = "TINYINT")
 	private Integer orderNumber;
+	
+	public Rating() {}
 	
 	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
 		this.moodysRating = moodysRating;

@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Entity
-@Table(name = "Bidlist")
+@Table(name = "bidlist")
 public class BidList {
 
 	/**
@@ -26,7 +26,7 @@ public class BidList {
 	 */
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "BidListId", columnDefinition = "TINYINT")
+    @Column(name = "bidlist_id", columnDefinition = "TINYINT")
     private Integer bidListId;
 
     /**
@@ -42,11 +42,13 @@ public class BidList {
     /**
      * BiQuantity.
      */
+    @Column(name = "bid_quantity")
     private double bidQuantity;
 
     /**
      * AskQuantity.
      */
+    @Column(name = "ask_quantity")
     private double askQuantity;
 
     /**
@@ -68,6 +70,7 @@ public class BidList {
     /**
      * BidList date.
      */
+    @Column(name = "bidlist_date")
     private Timestamp bidListDate;
 
     /**
@@ -103,40 +106,47 @@ public class BidList {
     /**
      * Creation name.
      */
+    @Column(name = "creation_name")
     @Size(max = 125, message = "{validation.name.size.too_long}")
     private String creationName;
 
     /**
      * Creation date.
      */
+    @Column(name = "creation_date")
     private Timestamp creationDate;
 
     /**
      * Revision name.
      */
+    @Column(name = "revision_name")
     @Size(max = 125, message = "{validation.name.size.too_long}")
     private String revisionName;
 
     /**
      * Revision date.
      */
+    @Column(name = "revision_date")
     private Timestamp revisionDate;
 
     /**
      * Deal name.
      */
+    @Column(name = "deal_name")
     @Size(max = 125, message = "{validation.name.size.too_long}")
     private String dealName;
 
     /**
      * Deal type.
      */
+    @Column(name = "deal_type")
     @Size(max = 125, message = "{validation.name.size.too_long}")
     private String dealType;
 
     /**
      * Source list id.
      */
+    @Column(name = "sourcelist_id")
     @Size(max = 125, message = "{validation.name.size.too_long}")
     private String sourceListId;
 
@@ -145,6 +155,8 @@ public class BidList {
      */
     @Size(max = 125, message = "{validation.name.size.too_long}")
     private String side;
+    
+    public BidList() {}
     
     public BidList(String account, String type, double bidQuantity) {
     	this.account = account;

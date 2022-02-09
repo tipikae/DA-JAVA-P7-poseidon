@@ -21,7 +21,7 @@ public class User {
 	 */
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "Id", columnDefinition = "TINYINT")
+    @Column(name = "id", columnDefinition = "TINYINT")
     private Integer id;
     
     /**

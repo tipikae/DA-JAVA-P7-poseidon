@@ -17,7 +17,7 @@ import java.sql.Timestamp;
  */
 @Data
 @Entity
-@Table(name = "CurvePoint")
+@Table(name = "curvepoint")
 public class CurvePoint {
     
 	/**
@@ -25,18 +25,19 @@ public class CurvePoint {
 	 */
 	@Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "Id", columnDefinition = "TINYINT")
+    @Column(name = "id", columnDefinition = "TINYINT")
 	private Integer id;
 
 	/**
 	 * CurveId.
 	 */
-    @Column(name = "CurveId", columnDefinition = "TINYINT")
+    @Column(name = "curve_id", columnDefinition = "TINYINT")
 	private Integer curveId;
     
     /**
      * As of date.
      */
+    @Column(name = "asof_date")
 	private Timestamp asOfDate;
 	
 	/**
@@ -52,7 +53,10 @@ public class CurvePoint {
 	/**
 	 * Creation date.
 	 */
+    @Column(name = "creation_date")
 	private Timestamp creationDate;
+    
+    public CurvePoint() {}
 	
 	public CurvePoint(Integer curveId, double term, double value) {
 		this.curveId = curveId;

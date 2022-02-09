@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  */
 @Data
 @Entity
-@Table(name = "RuleName")
+@Table(name = "rulename")
 public class RuleName {
 
 	/**
@@ -24,7 +24,7 @@ public class RuleName {
 	 */
 	@Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "Id", columnDefinition = "TINYINT")
+    @Column(name = "id", columnDefinition = "TINYINT")
 	private Integer id;
 	
 	/**
@@ -55,13 +55,17 @@ public class RuleName {
 	 * Sql string.
 	 */
 	@Size(max=125, message="{validation.name.size.too_long}")
+    @Column(name = "sql_str")
 	private String sqlStr;
 
 	/**
 	 * Sql part.
 	 */
 	@Size(max=125, message="{validation.name.size.too_long}")
+    @Column(name = "sql_part")
 	private String sqlPart;
+	
+	public RuleName() {}
 	
 	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
 		this.name = name;
