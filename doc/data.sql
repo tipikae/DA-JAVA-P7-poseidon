@@ -1,3 +1,7 @@
+/* Setting up DB */
+DROP DATABASE IF EXISTS `poseidon`;
+CREATE DATABASE `poseidon` CHARSET = utf8 COLLATE = utf8_general_ci;
+USE `poseidon`;
 
 CREATE TABLE BidList (
   BidListId tinyint(4) NOT NULL AUTO_INCREMENT,
