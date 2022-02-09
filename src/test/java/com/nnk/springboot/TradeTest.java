@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public class TradeTest {
 	@Autowired
 	private TradeRepository tradeRepository;
 
+	@Transactional
 	@Test
 	public void tradeTest() {
 		Trade trade = new Trade("Trade Account", "Type");
