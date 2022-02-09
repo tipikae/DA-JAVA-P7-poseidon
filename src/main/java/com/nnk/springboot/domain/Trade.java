@@ -141,4 +141,11 @@ public class Trade {
 	 */
 	@Size(max=125, message="{validation.name.size.too_long}")
 	private String side;
+
+	public Trade(String account, String type) {
+		this.account = account;
+		this.type = type;
+	}
+	
+	
 }

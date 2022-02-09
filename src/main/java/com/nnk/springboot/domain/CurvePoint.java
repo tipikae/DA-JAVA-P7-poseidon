@@ -53,4 +53,10 @@ public class CurvePoint {
 	 * Creation date.
 	 */
 	private Timestamp creationDate;
+	
+	public CurvePoint(Integer curveId, double term, double value) {
+		this.curveId = curveId;
+		this.term = term;
+		this.value = value;
+	}
 }

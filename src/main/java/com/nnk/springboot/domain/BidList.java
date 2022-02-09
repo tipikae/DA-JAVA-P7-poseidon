@@ -27,20 +27,16 @@ public class BidList {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "BidListId", columnDefinition = "TINYINT")
-    private Integer id;
+    private Integer bidListId;
 
     /**
      * Account.
      */
-    @Size(max = 30, message = "{validation.name.size.too_long}")
-    @NotBlank(message = "Account is mandatory")
     private String account;
 
     /**
      * Type.
      */
-    @Size(max = 30, message = "{validation.name.size.too_long}")
-    @NotBlank(message = "Type is mandatory")
     private String type;
 
     /**
@@ -149,4 +145,11 @@ public class BidList {
      */
     @Size(max = 125, message = "{validation.name.size.too_long}")
     private String side;
+    
+    public BidList(String account, String type, double bidQuantity) {
+    	this.account = account;
+    	this.type = type;
+    	this.bidQuantity = bidQuantity;
+    }
+
 }
