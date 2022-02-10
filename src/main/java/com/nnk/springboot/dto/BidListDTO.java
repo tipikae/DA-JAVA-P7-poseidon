@@ -34,4 +34,5 @@ public class BidListDTO implements Serializable {
 	 * Bid quantity.
 	 */
 	private double bidQuantity;
+	
 }

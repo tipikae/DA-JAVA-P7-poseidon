@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.dto.NewBidListDTO;
+import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
 import com.nnk.springboot.exceptions.ServiceException;
 
@@ -20,39 +21,38 @@ public interface IBidListService {
 	 * @param bid
 	 * @return BidListDTO
 	 * @throws ServiceException
+	 * @throws ConverterException 
 	 */
-	BidListDTO addBidList(NewBidListDTO bid) throws ServiceException;
+	BidListDTO addBidList(NewBidListDTO bid) throws ServiceException, ConverterException;
 	
 	/**
 	 * Get all BidLists.
 	 * @return List<BidListDTO>
-	 * @throws ServiceException
+	 * @throws ConverterException 
 	 */
-	List<BidListDTO> getAllBids() throws ServiceException;
+	List<BidListDTO> getAllBids() throws ConverterException;
 	
 	/**
 	 * Get a BidList.
 	 * @param id
 	 * @return BidListDTO
 	 * @throws NotFoundException
-	 * @throws ServiceException
+	 * @throws ConverterException 
 	 */
-	BidListDTO getBidList(Integer id) throws NotFoundException, ServiceException;
+	BidListDTO getBidList(Integer id) throws NotFoundException, ConverterException;
 	
 	/**
 	 * Update a BidList.
 	 * @param id
 	 * @param bid
 	 * @throws NotFoundException
-	 * @throws ServiceException
 	 */
-	void updateBidList(Integer id, NewBidListDTO bid) throws NotFoundException, ServiceException;
+	void updateBidList(Integer id, NewBidListDTO bid) throws NotFoundException;
 	
 	/**
 	 * Delete a BidList.
 	 * @param id
 	 * @throws NotFoundException
-	 * @throws ServiceException
 	 */
 	void deleteBidList(Integer id) throws NotFoundException, ServiceException;
 }
