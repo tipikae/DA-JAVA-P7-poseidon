@@ -54,13 +54,13 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public List<BidListDTO> getAllBids() throws ServiceException, ConverterException {
+	public List<BidListDTO> getAllBids() throws ConverterException {
 		LOGGER.debug("Service: getAllBids");
 		return converterBidList.convertListEntityToDTO(bidListRepository.findAll());
 	}
 
 	@Override
-	public BidListDTO getBidList(Integer id) throws NotFoundException, ServiceException, ConverterException {
+	public BidListDTO getBidList(Integer id) throws NotFoundException, ConverterException {
 		LOGGER.debug("Service: getBidList: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
@@ -72,7 +72,7 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public void updateBidList(Integer id, NewBidListDTO updatedBidList) throws NotFoundException, ServiceException {
+	public void updateBidList(Integer id, NewBidListDTO updatedBidList) throws NotFoundException {
 		LOGGER.debug("Service: updateBidList: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
@@ -89,7 +89,7 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public void deleteBidList(Integer id) throws NotFoundException, ServiceException {
+	public void deleteBidList(Integer id) throws NotFoundException {
 		LOGGER.debug("Service: deleteBidList: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {

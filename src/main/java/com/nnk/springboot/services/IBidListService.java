@@ -28,35 +28,31 @@ public interface IBidListService {
 	/**
 	 * Get all BidLists.
 	 * @return List<BidListDTO>
-	 * @throws ServiceException
 	 * @throws ConverterException 
 	 */
-	List<BidListDTO> getAllBids() throws ServiceException, ConverterException;
+	List<BidListDTO> getAllBids() throws ConverterException;
 	
 	/**
 	 * Get a BidList.
 	 * @param id
 	 * @return BidListDTO
 	 * @throws NotFoundException
-	 * @throws ServiceException
 	 * @throws ConverterException 
 	 */
-	BidListDTO getBidList(Integer id) throws NotFoundException, ServiceException, ConverterException;
+	BidListDTO getBidList(Integer id) throws NotFoundException, ConverterException;
 	
 	/**
 	 * Update a BidList.
 	 * @param id
 	 * @param bid
 	 * @throws NotFoundException
-	 * @throws ServiceException
 	 */
-	void updateBidList(Integer id, NewBidListDTO bid) throws NotFoundException, ServiceException;
+	void updateBidList(Integer id, NewBidListDTO bid) throws NotFoundException;
 	
 	/**
 	 * Delete a BidList.
 	 * @param id
 	 * @throws NotFoundException
-	 * @throws ServiceException
 	 */
 	void deleteBidList(Integer id) throws NotFoundException, ServiceException;
 }

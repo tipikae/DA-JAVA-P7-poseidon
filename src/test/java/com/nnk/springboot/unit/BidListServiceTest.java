@@ -115,20 +115,10 @@ class BidListServiceTest {
 	}
 
 	@Test
-	void getAllBidsThrowsServiceExceptionWhenError() {
-		
-	}
-
-	@Test
 	void getBidListReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(bidList1));
 		when(converterBidList.convertEntityToDTO(bidList1)).thenReturn(bidListDTO1);
 		assertEquals(bidList1.getBidListId(), bidListService.getBidList(1).getId());
-	}
-
-	@Test
-	void getBidListThrowsServiceExceptionWhenError() {
-		
 	}
 
 	@Test
@@ -145,11 +135,6 @@ class BidListServiceTest {
 	}
 
 	@Test
-	void updateBidListThrowsServiceExceptionWhenError() {
-		
-	}
-
-	@Test
 	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> bidListService.updateBidList(10, new NewBidListDTO()));
@@ -160,11 +145,6 @@ class BidListServiceTest {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(new BidList()));
 		bidListService.deleteBidList(1);
 		Mockito.verify(bidListRepository).delete(any(BidList.class));
-	}
-
-	@Test
-	void deleteBidListThrowsServiceExceptionWhenError() {
-		
 	}
 
 	@Test
