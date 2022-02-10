@@ -54,5 +54,5 @@ public interface IBidListService {
 	 * @param id
 	 * @throws NotFoundException
 	 */
-	void deleteBidList(Integer id) throws NotFoundException, ServiceException;
+	void deleteBidList(Integer id) throws NotFoundException;
 }
