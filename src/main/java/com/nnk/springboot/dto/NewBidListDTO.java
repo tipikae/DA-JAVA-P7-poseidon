@@ -40,4 +40,5 @@ public class NewBidListDTO implements Serializable {
 	@Positive(message = "Amount must be positive.")
 	@Digits(integer = 10, fraction = 2, message = "Amount must be a decimal number.")
 	private double bidQuantity;
+	
 }
