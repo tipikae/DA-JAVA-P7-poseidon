@@ -1,4 +1,4 @@
-package com.nnk.springboot.unit;
+package com.nnk.springboot.unit.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
