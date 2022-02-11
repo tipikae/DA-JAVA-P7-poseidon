@@ -31,14 +31,12 @@ public class Rating {
 	/**
 	 * Moodys rating.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
     @Column(name = "moodys_rating")
 	private String moodysRating;
 	
 	/**
 	 * Sand Prating.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
     @Column(name = "sandp_rating")
 	private String sandPRating;
 
@@ -46,7 +44,6 @@ public class Rating {
 	 * Fitch rating.
 	 */
     @Column(name = "fitch_rating")
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String fitchRating;
 
 	/**
