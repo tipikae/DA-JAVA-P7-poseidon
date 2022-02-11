@@ -97,7 +97,7 @@ public class RatingServiceImpl implements IRatingService {
 		Optional<Rating> optional = ratingRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("Rating with id=" + id + " not found.");
-			throw new NotFoundException("CurvePoint not found.");
+			throw new NotFoundException("Rating not found.");
 		}
 
 		ratingRepository.delete(optional.get());
