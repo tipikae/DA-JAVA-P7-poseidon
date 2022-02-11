@@ -23,7 +23,7 @@ public interface ICurvePointService {
 	 * @throws ServiceException
 	 * @throws ConverterException 
 	 */
-	CurvePointDTO addCurvePoint(NewCurvePointDTO curvePoint) throws ServiceException, ConverterException;
+	CurvePointDTO addCurvePoint(NewCurvePointDTO newCurvePoint) throws ServiceException, ConverterException;
 	
 	/**
 	 * Get all CurvePoints.
@@ -47,7 +47,7 @@ public interface ICurvePointService {
 	 * @param curvePoint
 	 * @throws NotFoundException
 	 */
-	void updateCurvePoint(Integer id, NewCurvePointDTO curvePoint) throws NotFoundException;
+	void updateCurvePoint(Integer id, NewCurvePointDTO updatedCurvePoint) throws NotFoundException;
 	
 	/**
 	 * Delete a CurvePoint.

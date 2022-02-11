@@ -23,7 +23,7 @@ public interface IBidListService {
 	 * @throws ServiceException
 	 * @throws ConverterException 
 	 */
-	BidListDTO addBidList(NewBidListDTO bid) throws ServiceException, ConverterException;
+	BidListDTO addBidList(NewBidListDTO newBidList) throws ServiceException, ConverterException;
 	
 	/**
 	 * Get all BidLists.
@@ -47,7 +47,7 @@ public interface IBidListService {
 	 * @param bid
 	 * @throws NotFoundException
 	 */
-	void updateBidList(Integer id, NewBidListDTO bid) throws NotFoundException;
+	void updateBidList(Integer id, NewBidListDTO updatedBidList) throws NotFoundException;
 	
 	/**
 	 * Delete a BidList.

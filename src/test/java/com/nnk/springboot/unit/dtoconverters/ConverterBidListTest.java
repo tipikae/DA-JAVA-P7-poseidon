@@ -15,7 +15,7 @@ import com.nnk.springboot.exceptions.ConverterException;
 
 class ConverterBidListTest {
 	
-	private ConverterBidListImpl converterBidList;
+	private ConverterBidListImpl converterBidList = new ConverterBidListImpl();
 
 	private static BidList rightBidList1;
 	private static BidList rightBidList2;
@@ -37,20 +37,19 @@ class ConverterBidListTest {
 		wrongBidLists = new ArrayList<>();
 		bidListDTOs = new ArrayList<>();
 		
-		/*rightCurvePoint1.setCurveId(10);
-		rightCurvePoint1.setId(1);
-		rightCurvePoint1.setTerm(10d);
-		rightCurvePoint1.setValue(10d);
+		rightBidList1.setAccount("account1");
+		rightBidList1.setBidListId(1);
+		rightBidList1.setType("type1");
+		rightBidList1.setBidQuantity(100);
 		
-		rightCurvePoint2.setCurveId(20);
-		rightCurvePoint2.setId(2);
-		rightCurvePoint2.setTerm(20d);
-		rightCurvePoint2.setValue(20d);
+		rightBidList2.setAccount("account2");
+		rightBidList2.setBidListId(2);
+		rightBidList2.setType("type2");
+		rightBidList2.setBidQuantity(200);
 		
-		wrongCurvePoint.setCurveId(30);
-		wrongCurvePoint.setId(3);
-		wrongCurvePoint.setTerm(0d);
-		wrongCurvePoint.setValue(20d);*/
+		wrongBidList.setAccount("");
+		wrongBidList.setType("type");
+		wrongBidList.setBidQuantity(100);
 		
 		rightBidLists.add(rightBidList1);
 		rightBidLists.add(rightBidList2);
@@ -58,39 +57,39 @@ class ConverterBidListTest {
 		wrongBidLists.add(rightBidList1);
 		wrongBidLists.add(wrongBidList);
 		
-		/*curvePointDTO1.setCurveId(10);
-		curvePointDTO1.setId(1);
-		curvePointDTO1.setTerm(10d);
-		curvePointDTO1.setValue(10d);
+		bidListDTO1.setAccount("account1");
+		bidListDTO1.setType("type1");
+		bidListDTO1.setId(1);
+		bidListDTO1.setBidQuantity(100);
 		
-		curvePointDTO2.setCurveId(20);
-		curvePointDTO2.setId(2);
-		curvePointDTO2.setTerm(20d);
-		curvePointDTO2.setValue(20d);*/
+		bidListDTO2.setAccount("account2");
+		bidListDTO2.setType("type2");
+		bidListDTO2.setId(2);
+		bidListDTO2.setBidQuantity(200);
 		
 		bidListDTOs.add(bidListDTO1);
 		bidListDTOs.add(bidListDTO2);
 	}
 
-	/*@Test
+	@Test
 	void convertEntityToDTOReturnsDTOWhenOk() throws ConverterException {
-		assertEquals(curvePointDTO1.getCurveId(), 
-				converterCurvePoint.convertEntityToDTO(rightCurvePoint1).getCurveId());
+		assertEquals(bidListDTO1.getId(), 
+				converterBidList.convertEntityToDTO(rightBidList1).getId());
 	}
 
 	@Test
-	void convertEntityToDTOThrowsConverterExceptionWhenZeroField() {
-		assertThrows(ConverterException.class, () -> converterCurvePoint.convertEntityToDTO(wrongCurvePoint));
+	void convertEntityToDTOThrowsConverterExceptionWhenEmptyField() {
+		assertThrows(ConverterException.class, () -> converterBidList.convertEntityToDTO(wrongBidList));
 	}
 
 	@Test
 	void convertListEntityToDTOReturnsListDTOWhenOk() throws ConverterException {
-		assertEquals(2, converterCurvePoint.convertListEntityToDTO(rightCurvePoints).size());
+		assertEquals(2, converterBidList.convertListEntityToDTO(rightBidLists).size());
 	}
 
 	@Test
-	void convertListEntityToDTOThrowsConverterExceptionWhenZeroField() {
-		assertThrows(ConverterException.class, () -> converterCurvePoint.convertListEntityToDTO(wrongCurvePoints));
-	}*/
+	void convertListEntityToDTOThrowsConverterExceptionWhenEmptyField() {
+		assertThrows(ConverterException.class, () -> converterBidList.convertListEntityToDTO(wrongBidLists));
+	}
 
 }

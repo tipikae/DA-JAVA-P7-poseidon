@@ -1,5 +1,7 @@
 package com.nnk.springboot.services;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +51,7 @@ public class BidListServiceImpl implements IBidListService {
 		bidList.setAccount(newBidList.getAccount());
 		bidList.setType(newBidList.getType());
 		bidList.setBidQuantity(newBidList.getBidQuantity());
+		bidList.setCreationDate(Timestamp.from(Instant.now()));
 		
 		return converterBidList.convertEntityToDTO(bidListRepository.save(bidList));
 	}
