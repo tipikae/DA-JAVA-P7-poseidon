@@ -30,38 +30,32 @@ public class RuleName {
 	/**
 	 * Name.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String name;
 
 	/**
 	 * Description.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String description;
 
 	/**
 	 * Json.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String json ;
 
 	/**
 	 * Template.
 	 */
-	@Size(max=512, message="{validation.name.size.too_long}")
 	private String template;
 
 	/**
 	 * Sql string.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
     @Column(name = "sql_str")
 	private String sqlStr;
 
 	/**
 	 * Sql part.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
     @Column(name = "sql_part")
 	private String sqlPart;
 	
