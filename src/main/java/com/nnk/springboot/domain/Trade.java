@@ -30,15 +30,11 @@ public class Trade {
 	/**
 	 * Account.
 	 */
-	@Size(max=30, message="{validation.name.size.too_long}")
-	@NotBlank
 	private String account;
 
 	/**
 	 * Type.
 	 */
-	@Size(max=30, message="{validation.name.size.too_long}")
-	@NotBlank
 	private String type;
 	
 	/**
