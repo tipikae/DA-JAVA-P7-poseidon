@@ -99,7 +99,7 @@ class UserServiceTest {
 	
 
 	@Test
-	void addBidListReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
 		when(passwordEncoder.encode(anyString())).thenReturn("");
 		when(userRepository.save(any(User.class))).thenReturn(user1);
 		when(userConverter.convertEntityToDTO(any(User.class))).thenReturn(userDTO1);
@@ -108,52 +108,52 @@ class UserServiceTest {
 	}
 
 	@Test
-	void addBidListThrowsServiceExceptionWhenError() {
+	void addItemThrowsServiceExceptionWhenError() {
 		
 	}
 
 	@Test
-	void getAllBidsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
 		when(userRepository.findAll()).thenReturn(users);
 		when(userConverter.convertListEntityToDTO(users)).thenReturn(userDTOs);
 		assertEquals(users.size(), userService.getAllItems().size());
 	}
 
 	@Test
-	void getBidListReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.of(user1));
 		when(userConverter.convertEntityToDTO(user1)).thenReturn(userDTO1);
 		assertEquals(user1.getId(), userService.getItemById(1).getId());
 	}
 
 	@Test
-	void getBidListThrowsNotFoundExceptionWhenNotFound() {
+	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> userService.getItemById(1));
 	}
 
 	@Test
-	void updateBidListWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.of(new User()));
 		userService.updateItem(1, rightNewUserDTO);
 		Mockito.verify(userRepository).save(any(User.class));
 	}
 
 	@Test
-	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
+	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> userService.updateItem(10, new NewUserDTO()));
 	}
 
 	@Test
-	void deleteBidListWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws NotFoundException, ServiceException {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.of(new User()));
 		userService.deleteItem(1);
 		Mockito.verify(userRepository).delete(any(User.class));
 	}
 
 	@Test
-	void deleteBidListThrowsNotFoundExceptionWhenNotFound() {
+	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> userService.deleteItem(10));
 	}

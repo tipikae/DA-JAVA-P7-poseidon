@@ -90,7 +90,7 @@ class TradeServiceTest {
 	
 
 	@Test
-	void addBidListReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
 		when(tradeRepository.save(any(Trade.class))).thenReturn(trade1);
 		when(tradeConverter.convertEntityToDTO(any(Trade.class))).thenReturn(tradeDTO1);
 		assertEquals(rightNewTradeDTO.getAccount(), 
@@ -98,52 +98,52 @@ class TradeServiceTest {
 	}
 
 	@Test
-	void addBidListThrowsServiceExceptionWhenError() {
+	void addItemThrowsServiceExceptionWhenError() {
 		
 	}
 
 	@Test
-	void getAllBidsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
 		when(tradeRepository.findAll()).thenReturn(trades);
 		when(tradeConverter.convertListEntityToDTO(trades)).thenReturn(tradeDTOs);
 		assertEquals(trades.size(), tradeService.getAllItems().size());
 	}
 
 	@Test
-	void getBidListReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(trade1));
 		when(tradeConverter.convertEntityToDTO(trade1)).thenReturn(tradeDTO1);
 		assertEquals(trade1.getTradeId(), tradeService.getItemById(1).getTradeId());
 	}
 
 	@Test
-	void getBidListThrowsNotFoundExceptionWhenNotFound() {
+	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> tradeService.getItemById(1));
 	}
 
 	@Test
-	void updateBidListWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(new Trade()));
 		tradeService.updateItem(1, rightNewTradeDTO);
 		Mockito.verify(tradeRepository).save(any(Trade.class));
 	}
 
 	@Test
-	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
+	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> tradeService.updateItem(10, new NewTradeDTO()));
 	}
 
 	@Test
-	void deleteBidListWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws NotFoundException, ServiceException {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(new Trade()));
 		tradeService.deleteItem(1);
 		Mockito.verify(tradeRepository).delete(any(Trade.class));
 	}
 
 	@Test
-	void deleteBidListThrowsNotFoundExceptionWhenNotFound() {
+	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> tradeService.deleteItem(10));
 	}

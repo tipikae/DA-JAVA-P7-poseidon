@@ -114,7 +114,7 @@ class RuleNameServiceTest {
 	
 
 	@Test
-	void addBidListReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
 		when(ruleNameRepository.save(any(RuleName.class))).thenReturn(ruleName1);
 		when(ruleNameConverter.convertEntityToDTO(any(RuleName.class))).thenReturn(ruleNameDTO1);
 		assertEquals(rightNewRuleNameDTO.getDescription(), 
@@ -122,52 +122,52 @@ class RuleNameServiceTest {
 	}
 
 	@Test
-	void addBidListThrowsServiceExceptionWhenError() {
+	void addItemThrowsServiceExceptionWhenError() {
 		
 	}
 
 	@Test
-	void getAllBidsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
 		when(ruleNameRepository.findAll()).thenReturn(ruleNames);
 		when(ruleNameConverter.convertListEntityToDTO(ruleNames)).thenReturn(ruleNameDTOs);
 		assertEquals(ruleNames.size(), ruleNameService.getAllItems().size());
 	}
 
 	@Test
-	void getBidListReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(ruleName1));
 		when(ruleNameConverter.convertEntityToDTO(ruleName1)).thenReturn(ruleNameDTO1);
 		assertEquals(ruleName1.getId(), ruleNameService.getItemById(1).getId());
 	}
 
 	@Test
-	void getBidListThrowsNotFoundExceptionWhenNotFound() {
+	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> ruleNameService.getItemById(1));
 	}
 
 	@Test
-	void updateBidListWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(new RuleName()));
 		ruleNameService.updateItem(1, rightNewRuleNameDTO);
 		Mockito.verify(ruleNameRepository).save(any(RuleName.class));
 	}
 
 	@Test
-	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
+	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> ruleNameService.updateItem(10, new NewRuleNameDTO()));
 	}
 
 	@Test
-	void deleteBidListWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws NotFoundException, ServiceException {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(new RuleName()));
 		ruleNameService.deleteItem(1);
 		Mockito.verify(ruleNameRepository).delete(any(RuleName.class));
 	}
 
 	@Test
-	void deleteBidListThrowsNotFoundExceptionWhenNotFound() {
+	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> ruleNameService.deleteItem(10));
 	}
