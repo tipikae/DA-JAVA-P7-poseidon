@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.dto.NewCurvePointDTO;
-import com.nnk.springboot.dtoconverters.IConverterCurvePoint;
+import com.nnk.springboot.dtoconverters.ICurvePointDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
 import com.nnk.springboot.exceptions.ServiceException;
@@ -34,13 +34,13 @@ class CurvePointServiceTest {
 	private CurvePointRepository curvePointRepository;
 	
 	@Mock
-	private IConverterCurvePoint converterCurvePoint;
+	private ICurvePointDTOConverter converterCurvePoint;
 	
 	@InjectMocks
 	private CurvePointServiceImpl curvePointService;
 	
-	private static NewCurvePointDTO rightNewCurvePointDTODTO;
-	private static NewCurvePointDTO wrongNewCurvePointDTODTO;
+	private static NewCurvePointDTO rightNewCurvePointDTO;
+	private static NewCurvePointDTO wrongNewCurvePointDTO;
 	private static CurvePoint curvePoint1;
 	private static CurvePoint curvePoint2;
 	private static CurvePointDTO curvePointDTO1;
@@ -50,8 +50,8 @@ class CurvePointServiceTest {
 	
 	@BeforeAll
 	private static void setUp() {
-		rightNewCurvePointDTODTO = new NewCurvePointDTO();
-		wrongNewCurvePointDTODTO = new NewCurvePointDTO();
+		rightNewCurvePointDTO = new NewCurvePointDTO();
+		wrongNewCurvePointDTO = new NewCurvePointDTO();
 		curvePoint1 = new CurvePoint();
 		curvePoint2 = new CurvePoint();
 		curvePointDTO1 = new CurvePointDTO();
@@ -59,13 +59,13 @@ class CurvePointServiceTest {
 		curvePoints = new ArrayList<>();
 		curvePointDTOs = new ArrayList<>();
 		
-		rightNewCurvePointDTODTO.setCurveId(10);
-		rightNewCurvePointDTODTO.setTerm(10d);
-		rightNewCurvePointDTODTO.setValue(10d);
+		rightNewCurvePointDTO.setCurveId(10);
+		rightNewCurvePointDTO.setTerm(10d);
+		rightNewCurvePointDTO.setValue(10d);
 		
-		wrongNewCurvePointDTODTO.setCurveId(20);
-		wrongNewCurvePointDTODTO.setTerm(0d);
-		wrongNewCurvePointDTODTO.setValue(20d);
+		wrongNewCurvePointDTO.setCurveId(20);
+		wrongNewCurvePointDTO.setTerm(0d);
+		wrongNewCurvePointDTO.setValue(20d);
 		
 		curvePoint1.setCurveId(10);
 		curvePoint1.setId(1);
@@ -99,8 +99,8 @@ class CurvePointServiceTest {
 	void addBidListReturnsDTOWhenOk() throws ConverterException, ServiceException {
 		when(curvePointRepository.save(any(CurvePoint.class))).thenReturn(curvePoint1);
 		when(converterCurvePoint.convertEntityToDTO(any(CurvePoint.class))).thenReturn(curvePointDTO1);
-		assertEquals(rightNewCurvePointDTODTO.getCurveId(), 
-				curvePointService.addItem(rightNewCurvePointDTODTO).getCurveId());
+		assertEquals(rightNewCurvePointDTO.getCurveId(), 
+				curvePointService.addItem(rightNewCurvePointDTO).getCurveId());
 	}
 
 	@Test
@@ -131,7 +131,7 @@ class CurvePointServiceTest {
 	@Test
 	void updateBidListWhenOk() throws NotFoundException, ServiceException {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(new CurvePoint()));
-		curvePointService.updateItem(1, rightNewCurvePointDTODTO);
+		curvePointService.updateItem(1, rightNewCurvePointDTO);
 		Mockito.verify(curvePointRepository).save(any(CurvePoint.class));
 	}
 

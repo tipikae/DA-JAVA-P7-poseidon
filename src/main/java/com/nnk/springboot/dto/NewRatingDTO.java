@@ -5,6 +5,7 @@ package com.nnk.springboot.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -41,5 +42,6 @@ public class NewRatingDTO implements Serializable {
 	/**
 	 * Order number.
 	 */
+	@Positive
 	private Integer orderNumber;
 }

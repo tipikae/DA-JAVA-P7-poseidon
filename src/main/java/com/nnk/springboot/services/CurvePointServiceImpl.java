@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.dto.NewCurvePointDTO;
-import com.nnk.springboot.dtoconverters.IConverterCurvePoint;
+import com.nnk.springboot.dtoconverters.ICurvePointDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
 import com.nnk.springboot.exceptions.ServiceException;
@@ -34,7 +34,7 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	private CurvePointRepository curvePointRepository;
 	
 	@Autowired
-	private IConverterCurvePoint converterCurvePoint;
+	private ICurvePointDTOConverter converterCurvePoint;
 
 	@Override
 	public CurvePointDTO addItem(NewCurvePointDTO newCurvePoint) throws ServiceException, ConverterException {

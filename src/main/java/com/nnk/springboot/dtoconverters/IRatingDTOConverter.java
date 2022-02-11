@@ -12,6 +12,6 @@ import com.nnk.springboot.dto.RatingDTO;
  * @v 1.0
  *
  */
-public interface IConverterRating extends IConverter<Rating, RatingDTO> {
+public interface IRatingDTOConverter extends IDTOConverter<Rating, RatingDTO> {
 
 }

@@ -9,6 +9,6 @@ import com.nnk.springboot.dto.BidListDTO;
  * @version 1.0
  *
  */
-public interface IConverterBidList extends IConverter<BidList, BidListDTO> {
+public interface IBidListDTOConverter extends IDTOConverter<BidList, BidListDTO> {
 
 }

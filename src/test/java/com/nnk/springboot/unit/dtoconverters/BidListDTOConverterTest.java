@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
-import com.nnk.springboot.dtoconverters.ConverterBidListImpl;
+import com.nnk.springboot.dtoconverters.BidListDTOConverterImpl;
 import com.nnk.springboot.exceptions.ConverterException;
 
-class ConverterBidListTest {
+class BidListDTOConverterTest {
 	
-	private ConverterBidListImpl converterBidList = new ConverterBidListImpl();
+	private BidListDTOConverterImpl converterBidList = new BidListDTOConverterImpl();
 
 	private static BidList rightBidList1;
 	private static BidList rightBidList2;

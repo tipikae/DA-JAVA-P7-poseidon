@@ -18,9 +18,9 @@ import com.nnk.springboot.exceptions.ConverterException;
  *
  */
 @Component
-public class ConverterBidListImpl implements IConverterBidList {
+public class BidListDTOConverterImpl implements IBidListDTOConverter {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConverterBidListImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BidListDTOConverterImpl.class);
 
 	/**
 	 * {@inheritDoc}
