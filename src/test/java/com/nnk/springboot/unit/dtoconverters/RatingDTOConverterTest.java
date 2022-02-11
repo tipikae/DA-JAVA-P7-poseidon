@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
-import com.nnk.springboot.dtoconverters.ConverterRatingImpl;
+import com.nnk.springboot.dtoconverters.RatingDTOConverterImpl;
 import com.nnk.springboot.exceptions.ConverterException;
 
-class ConverterRatingTest {
+class RatingDTOConverterTest {
 	
-	private ConverterRatingImpl converterRating = new ConverterRatingImpl();
+	private RatingDTOConverterImpl converterRating = new RatingDTOConverterImpl();
 
 	private static Rating rightRating1;
 	private static Rating rightRating2;

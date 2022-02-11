@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.dto.NewBidListDTO;
-import com.nnk.springboot.dtoconverters.IConverterBidList;
+import com.nnk.springboot.dtoconverters.IBidListDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
 import com.nnk.springboot.exceptions.ServiceException;
@@ -36,7 +36,7 @@ public class BidListServiceImpl implements IBidListService {
 	private BidListRepository bidListRepository;
 	
 	@Autowired
-	private IConverterBidList converterBidList;
+	private IBidListDTOConverter converterBidList;
 
 	@Override
 	public BidListDTO addItem(NewBidListDTO newBidList) throws ServiceException, ConverterException {

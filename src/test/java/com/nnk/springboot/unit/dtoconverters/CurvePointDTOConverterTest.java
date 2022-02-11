@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
-import com.nnk.springboot.dtoconverters.ConverterCurvePointImpl;
+import com.nnk.springboot.dtoconverters.CurvePointDTOConverterImpl;
 import com.nnk.springboot.exceptions.ConverterException;
 
-class ConverterCurvePointTest {
+class CurvePointDTOConverterTest {
 	
-	private ConverterCurvePointImpl converterCurvePoint = new ConverterCurvePointImpl();
+	private CurvePointDTOConverterImpl converterCurvePoint = new CurvePointDTOConverterImpl();
 	
 	private static CurvePoint rightCurvePoint1;
 	private static CurvePoint rightCurvePoint2;

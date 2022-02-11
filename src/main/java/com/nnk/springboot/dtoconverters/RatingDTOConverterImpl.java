@@ -21,9 +21,9 @@ import com.nnk.springboot.exceptions.ConverterException;
  *
  */
 @Component
-public class ConverterRatingImpl implements IConverterRating {
+public class RatingDTOConverterImpl implements IRatingDTOConverter {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConverterRatingImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RatingDTOConverterImpl.class);
 
 	@Override
 	public RatingDTO convertEntityToDTO(Rating rating) throws ConverterException {

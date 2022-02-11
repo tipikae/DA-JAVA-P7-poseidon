@@ -10,7 +10,7 @@ import com.nnk.springboot.exceptions.ConverterException;
  * @version 1.0
  *
  */
-public interface IConverter <E, D> {
+public interface IDTOConverter <E, D> {
 
 	D convertEntityToDTO(E entity) throws ConverterException;
 	List<D> convertListEntityToDTO(List<E> entities) throws ConverterException;

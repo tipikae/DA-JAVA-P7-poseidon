@@ -9,6 +9,6 @@ import com.nnk.springboot.dto.CurvePointDTO;
  * @version 1.0
  *
  */
-public interface IConverterCurvePoint extends IConverter<CurvePoint, CurvePointDTO> {
+public interface ICurvePointDTOConverter extends IDTOConverter<CurvePoint, CurvePointDTO> {
 
 }

@@ -21,9 +21,9 @@ import com.nnk.springboot.exceptions.ConverterException;
  *
  */
 @Component
-public class ConverterCurvePointImpl implements IConverterCurvePoint {
+public class CurvePointDTOConverterImpl implements ICurvePointDTOConverter {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConverterCurvePointImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CurvePointDTOConverterImpl.class);
 
 	/**
 	 * {@inheritDoc}
