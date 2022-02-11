@@ -3,6 +3,8 @@ package com.nnk.springboot;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @SpringBootTest
 public class PasswordEncodeTest {
+	
+	@MockBean
+	private UserDetailsService userDetailsService;
 
 	@Transactional
     @Test

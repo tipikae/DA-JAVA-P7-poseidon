@@ -3,6 +3,7 @@ package com.nnk.springboot.unit.services;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.NewUserDTO;
@@ -32,6 +34,9 @@ class UserServiceTest {
 
 	@Mock
 	private UserRepository userRepository;
+	
+	@Mock
+	private PasswordEncoder passwordEncoder;
 	
 	@Mock
 	private IUserDTOConverter userConverter;
@@ -60,12 +65,10 @@ class UserServiceTest {
 		userDTOs = new ArrayList<>();
 		
 		rightNewUserDTO.setFullname("fullname1");
-		rightNewUserDTO.setId(1);
 		rightNewUserDTO.setPassword("password1");
 		rightNewUserDTO.setUsername("username1");
 		
 		wrongNewUserDTO.setFullname("fullname2");
-		wrongNewUserDTO.setId(2);
 		wrongNewUserDTO.setPassword("password2");
 		wrongNewUserDTO.setUsername("");
 		
@@ -97,6 +100,7 @@ class UserServiceTest {
 
 	@Test
 	void addBidListReturnsDTOWhenOk() throws ConverterException, ServiceException {
+		when(passwordEncoder.encode(anyString())).thenReturn("");
 		when(userRepository.save(any(User.class))).thenReturn(user1);
 		when(userConverter.convertEntityToDTO(any(User.class))).thenReturn(userDTO1);
 		assertEquals(rightNewUserDTO.getFullname(), 

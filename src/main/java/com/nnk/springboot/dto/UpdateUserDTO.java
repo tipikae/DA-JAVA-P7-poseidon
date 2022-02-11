@@ -7,17 +7,14 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 
-import lombok.Data;
-
 /**
- * New User DTO.
+ * Update User DTO.
  * @author tipikae
  * @version 1.0
  *
  */
-@Data
-public class NewUserDTO implements Serializable {
-	
+public class UpdateUserDTO implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,12 +22,6 @@ public class NewUserDTO implements Serializable {
      */
     @NotBlank(message = "Username is mandatory")
     private String username;
-    
-    /**
-     * Password.
-     */
-    @NotBlank(message = "Password is mandatory")
-    private String password;
     
     /**
      * Fullname.
