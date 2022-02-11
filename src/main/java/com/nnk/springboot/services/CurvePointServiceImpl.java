@@ -37,8 +37,8 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	private IConverterCurvePoint converterCurvePoint;
 
 	@Override
-	public CurvePointDTO addCurvePoint(NewCurvePointDTO newCurvePoint) throws ServiceException, ConverterException {
-		LOGGER.debug("Service: addCurvePoint: curveId=" + newCurvePoint.getCurveId() + ", term=" + newCurvePoint.getTerm() 
+	public CurvePointDTO addItem(NewCurvePointDTO newCurvePoint) throws ServiceException, ConverterException {
+		LOGGER.debug("Service: addItem: curveId=" + newCurvePoint.getCurveId() + ", term=" + newCurvePoint.getTerm() 
 				+ ", value=" + newCurvePoint.getValue());
 		/*if(false) {
 			LOGGER.debug("");
@@ -55,14 +55,14 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	}
 
 	@Override
-	public List<CurvePointDTO> getAllCurvePoints() throws ConverterException {
-		LOGGER.debug("Service: getAllCurvePoints");
+	public List<CurvePointDTO> getAllItems() throws ConverterException {
+		LOGGER.debug("Service: getAllItems");
 		return converterCurvePoint.convertListEntityToDTO(curvePointRepository.findAll());
 	}
 
 	@Override
-	public CurvePointDTO getCurvePoint(Integer id) throws NotFoundException, ConverterException {
-		LOGGER.debug("Service: getCurvePoint: id=" + id);
+	public CurvePointDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<CurvePoint> optional = curvePointRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("CurvePoint with id=" + id + " not found.");
@@ -73,8 +73,8 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	}
 
 	@Override
-	public void updateCurvePoint(Integer id, NewCurvePointDTO updatedCurvePoint) throws NotFoundException {
-		LOGGER.debug("Service: updateCurvePoint: id=" + id);
+	public void updateItem(Integer id, NewCurvePointDTO updatedCurvePoint) throws NotFoundException {
+		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<CurvePoint> optional = curvePointRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("CurvePoint with id=" + id + " not found.");
@@ -90,8 +90,8 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	}
 
 	@Override
-	public void deleteCurvePoint(Integer id) throws NotFoundException {
-		LOGGER.debug("Service: deleteCurvePoint: id=" + id);
+	public void deleteItem(Integer id) throws NotFoundException {
+		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<CurvePoint> optional = curvePointRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("CurvePoint with id=" + id + " not found.");

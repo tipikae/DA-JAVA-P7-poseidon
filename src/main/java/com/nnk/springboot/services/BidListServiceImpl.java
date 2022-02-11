@@ -39,8 +39,8 @@ public class BidListServiceImpl implements IBidListService {
 	private IConverterBidList converterBidList;
 
 	@Override
-	public BidListDTO addBidList(NewBidListDTO newBidList) throws ServiceException, ConverterException {
-		LOGGER.debug("Service: addBidList: account=" + newBidList.getAccount() + ", type=" + newBidList.getType() 
+	public BidListDTO addItem(NewBidListDTO newBidList) throws ServiceException, ConverterException {
+		LOGGER.debug("Service: addItem: account=" + newBidList.getAccount() + ", type=" + newBidList.getType() 
 			+ ", qty=" + newBidList.getBidQuantity());
 		/*if(false) {
 			LOGGER.debug("");
@@ -57,14 +57,14 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public List<BidListDTO> getAllBids() throws ConverterException {
-		LOGGER.debug("Service: getAllBids");
+	public List<BidListDTO> getAllItems() throws ConverterException {
+		LOGGER.debug("Service: getAllItems");
 		return converterBidList.convertListEntityToDTO(bidListRepository.findAll());
 	}
 
 	@Override
-	public BidListDTO getBidList(Integer id) throws NotFoundException, ConverterException {
-		LOGGER.debug("Service: getBidList: id=" + id);
+	public BidListDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("BidList with id=" + id + " not found.");
@@ -75,8 +75,8 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public void updateBidList(Integer id, NewBidListDTO updatedBidList) throws NotFoundException {
-		LOGGER.debug("Service: updateBidList: id=" + id);
+	public void updateItem(Integer id, NewBidListDTO updatedBidList) throws NotFoundException {
+		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("BidList with id=" + id + " not found.");
@@ -92,8 +92,8 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public void deleteBidList(Integer id) throws NotFoundException {
-		LOGGER.debug("Service: deleteBidList: id=" + id);
+	public void deleteItem(Integer id) throws NotFoundException {
+		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("BidList with id=" + id + " not found.");

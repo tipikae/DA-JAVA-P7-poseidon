@@ -100,7 +100,7 @@ class CurvePointServiceTest {
 		when(curvePointRepository.save(any(CurvePoint.class))).thenReturn(curvePoint1);
 		when(converterCurvePoint.convertEntityToDTO(any(CurvePoint.class))).thenReturn(curvePointDTO1);
 		assertEquals(rightNewCurvePointDTODTO.getCurveId(), 
-				curvePointService.addCurvePoint(rightNewCurvePointDTODTO).getCurveId());
+				curvePointService.addItem(rightNewCurvePointDTODTO).getCurveId());
 	}
 
 	@Test
@@ -112,46 +112,46 @@ class CurvePointServiceTest {
 	void getAllBidsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
 		when(curvePointRepository.findAll()).thenReturn(curvePoints);
 		when(converterCurvePoint.convertListEntityToDTO(curvePoints)).thenReturn(curvePointDTOs);
-		assertEquals(curvePoints.size(), curvePointService.getAllCurvePoints().size());
+		assertEquals(curvePoints.size(), curvePointService.getAllItems().size());
 	}
 
 	@Test
 	void getBidListReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(curvePoint1));
 		when(converterCurvePoint.convertEntityToDTO(curvePoint1)).thenReturn(curvePointDTO1);
-		assertEquals(curvePoint1.getId(), curvePointService.getCurvePoint(1).getId());
+		assertEquals(curvePoint1.getId(), curvePointService.getItemById(1).getId());
 	}
 
 	@Test
 	void getBidListThrowsNotFoundExceptionWhenNotFound() {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> curvePointService.getCurvePoint(1));
+		assertThrows(NotFoundException.class, () -> curvePointService.getItemById(1));
 	}
 
 	@Test
 	void updateBidListWhenOk() throws NotFoundException, ServiceException {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(new CurvePoint()));
-		curvePointService.updateCurvePoint(1, rightNewCurvePointDTODTO);
+		curvePointService.updateItem(1, rightNewCurvePointDTODTO);
 		Mockito.verify(curvePointRepository).save(any(CurvePoint.class));
 	}
 
 	@Test
 	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> curvePointService.updateCurvePoint(10, new NewCurvePointDTO()));
+		assertThrows(NotFoundException.class, () -> curvePointService.updateItem(10, new NewCurvePointDTO()));
 	}
 
 	@Test
 	void deleteBidListWhenOk() throws NotFoundException, ServiceException {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(new CurvePoint()));
-		curvePointService.deleteCurvePoint(1);
+		curvePointService.deleteItem(1);
 		Mockito.verify(curvePointRepository).delete(any(CurvePoint.class));
 	}
 
 	@Test
 	void deleteBidListThrowsNotFoundExceptionWhenNotFound() {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> curvePointService.deleteCurvePoint(10));
+		assertThrows(NotFoundException.class, () -> curvePointService.deleteItem(10));
 	}
 
 }
