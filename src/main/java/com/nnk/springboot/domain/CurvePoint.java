@@ -24,7 +24,7 @@ public class CurvePoint {
 	 * Id.
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "TINYINT")
 	private Integer id;
 

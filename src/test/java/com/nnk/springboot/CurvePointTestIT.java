@@ -1,5 +1,6 @@
 package com.nnk.springboot;
 
+import com.nnk.springboot.config.H2TestProfileJpaConfig;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
 
@@ -10,13 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest
-public class CurvePointTest {
+@SpringBootTest(classes = {Application.class, H2TestProfileJpaConfig.class})
+@ActiveProfiles("test")
+public class CurvePointTestIT {
 	
 	@MockBean
 	private UserDetailsService userDetailsService;

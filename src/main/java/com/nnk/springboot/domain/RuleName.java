@@ -23,7 +23,7 @@ public class RuleName {
 	 * Id.
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "TINYINT")
 	private Integer id;
 	

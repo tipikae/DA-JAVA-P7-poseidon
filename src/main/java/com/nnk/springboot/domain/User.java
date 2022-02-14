@@ -13,14 +13,14 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
 	
 	/**
 	 * Id.
 	 */
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "TINYINT")
     private Integer id;
     

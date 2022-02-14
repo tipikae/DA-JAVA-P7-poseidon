@@ -25,7 +25,7 @@ public class BidList {
 	 * Id.
 	 */
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "bidlist_id", columnDefinition = "TINYINT")
     private Integer bidListId;
 

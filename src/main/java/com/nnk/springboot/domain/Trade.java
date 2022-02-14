@@ -16,14 +16,14 @@ import java.sql.Timestamp;
  */
 @Data
 @Entity
-@Table(name = "Trade")
+@Table(name = "trade")
 public class Trade {
 	
 	/**
 	 * Id.
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "trade_id", columnDefinition = "TINYINT")
 	private Integer tradeId;
 

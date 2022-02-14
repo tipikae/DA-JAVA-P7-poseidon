@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
  * Date: 09/03/2019
  * Time: 11:26 AM
  */
-@SpringBootTest
-public class PasswordEncodeTest {
+@SpringBootTest()
+public class PasswordEncodeTestIT {
 	
 	@MockBean
 	private UserDetailsService userDetailsService;

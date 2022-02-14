@@ -17,14 +17,14 @@ import java.sql.Timestamp;
  */
 @Data
 @Entity
-@Table(name = "Rating")
+@Table(name = "rating")
 public class Rating {
     
 	/**
 	 * Id.
 	 */
 	@Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "TINYINT")
 	private Integer id;
 	
