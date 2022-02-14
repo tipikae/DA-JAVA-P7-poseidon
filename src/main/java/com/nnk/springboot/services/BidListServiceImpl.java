@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.dto.NewBidListDTO;
+import com.nnk.springboot.dto.UpdateBidListDTO;
 import com.nnk.springboot.dtoconverters.IBidListDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -75,7 +76,7 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public void updateItem(Integer id, NewBidListDTO updatedBidList) throws NotFoundException {
+	public void updateItem(Integer id, UpdateBidListDTO updatedBidList) throws NotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {

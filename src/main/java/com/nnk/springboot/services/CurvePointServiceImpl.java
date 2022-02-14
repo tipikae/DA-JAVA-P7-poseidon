@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.dto.NewCurvePointDTO;
+import com.nnk.springboot.dto.UpdateCurvePointDTO;
 import com.nnk.springboot.dtoconverters.ICurvePointDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -73,7 +74,7 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	}
 
 	@Override
-	public void updateItem(Integer id, NewCurvePointDTO updatedCurvePoint) throws NotFoundException {
+	public void updateItem(Integer id, UpdateCurvePointDTO updatedCurvePoint) throws NotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<CurvePoint> optional = curvePointRepository.findById(id);
 		if(!optional.isPresent()) {

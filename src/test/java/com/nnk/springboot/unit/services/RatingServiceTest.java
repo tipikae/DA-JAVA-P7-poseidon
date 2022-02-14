@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.NewRatingDTO;
 import com.nnk.springboot.dto.RatingDTO;
+import com.nnk.springboot.dto.UpdateRatingDTO;
 import com.nnk.springboot.dtoconverters.IRatingDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -41,6 +42,7 @@ class RatingServiceTest {
 	
 	private static NewRatingDTO rightNewRatingDTO;
 	private static NewRatingDTO wrongNewRatingDTO;
+	private static UpdateRatingDTO updatedRatingDTO;
 	private static Rating rating1;
 	private static Rating rating2;
 	private static RatingDTO ratingDTO1;
@@ -52,6 +54,7 @@ class RatingServiceTest {
 	private static void setUp() {
 		rightNewRatingDTO = new NewRatingDTO();
 		wrongNewRatingDTO = new NewRatingDTO();
+		updatedRatingDTO = new UpdateRatingDTO();
 		rating1 = new Rating();
 		rating2 = new Rating();
 		ratingDTO1 = new RatingDTO();
@@ -68,6 +71,11 @@ class RatingServiceTest {
 		wrongNewRatingDTO.setMoodysRating("moodys1");
 		wrongNewRatingDTO.setOrderNumber(0);
 		wrongNewRatingDTO.setSandPRating("sand1");
+		
+		updatedRatingDTO.setFitchRating("fitch1");
+		updatedRatingDTO.setMoodysRating("moodys1");
+		updatedRatingDTO.setOrderNumber(10);
+		updatedRatingDTO.setSandPRating("sand1");
 		
 		rating1.setId(1);
 		rating1.setFitchRating("fitch1");
@@ -137,14 +145,14 @@ class RatingServiceTest {
 	@Test
 	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(new Rating()));
-		ratingService.updateItem(1, rightNewRatingDTO);
+		ratingService.updateItem(1, updatedRatingDTO);
 		Mockito.verify(ratingRepository).save(any(Rating.class));
 	}
 
 	@Test
 	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ratingService.updateItem(10, new NewRatingDTO()));
+		assertThrows(NotFoundException.class, () -> ratingService.updateItem(10, new UpdateRatingDTO()));
 	}
 
 	@Test

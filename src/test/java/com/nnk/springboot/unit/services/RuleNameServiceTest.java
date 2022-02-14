@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.NewRuleNameDTO;
 import com.nnk.springboot.dto.RuleNameDTO;
+import com.nnk.springboot.dto.UpdateRuleNameDTO;
 import com.nnk.springboot.dtoconverters.IRuleNameDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -41,6 +42,7 @@ class RuleNameServiceTest {
 	
 	private static NewRuleNameDTO rightNewRuleNameDTO;
 	private static NewRuleNameDTO wrongNewRuleNameDTO;
+	private static UpdateRuleNameDTO updatedRuleNameDTO;
 	private static RuleName ruleName1;
 	private static RuleName ruleName2;
 	private static RuleNameDTO ruleNameDTO1;
@@ -52,6 +54,7 @@ class RuleNameServiceTest {
 	private static void setUp() {
 		rightNewRuleNameDTO = new NewRuleNameDTO();
 		wrongNewRuleNameDTO = new NewRuleNameDTO();
+		updatedRuleNameDTO = new UpdateRuleNameDTO();
 		ruleName1 = new RuleName();
 		ruleName2 = new RuleName();
 		ruleNameDTO1 = new RuleNameDTO();
@@ -72,6 +75,13 @@ class RuleNameServiceTest {
 		wrongNewRuleNameDTO.setSqlPart("sqlpart0");
 		wrongNewRuleNameDTO.setSqlStr("sqlstr0");
 		wrongNewRuleNameDTO.setTemplate("template0");
+		
+		updatedRuleNameDTO.setDescription("description1");
+		updatedRuleNameDTO.setJson("json_updated");
+		updatedRuleNameDTO.setName("name1");
+		updatedRuleNameDTO.setSqlPart("sqlpart1");
+		updatedRuleNameDTO.setSqlStr("sqlstr1");
+		updatedRuleNameDTO.setTemplate("template1");
 		
 		ruleName1.setId(1);
 		ruleName1.setDescription("description1");
@@ -149,14 +159,14 @@ class RuleNameServiceTest {
 	@Test
 	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(new RuleName()));
-		ruleNameService.updateItem(1, rightNewRuleNameDTO);
+		ruleNameService.updateItem(1, updatedRuleNameDTO);
 		Mockito.verify(ruleNameRepository).save(any(RuleName.class));
 	}
 
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ruleNameService.updateItem(10, new NewRuleNameDTO()));
+		assertThrows(NotFoundException.class, () -> ruleNameService.updateItem(10, new UpdateRuleNameDTO()));
 	}
 
 	@Test

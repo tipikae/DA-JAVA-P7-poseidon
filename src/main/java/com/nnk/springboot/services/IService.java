@@ -15,7 +15,7 @@ import com.nnk.springboot.exceptions.ServiceException;
  * @version 1.0
  *
  */
-public interface IService<D, N> {
+public interface IService<D, N, U> {
 
 	/**
 	 * Add an item.
@@ -48,7 +48,7 @@ public interface IService<D, N> {
 	 * @param updatedDTO
 	 * @throws NotFoundException
 	 */
-	void updateItem(Integer id, N updatedDTO) throws NotFoundException;
+	void updateItem(Integer id, U updatedDTO) throws NotFoundException;
 	
 	/**
 	 * Delete an item.

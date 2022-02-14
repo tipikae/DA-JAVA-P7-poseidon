@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.NewUserDTO;
+import com.nnk.springboot.dto.UpdateUserDTO;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.dtoconverters.IUserDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
@@ -78,7 +79,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void updateItem(Integer id, NewUserDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateUserDTO updatedDTO) throws NotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<User> optional = userRepository.findById(id);
 		if(!optional.isPresent()) {

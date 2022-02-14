@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.NewTradeDTO;
 import com.nnk.springboot.dto.TradeDTO;
+import com.nnk.springboot.dto.UpdateTradeDTO;
 import com.nnk.springboot.dtoconverters.ITradeDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -71,7 +72,7 @@ public class TradeServiceImpl implements ITradeService {
 	}
 
 	@Override
-	public void updateItem(Integer id, NewTradeDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateTradeDTO updatedDTO) throws NotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<Trade> optional = tradeRepository.findById(id);
 		if(!optional.isPresent()) {

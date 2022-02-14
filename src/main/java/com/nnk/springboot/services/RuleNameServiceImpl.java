@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.NewRuleNameDTO;
 import com.nnk.springboot.dto.RuleNameDTO;
+import com.nnk.springboot.dto.UpdateRuleNameDTO;
 import com.nnk.springboot.dtoconverters.IRuleNameDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -77,7 +78,7 @@ public class RuleNameServiceImpl implements IRuleNameService {
 	}
 
 	@Override
-	public void updateItem(Integer id, NewRuleNameDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateRuleNameDTO updatedDTO) throws NotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<RuleName> optional = ruleNameRepository.findById(id);
 		if(!optional.isPresent()) {

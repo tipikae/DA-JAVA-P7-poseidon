@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.NewTradeDTO;
 import com.nnk.springboot.dto.TradeDTO;
+import com.nnk.springboot.dto.UpdateTradeDTO;
 import com.nnk.springboot.dtoconverters.ITradeDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -41,6 +42,7 @@ class TradeServiceTest {
 	
 	private static NewTradeDTO rightNewTradeDTO;
 	private static NewTradeDTO wrongNewTradeDTO;
+	private static UpdateTradeDTO updatedTradeDTO;
 	private static Trade trade1;
 	private static Trade trade2;
 	private static TradeDTO tradeDTO1;
@@ -52,6 +54,7 @@ class TradeServiceTest {
 	private static void setUp() {
 		rightNewTradeDTO = new NewTradeDTO();
 		wrongNewTradeDTO = new NewTradeDTO();
+		updatedTradeDTO = new UpdateTradeDTO();
 		trade1 = new Trade();
 		trade2 = new Trade();
 		tradeDTO1 = new TradeDTO();
@@ -64,6 +67,9 @@ class TradeServiceTest {
 		
 		wrongNewTradeDTO.setAccount("");
 		wrongNewTradeDTO.setType("type0");
+		
+		updatedTradeDTO.setAccount("account1");
+		updatedTradeDTO.setType("type10");
 		
 		trade1.setTradeId(1);
 		trade1.setAccount("account1");
@@ -125,14 +131,14 @@ class TradeServiceTest {
 	@Test
 	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(new Trade()));
-		tradeService.updateItem(1, rightNewTradeDTO);
+		tradeService.updateItem(1, updatedTradeDTO);
 		Mockito.verify(tradeRepository).save(any(Trade.class));
 	}
 
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> tradeService.updateItem(10, new NewTradeDTO()));
+		assertThrows(NotFoundException.class, () -> tradeService.updateItem(10, new UpdateTradeDTO()));
 	}
 
 	@Test

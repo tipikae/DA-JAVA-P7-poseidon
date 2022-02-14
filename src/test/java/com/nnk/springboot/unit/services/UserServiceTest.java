@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.NewUserDTO;
+import com.nnk.springboot.dto.UpdateUserDTO;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.dtoconverters.IUserDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
@@ -46,6 +47,7 @@ class UserServiceTest {
 	
 	private static NewUserDTO rightNewUserDTO;
 	private static NewUserDTO wrongNewUserDTO;
+	private static UpdateUserDTO updatedUserDTO;
 	private static User user1;
 	private static User user2;
 	private static UserDTO userDTO1;
@@ -57,6 +59,7 @@ class UserServiceTest {
 	private static void setUp() {
 		rightNewUserDTO = new NewUserDTO();
 		wrongNewUserDTO = new NewUserDTO();
+		updatedUserDTO = new UpdateUserDTO();
 		user1 = new User();
 		user2 = new User();
 		userDTO1 = new UserDTO();
@@ -71,6 +74,9 @@ class UserServiceTest {
 		wrongNewUserDTO.setFullname("fullname2");
 		wrongNewUserDTO.setPassword("password2");
 		wrongNewUserDTO.setUsername("");
+		
+		updatedUserDTO.setFullname("fullname1");
+		updatedUserDTO.setUsername("username_updated");
 		
 		user1.setFullname("fullname1");
 		user1.setId(1);
@@ -135,14 +141,14 @@ class UserServiceTest {
 	@Test
 	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.of(new User()));
-		userService.updateItem(1, rightNewUserDTO);
+		userService.updateItem(1, updatedUserDTO);
 		Mockito.verify(userRepository).save(any(User.class));
 	}
 
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> userService.updateItem(10, new NewUserDTO()));
+		assertThrows(NotFoundException.class, () -> userService.updateItem(10, new UpdateUserDTO()));
 	}
 
 	@Test

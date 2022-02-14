@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.dto.NewBidListDTO;
+import com.nnk.springboot.dto.UpdateBidListDTO;
 import com.nnk.springboot.dtoconverters.IBidListDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -41,6 +42,7 @@ class BidListServiceTest {
 	
 	private static NewBidListDTO rightNewBidListDTO;
 	private static NewBidListDTO wrongNewBidListDTO;
+	private static UpdateBidListDTO updatedBidListDTO;
 	private static BidList bidList1;
 	private static BidList bidList2;
 	private static BidListDTO bidListDTO1;
@@ -52,6 +54,7 @@ class BidListServiceTest {
 	private static void setUp() {
 		rightNewBidListDTO = new NewBidListDTO();
 		wrongNewBidListDTO = new NewBidListDTO();
+		updatedBidListDTO = new UpdateBidListDTO();
 		bidList1 = new BidList();
 		bidList2 = new BidList();
 		bidListDTO1 = new BidListDTO();
@@ -66,6 +69,10 @@ class BidListServiceTest {
 		wrongNewBidListDTO.setAccount("account1");
 		wrongNewBidListDTO.setBidQuantity(100);
 		wrongNewBidListDTO.setType("type1");
+		
+		updatedBidListDTO.setAccount("account1");
+		updatedBidListDTO.setBidQuantity(500);
+		updatedBidListDTO.setType("type1");
 		
 		bidList1.setAccount("account1");
 		bidList1.setBidQuantity(100);
@@ -130,14 +137,14 @@ class BidListServiceTest {
 	@Test
 	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(new BidList()));
-		bidListService.updateItem(1, rightNewBidListDTO);
+		bidListService.updateItem(1, updatedBidListDTO);
 		Mockito.verify(bidListRepository).save(any(BidList.class));
 	}
 
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> bidListService.updateItem(10, new NewBidListDTO()));
+		assertThrows(NotFoundException.class, () -> bidListService.updateItem(10, new UpdateBidListDTO()));
 	}
 
 	@Test
