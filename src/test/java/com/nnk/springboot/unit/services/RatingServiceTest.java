@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.NewRatingDTO;
 import com.nnk.springboot.dto.RatingDTO;
+import com.nnk.springboot.dto.UpdateRatingDTO;
 import com.nnk.springboot.dtoconverters.IRatingDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -41,6 +42,7 @@ class RatingServiceTest {
 	
 	private static NewRatingDTO rightNewRatingDTO;
 	private static NewRatingDTO wrongNewRatingDTO;
+	private static UpdateRatingDTO updatedRatingDTO;
 	private static Rating rating1;
 	private static Rating rating2;
 	private static RatingDTO ratingDTO1;
@@ -52,6 +54,7 @@ class RatingServiceTest {
 	private static void setUp() {
 		rightNewRatingDTO = new NewRatingDTO();
 		wrongNewRatingDTO = new NewRatingDTO();
+		updatedRatingDTO = new UpdateRatingDTO();
 		rating1 = new Rating();
 		rating2 = new Rating();
 		ratingDTO1 = new RatingDTO();
@@ -68,6 +71,11 @@ class RatingServiceTest {
 		wrongNewRatingDTO.setMoodysRating("moodys1");
 		wrongNewRatingDTO.setOrderNumber(0);
 		wrongNewRatingDTO.setSandPRating("sand1");
+		
+		updatedRatingDTO.setFitchRating("fitch1");
+		updatedRatingDTO.setMoodysRating("moodys1");
+		updatedRatingDTO.setOrderNumber(10);
+		updatedRatingDTO.setSandPRating("sand1");
 		
 		rating1.setId(1);
 		rating1.setFitchRating("fitch1");
@@ -102,7 +110,7 @@ class RatingServiceTest {
 	
 
 	@Test
-	void addBidListReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
 		when(ratingRepository.save(any(Rating.class))).thenReturn(rating1);
 		when(ratingConverter.convertEntityToDTO(any(Rating.class))).thenReturn(ratingDTO1);
 		assertEquals(rightNewRatingDTO.getOrderNumber(), 
@@ -110,52 +118,52 @@ class RatingServiceTest {
 	}
 
 	@Test
-	void addBidListThrowsServiceExceptionWhenError() {
+	void addItemThrowsServiceExceptionWhenError() {
 		
 	}
 
 	@Test
-	void getAllBidsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
 		when(ratingRepository.findAll()).thenReturn(ratings);
 		when(ratingConverter.convertListEntityToDTO(ratings)).thenReturn(ratingDTOs);
 		assertEquals(ratings.size(), ratingService.getAllItems().size());
 	}
 
 	@Test
-	void getBidListReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(rating1));
 		when(ratingConverter.convertEntityToDTO(rating1)).thenReturn(ratingDTO1);
 		assertEquals(rating1.getId(), ratingService.getItemById(1).getId());
 	}
 
 	@Test
-	void getBidListThrowsNotFoundExceptionWhenNotFound() {
+	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> ratingService.getItemById(1));
 	}
 
 	@Test
-	void updateBidListWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws NotFoundException, ServiceException {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(new Rating()));
-		ratingService.updateItem(1, rightNewRatingDTO);
+		ratingService.updateItem(1, updatedRatingDTO);
 		Mockito.verify(ratingRepository).save(any(Rating.class));
 	}
 
 	@Test
 	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ratingService.updateItem(10, new NewRatingDTO()));
+		assertThrows(NotFoundException.class, () -> ratingService.updateItem(10, new UpdateRatingDTO()));
 	}
 
 	@Test
-	void deleteBidListWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws NotFoundException, ServiceException {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(new Rating()));
 		ratingService.deleteItem(1);
 		Mockito.verify(ratingRepository).delete(any(Rating.class));
 	}
 
 	@Test
-	void deleteBidListThrowsNotFoundExceptionWhenNotFound() {
+	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());
 		assertThrows(NotFoundException.class, () -> ratingService.deleteItem(10));
 	}

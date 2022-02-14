@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.NewRatingDTO;
 import com.nnk.springboot.dto.RatingDTO;
+import com.nnk.springboot.dto.UpdateRatingDTO;
 import com.nnk.springboot.dtoconverters.IRatingDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.NotFoundException;
@@ -74,7 +75,7 @@ public class RatingServiceImpl implements IRatingService {
 	}
 
 	@Override
-	public void updateItem(Integer id, NewRatingDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateRatingDTO updatedDTO) throws NotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<Rating> optional = ratingRepository.findById(id);
 		if(!optional.isPresent()) {

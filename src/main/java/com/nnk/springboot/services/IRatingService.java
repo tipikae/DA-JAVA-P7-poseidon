@@ -5,6 +5,7 @@ package com.nnk.springboot.services;
 
 import com.nnk.springboot.dto.NewRatingDTO;
 import com.nnk.springboot.dto.RatingDTO;
+import com.nnk.springboot.dto.UpdateRatingDTO;
 
 /**
  * Rating service interface.
@@ -12,6 +13,6 @@ import com.nnk.springboot.dto.RatingDTO;
  * @version 1.0
  *
  */
-public interface IRatingService extends IService<RatingDTO, NewRatingDTO> {
+public interface IRatingService extends IService<RatingDTO, NewRatingDTO, UpdateRatingDTO> {
 
 }
