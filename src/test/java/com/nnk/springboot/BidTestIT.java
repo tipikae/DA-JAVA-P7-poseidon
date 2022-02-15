@@ -7,6 +7,7 @@ import com.nnk.springboot.repositories.BidListRepository;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,8 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest(classes = {Application.class, H2TestProfileJpaConfig.class})
-@ActiveProfiles("test")
+//@SpringBootTest(classes = {Application.class, H2TestProfileJpaConfig.class})
+//@SpringBootTest
+@DataJpaTest
+//@ActiveProfiles("test")
 public class BidTestIT {
 	
 	@MockBean
@@ -31,7 +34,6 @@ public class BidTestIT {
 	@Autowired
 	private BidListRepository bidListRepository;
 
-	@Transactional
 	@Test
 	public void bidListTest() {
 		BidList bid = new BidList("Account Test", "Type Test", 10d);
