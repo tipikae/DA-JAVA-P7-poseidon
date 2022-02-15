@@ -35,7 +35,7 @@ public class BidListDTOConverterImpl implements IBidListDTOConverter {
 		BidListDTO bidListDTO = new BidListDTO();
 		bidListDTO.setAccount(bidList.getAccount());
 		bidListDTO.setBidQuantity(bidList.getBidQuantity());
-		bidListDTO.setId(bidList.getBidListId());
+		bidListDTO.setBidListId(bidList.getBidListId());
 		bidListDTO.setType(bidList.getType());
 		
 		return bidListDTO;
