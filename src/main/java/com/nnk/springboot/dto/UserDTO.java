@@ -32,4 +32,14 @@ public class UserDTO implements Serializable {
      * Fullname.
      */
     private String fullname;
+    
+    /**
+     * Role.
+     */
+    private String role;
+    
+    /**
+     * Password.
+     */
+    private final String password = ""; 
 }

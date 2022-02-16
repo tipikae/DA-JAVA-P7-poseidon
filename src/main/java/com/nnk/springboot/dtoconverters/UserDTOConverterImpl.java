@@ -35,6 +35,7 @@ public class UserDTOConverterImpl implements IUserDTOConverter {
 		userDTO.setFullname(user.getFullname());
 		userDTO.setId(user.getId());
 		userDTO.setUsername(user.getUsername());
+		userDTO.setRole(user.getRole());
 		
 		return userDTO;
 	}

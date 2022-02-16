@@ -18,7 +18,7 @@ public class BidListDTO implements Serializable {
 	/**
 	 * Id.
 	 */
-	private Integer id;
+	private Integer bidListId;
 	
 	/**
 	 * Account.

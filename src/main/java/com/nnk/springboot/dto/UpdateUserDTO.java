@@ -23,12 +23,18 @@ public class UpdateUserDTO implements Serializable {
 	/**
      * Username.
      */
-    @NotBlank(message = "Username is mandatory")
+    @NotBlank(message = "Username is mandatory.")
     private String username;
     
     /**
      * Fullname.
      */
-    @NotBlank(message = "FullName is mandatory")
+    @NotBlank(message = "Fullname is mandatory.")
     private String fullname;
+    
+    /**
+     * Role.
+     */
+    @NotBlank(message = "Role is mandatory.")
+    private String role;
 }

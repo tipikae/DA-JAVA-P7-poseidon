@@ -24,14 +24,14 @@ public class NewBidListDTO implements Serializable {
 	 * Account.
 	 */
     @Size(max = 30, message = "{validation.name.size.too_long}")
-    @NotBlank(message = "Account is mandatory")
+    @NotBlank(message = "Account is mandatory.")
 	private String account;
 
     /**
      * Type.
      */
     @Size(max = 30, message = "{validation.name.size.too_long}")
-    @NotBlank(message = "Type is mandatory")
+    @NotBlank(message = "Type is mandatory.")
 	private String type;
     
     /**

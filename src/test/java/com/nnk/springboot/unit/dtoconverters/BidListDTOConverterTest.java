@@ -59,12 +59,12 @@ class BidListDTOConverterTest {
 		
 		bidListDTO1.setAccount("account1");
 		bidListDTO1.setType("type1");
-		bidListDTO1.setId(1);
+		bidListDTO1.setBidListId(1);
 		bidListDTO1.setBidQuantity(100);
 		
 		bidListDTO2.setAccount("account2");
 		bidListDTO2.setType("type2");
-		bidListDTO2.setId(2);
+		bidListDTO2.setBidListId(2);
 		bidListDTO2.setBidQuantity(200);
 		
 		bidListDTOs.add(bidListDTO1);
@@ -73,8 +73,8 @@ class BidListDTOConverterTest {
 
 	@Test
 	void convertEntityToDTOReturnsDTOWhenOk() throws ConverterException {
-		assertEquals(bidListDTO1.getId(), 
-				converterBidList.convertEntityToDTO(rightBidList1).getId());
+		assertEquals(bidListDTO1.getBidListId(), 
+				converterBidList.convertEntityToDTO(rightBidList1).getBidListId());
 	}
 
 	@Test

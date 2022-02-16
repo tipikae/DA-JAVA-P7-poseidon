@@ -86,12 +86,12 @@ class BidListServiceTest {
 		
 		bidListDTO1.setAccount("account1");
 		bidListDTO1.setBidQuantity(100);
-		bidListDTO1.setId(1);
+		bidListDTO1.setBidListId(1);
 		bidListDTO1.setType("type1");
 		
 		bidListDTO2.setAccount("account2");
 		bidListDTO2.setBidQuantity(200);
-		bidListDTO2.setId(2);
+		bidListDTO2.setBidListId(2);
 		bidListDTO2.setType("type2");
 		
 		bidLists.add(bidList1);
@@ -125,7 +125,7 @@ class BidListServiceTest {
 	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(bidList1));
 		when(converterBidList.convertEntityToDTO(bidList1)).thenReturn(bidListDTO1);
-		assertEquals(bidList1.getBidListId(), bidListService.getItemById(1).getId());
+		assertEquals(bidList1.getBidListId(), bidListService.getItemById(1).getBidListId());
 	}
 
 	@Test
