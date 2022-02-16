@@ -88,7 +88,7 @@ class CurveControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	@WithMockUser
 	@Test
-	void addBidFormReturnsForm() throws Exception {
+	void addCurveFormReturnsForm() throws Exception {
 		mockMvc.perform(get(ROOT_REQUEST + "/add"))
 			.andExpect(status().isOk())
 			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
@@ -104,7 +104,7 @@ class CurveControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", rightCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?success=New CurvePoint added."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=New CurvePoint added."));
 	}
 
 	@WithMockUser
@@ -112,12 +112,12 @@ class CurveControllerTest {
 	void validateReturnsFormWithErrorWhenValidationError() throws Exception {
 		NewCurvePointDTO wrongCurveDTO = new NewCurvePointDTO();
 		wrongCurveDTO.setCurveId(10);
-		wrongCurveDTO.setTerm(1);
+		wrongCurveDTO.setTerm(0);
 		wrongCurveDTO.setValue(10d);
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", wrongCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Term must be a decimal number. "));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Term must be strictly positive. "));
 	}
 
 	@WithMockUser
@@ -180,7 +180,7 @@ class CurveControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	@WithMockUser
 	@Test
-	void updateBidReturnsListWhenOk() throws Exception {
+	void updateCurveReturnsListWhenOk() throws Exception {
 		UpdateCurvePointDTO rightUpdateCurveDTO = new UpdateCurvePointDTO();
 		rightUpdateCurveDTO.setCurveId(20);
 		rightUpdateCurveDTO.setTerm(10d);
@@ -193,20 +193,20 @@ class CurveControllerTest {
 
 	@WithMockUser
 	@Test
-	void updateBidReturnsFormWithErrorWhenValidationError() throws Exception {
+	void updateCurveReturnsFormWithErrorWhenValidationError() throws Exception {
 		UpdateCurvePointDTO wrongUpdateCurveDTO = new UpdateCurvePointDTO();
 		wrongUpdateCurveDTO.setCurveId(20);
 		wrongUpdateCurveDTO.setTerm(10d);
-		wrongUpdateCurveDTO.setValue(10);
+		wrongUpdateCurveDTO.setValue(0);
 		mockMvc.perform(post(ROOT_REQUEST + "/update/1")
 				.flashAttr("curvePoint", wrongUpdateCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/1?error=Value must be a decimal number. "));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/1?error=Value must be strictly positive. "));
 	}
 
 	@WithMockUser
 	@Test
-	void updateBidReturnsError404WhenNotFoundException() throws Exception {
+	void updateCurveReturnsError404WhenNotFoundException() throws Exception {
 		UpdateCurvePointDTO rightUpdateCurveDTO = new UpdateCurvePointDTO();
 		rightUpdateCurveDTO.setCurveId(20);
 		rightUpdateCurveDTO.setTerm(10d);
@@ -223,7 +223,7 @@ class CurveControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	@WithMockUser
 	@Test
-	void deleteBidReturnsListWhenOk() throws Exception {
+	void deleteCurveReturnsListWhenOk() throws Exception {
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/1"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list"));
@@ -231,7 +231,7 @@ class CurveControllerTest {
 
 	@WithMockUser
 	@Test
-	void deleteBidReturnsError404WhenNotFoundException() throws Exception {
+	void deleteCurveReturnsError404WhenNotFoundException() throws Exception {
 		doThrow(NotFoundException.class).when(curveService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
