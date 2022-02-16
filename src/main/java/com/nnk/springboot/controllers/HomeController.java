@@ -1,21 +1,36 @@
 package com.nnk.springboot.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomeController
-{
+public class HomeController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	
+	/**
+	 * Get home page.
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping("/")
-	public String home(Model model)
-	{
+	public String home(Model model) {
 		return "home";
 	}
 
+	/**
+	 * Get admin home page
+	 * @param request
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping("/admin/home")
-	public String adminHome(Model model)
-	{
+	public String adminHome(HttpServletRequest request, Model model) {
 		return "redirect:/bidList/list";
 	}
 
