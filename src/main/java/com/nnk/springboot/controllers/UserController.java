@@ -59,6 +59,7 @@ public class UserController {
     /**
      * Get add user form.
      * @param request
+     * @param model
      * @return String
      */
     @GetMapping("/user/add")
@@ -96,21 +97,17 @@ public class UserController {
     	try {
 			UserDTO user = userService.addItem(newUserDTO);
 			model.addAttribute("user", user);
+	    	return "redirect:/user/list?success=New User added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			model.addAttribute("user", newUserDTO);
 			return "redirect:/user/add?error=Unable to process new User.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
-			model.addAttribute("user", newUserDTO);
 			return "redirect:/user/add?error=Unable to process new User.";
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
-			model.addAttribute("user", newUserDTO);
 			return "redirect:/user/add?error=Unable to process new User.";
 		}
-    	
-    	return "redirect:/user/list?success=New User added.";
     }
 
     /**
@@ -175,17 +172,14 @@ public class UserController {
     	
     	try {
     		userService.updateItem(id, updateUserDTO);
+            return "redirect:/user/list?success=User has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateUser: NotFoundException: " + e.getMessage());
-			model.addAttribute("user", updateUserDTO);
 			return "redirect:/user/update/" + id + "?error=User not found.";
 		} catch (Exception e) {
 			LOGGER.debug("updateUser: Exception: " + e.getMessage());
-			model.addAttribute("user", updateUserDTO);
 			return "redirect:/user/update/" + id + "?error=Unable to process update User.";
 		}
-    	
-        return "redirect:/user/list?success=User has been updated.";
     }
 
     /**

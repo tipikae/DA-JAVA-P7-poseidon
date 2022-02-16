@@ -58,11 +58,15 @@ public class RuleNameController {
     /**
      * Get add ruleName form.
      * @param request
+     * @param model
      * @return String
      */
     @GetMapping("/ruleName/add")
-    public String addRuleForm(HttpServletRequest request) {
+    public String addRuleForm(HttpServletRequest request, Model model) {
     	LOGGER.debug("Getting add ruleName form");
+    	if(!model.containsAttribute("ruleName")) {
+    		model.addAttribute("ruleName", new RuleNameDTO());
+    	}
         return "ruleName/add";
     }
 
@@ -92,6 +96,7 @@ public class RuleNameController {
     	try {
 			RuleNameDTO ruleName = ruleNameService.addItem(newRuleNameDTO);
 			model.addAttribute("ruleName", ruleName);
+	        return "redirect:/ruleName/list?success=New RuleName added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
 			return "redirect:/ruleName/add?error=Unable to process new RuleName.";
@@ -102,8 +107,6 @@ public class RuleNameController {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
 			return "redirect:/ruleName/add?error=Unable to process new RuleName.";
 		}
-    	
-        return "redirect:/ruleName/list?success=New RuleName added.";
     }
 
     /**
@@ -120,10 +123,14 @@ public class RuleNameController {
     		Model model) {
     	
     	LOGGER.debug("Getting a ruleName to update");
+    	if(model.containsAttribute("ruleName")) {
+    		return "ruleName/update";
+    	}
     	
     	try {
 			RuleNameDTO ruleName = ruleNameService.getItemById(id);
 			model.addAttribute("ruleName", ruleName);
+			return "ruleName/update";
 		} catch (NotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
@@ -134,8 +141,6 @@ public class RuleNameController {
 			LOGGER.debug("ShowUpdateForm: Exception: " + e.getMessage());
 			return "error/400";
 		}
-    	
-        return "ruleName/update";
     }
 
     /**
@@ -165,6 +170,7 @@ public class RuleNameController {
     	
     	try {
     		ruleNameService.updateItem(id, updateRuleNameDTO);
+            return "redirect:/ruleName/list?success=RuleName has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateRuleName: NotFoundException: " + e.getMessage());
 			return "redirect:/ruleName/update/" + id + "?error=RuleName not found.";
@@ -172,8 +178,6 @@ public class RuleNameController {
 			LOGGER.debug("updateRuleName: Exception: " + e.getMessage());
 			return "redirect:/ruleName/update/" + id + "?error=Unable to process update RuleName.";
 		}
-    	
-        return "redirect:/ruleName/list?success=RuleName has been updated.";
     }
 
     /**

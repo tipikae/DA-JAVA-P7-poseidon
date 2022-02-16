@@ -60,11 +60,15 @@ public class CurveController {
     /**
      * Get add curvePoint form.
      * @param request
+     * @param model
      * @return String
      */
     @GetMapping("/curvePoint/add")
-    public String addCurveForm(HttpServletRequest request) {
+    public String addCurveForm(HttpServletRequest request, Model model) {
     	LOGGER.debug("Getting add curvePoint form");
+    	if(!model.containsAttribute("curvePoint")) {
+    		model.addAttribute("curvePoint", new CurvePointDTO());
+    	}
         return "curvePoint/add";
     }
 
@@ -94,6 +98,7 @@ public class CurveController {
     	try {
 			CurvePointDTO curvePoint = curveService.addItem(newCurvePointDTO);
 			model.addAttribute("curvePoint", curvePoint);
+	    	return "redirect:/curvePoint/list?success=New CurvePoint added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
 			return "redirect:/curvePoint/add?error=Unable to process new CurvePoint.";
@@ -103,9 +108,7 @@ public class CurveController {
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
 			return "redirect:/curvePoint/add?error=Unable to process new CurvePoint.";
-		}
-    	
-    	return "redirect:/curvePoint/list?success=New CurvePoint added.";
+		}	
     }
 
     /**
@@ -122,10 +125,14 @@ public class CurveController {
     		Model model) {
     	
     	LOGGER.debug("Getting a curvePoint to update");
+    	if(model.containsAttribute("curvePoint")) {
+    		return "curvePoint/update";
+    	}
     	
     	try {
 			CurvePointDTO curvePoint = curveService.getItemById(id);
 			model.addAttribute("curvePoint", curvePoint);
+			return "curvePoint/update";
 		} catch (NotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
@@ -136,8 +143,6 @@ public class CurveController {
 			LOGGER.debug("ShowUpdateForm: Exception: " + e.getMessage());
 			return "error/400";
 		}
-    	
-        return "curvePoint/update";
     }
 
     /**
@@ -167,6 +172,7 @@ public class CurveController {
     	
     	try {
 			curveService.updateItem(id, updateCurvePointDTO);
+	        return "redirect:/curvePoint/list?success=CurvePoint has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("UpdateCurve: NotFoundException: " + e.getMessage());
 			return "redirect:/curvePoint/update/" + id + "?error=CurvePoint not found.";
@@ -174,8 +180,6 @@ public class CurveController {
 			LOGGER.debug("UpdateCurve: Exception: " + e.getMessage());
 			return "redirect:/curvePoint/update/" + id + "?error=Unable to process update CurvePoint.";
 		}
-    	
-        return "redirect:/curvePoint/list?success=CurvePoint has been updated.";
     }
 
     /**

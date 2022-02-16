@@ -58,11 +58,15 @@ public class RatingController {
     /**
      * Get add rating form.
      * @param request
+     * @param model
      * @return String
      */
     @GetMapping("/rating/add")
-    public String addRatingForm(HttpServletRequest request) {
+    public String addRatingForm(HttpServletRequest request, Model model) {
     	LOGGER.debug("Getting add rating form");
+    	if(!model.containsAttribute("rating")) {
+    		model.addAttribute("rating", new RatingDTO());
+    	}
         return "rating/add";
     }
 
@@ -92,6 +96,7 @@ public class RatingController {
     	try {
 			RatingDTO ratingPoint = ratingService.addItem(newRatingDTO);
 			model.addAttribute("rating", ratingPoint);
+	    	return "redirect:/rating/list?success=New Rating added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
 			return "redirect:/rating/add?error=Unable to process new Rating.";
@@ -102,8 +107,6 @@ public class RatingController {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
 			return "redirect:/rating/add?error=Unable to process new Rating.";
 		}
-    	
-    	return "redirect:/rating/list?success=New Rating added.";
     }
 
     /**
@@ -120,10 +123,14 @@ public class RatingController {
     		Model model) {
     	
     	LOGGER.debug("Getting a rating to update");
+    	if(model.containsAttribute("rating")) {
+    		return "rating/update";
+    	}
     	
     	try {
 			RatingDTO rating = ratingService.getItemById(id);
 			model.addAttribute("rating", rating);
+			return "rating/update";
 		} catch (NotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
@@ -134,8 +141,6 @@ public class RatingController {
 			LOGGER.debug("ShowUpdateForm: Exception: " + e.getMessage());
 			return "error/400";
 		}
-    	
-        return "rating/update";
     }
 
     /**
@@ -165,6 +170,7 @@ public class RatingController {
     	
     	try {
 			ratingService.updateItem(id, updateRatingDTO);
+	        return "redirect:/rating/list?success=Rating has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateRating: NotFoundException: " + e.getMessage());
 			return "redirect:/rating/update/" + id + "?error=Rating not found.";
@@ -172,8 +178,6 @@ public class RatingController {
 			LOGGER.debug("updateRating: Exception: " + e.getMessage());
 			return "redirect:/rating/update/" + id + "?error=Unable to process update Rating.";
 		}
-    	
-        return "redirect:/rating/list?success=Rating has been updated.";
     }
 
     @GetMapping("/rating/delete/{id}")

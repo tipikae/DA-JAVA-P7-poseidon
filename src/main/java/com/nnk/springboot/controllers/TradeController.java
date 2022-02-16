@@ -59,11 +59,15 @@ public class TradeController {
     /**
      * Get add trade form.
      * @param request
+     * @param model
      * @return String
      */
     @GetMapping("/trade/add")
-    public String addTradeForm(HttpServletRequest request) {
+    public String addTradeForm(HttpServletRequest request, Model model) {
     	LOGGER.debug("Getting add trade form");
+    	if(!model.containsAttribute("trade")) {
+    		model.addAttribute("trade", new TradeDTO());
+    	}
         return "trade/add";
     }
 
@@ -93,6 +97,7 @@ public class TradeController {
     	try {
 			TradeDTO trade = tradeService.addItem(newTradeDTO);
 			model.addAttribute("trade", trade);
+	        return "redirect:/trade/list?success=New Trade added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
 			return "redirect:/trade/add?error=Unable to process new Trade.";
@@ -103,8 +108,6 @@ public class TradeController {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
 			return "redirect:/trade/add?error=Unable to process new Trade.";
 		}
-    	
-        return "redirect:/trade/list?success=New Trade added.";
     }
 
     /**
@@ -121,10 +124,14 @@ public class TradeController {
     		Model model) {
     	
     	LOGGER.debug("Getting a trade to update");
+    	if(model.containsAttribute("trade")) {
+    		return "trade/update";
+    	}
     	
     	try {
 			TradeDTO trade = tradeService.getItemById(id);
 			model.addAttribute("trade", trade);
+			return "trade/update";
 		} catch (NotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
@@ -135,8 +142,6 @@ public class TradeController {
 			LOGGER.debug("ShowUpdateForm: Exception: " + e.getMessage());
 			return "error/400";
 		}
-    	
-        return "trade/update";
     }
 
     /**
@@ -166,6 +171,7 @@ public class TradeController {
     	
     	try {
     		tradeService.updateItem(id, updateTradeDTO);
+            return "redirect:/trade/list?success=Trade has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateTrade: NotFoundException: " + e.getMessage());
 			return "redirect:/trade/update/" + id + "?error=Trade not found.";
@@ -173,8 +179,6 @@ public class TradeController {
 			LOGGER.debug("updateTrade: Exception: " + e.getMessage());
 			return "redirect:/trade/update/" + id + "?error=Unable to process update Trade.";
 		}
-    	
-        return "redirect:/trade/list?success=Trade has been updated.";
     }
 
     /**

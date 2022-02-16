@@ -59,11 +59,15 @@ public class BidListController {
     /**
      * Get add bidList form.
      * @param request
+     * @param request
      * @return String
      */
     @GetMapping("/bidList/add")
-    public String addBidForm(HttpServletRequest request) {
+    public String addBidForm(HttpServletRequest request, Model model) {
     	LOGGER.debug("Getting add bidlist form");
+    	if(!model.containsAttribute("bidList")) {
+    		model.addAttribute("bidList", new BidListDTO());
+    	}
         return "bidList/add";
     }
 
@@ -93,6 +97,7 @@ public class BidListController {
     	try {
 			BidListDTO bidList = bidListService.addItem(newBidListDTO);
 			model.addAttribute("bidList", bidList);
+	    	return "redirect:/bidList/list?success=New BidList added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
 			return "redirect:/bidList/add?error=Unable to process new BidList.";
@@ -103,8 +108,6 @@ public class BidListController {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
 			return "redirect:/bidList/add?error=Unable to process new BidList.";
 		}
-    	
-    	return "redirect:/bidList/list?success=New BidList added.";
     }
 
     /**
@@ -122,9 +125,14 @@ public class BidListController {
     	
     	LOGGER.debug("Getting a bidlist to update");
     	
+    	if(model.containsAttribute("bidList")) {
+    		return "bidList/update";
+    	}
+    	
     	try {
 			BidListDTO bidList = bidListService.getItemById(id);
 			model.addAttribute("bidList", bidList);
+			return "bidList/update";
 		} catch (NotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
@@ -135,8 +143,6 @@ public class BidListController {
 			LOGGER.debug("ShowUpdateForm: Exception: " + e.getMessage());
 			return "error/400";
 		}
-    	
-        return "bidList/update";
     }
 
     /**
@@ -165,6 +171,7 @@ public class BidListController {
     	
     	try {
 			bidListService.updateItem(id, updateBidListDTO);
+	        return "redirect:/bidList/list?success=BidList has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("UpdateBid: NotFoundException: " + e.getMessage());
 			return "redirect:/bidList/update/" + id + "?error=BidList not found.";
@@ -172,8 +179,6 @@ public class BidListController {
 			LOGGER.debug("UpdateBid: Exception: " + e.getMessage());
 			return "redirect:/bidList/update/" + id + "?error=Unable to process update BidList.";
 		}
-    	
-        return "redirect:/bidList/list?success=BidList has been updated.";
     }
 
     @GetMapping("/bidList/delete/{id}")
