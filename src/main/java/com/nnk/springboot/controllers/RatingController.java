@@ -180,7 +180,9 @@ public class RatingController {
     public String deleteRating(
     		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
-    		Model model) {LOGGER.debug("Deleting a rating");
+    		Model model) {
+    	
+    	LOGGER.debug("Deleting a rating");
     	try {
 			ratingService.deleteItem(id);
 		} catch (NotFoundException e) {
