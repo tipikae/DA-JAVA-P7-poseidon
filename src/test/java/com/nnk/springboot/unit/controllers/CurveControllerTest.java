@@ -188,7 +188,7 @@ class CurveControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/update/1")
 				.flashAttr("curvePoint", rightUpdateCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=CurvePoint updated."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=CurvePoint has been updated."));
 	}
 
 	@WithMockUser
@@ -226,7 +226,7 @@ class CurveControllerTest {
 	void deleteCurveReturnsListWhenOk() throws Exception {
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/1"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list"));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=CurvePoint has been deleted."));
 	}
 
 	@WithMockUser

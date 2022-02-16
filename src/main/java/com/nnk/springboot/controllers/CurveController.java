@@ -118,7 +118,7 @@ public class CurveController {
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(
     		HttpServletRequest request, 
-    		@PathVariable("id") Integer id, 
+    		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	
     	LOGGER.debug("Getting a curvePoint to update");
@@ -175,7 +175,7 @@ public class CurveController {
 			return "redirect:/curvePoint/update/" + id + "?error=Unable to process update CurvePoint.";
 		}
     	
-        return "redirect:/curvePoint/list?success=CurvePoint updated.";
+        return "redirect:/curvePoint/list?success=CurvePoint has been updated.";
     }
 
     /**
@@ -201,6 +201,6 @@ public class CurveController {
 			LOGGER.debug("DeleteCurve: Exception: " + e.getMessage());
 			return "redirect:/curvePoint/delete/" + id + "?error=Unable to process delete CurvePoint.";
 		}
-        return "redirect:/curvePoint/list";
+        return "redirect:/curvePoint/list?success=CurvePoint has been deleted.";
     }
 }
