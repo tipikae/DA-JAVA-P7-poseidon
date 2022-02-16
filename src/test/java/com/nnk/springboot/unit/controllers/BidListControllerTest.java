@@ -99,7 +99,7 @@ class BidListControllerTest {
 	void validateReturnsFormWhenOk() throws Exception {
 		when(bidListService.addItem(any(NewBidListDTO.class))).thenReturn(new BidListDTO());
 		mockMvc.perform(post("/bidList/validate")
-				.flashAttr("bidlist", rightBidListDTO))
+				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/add?success=New BidList added."));
 	}
@@ -112,7 +112,7 @@ class BidListControllerTest {
 		wrongBidListDTO.setBidQuantity(10d);
 		wrongBidListDTO.setType("type1");
 		mockMvc.perform(post("/bidList/validate")
-				.flashAttr("bidlist", wrongBidListDTO))
+				.flashAttr("bidList", wrongBidListDTO))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/add?error=Account is mandatory. "));
 	}
@@ -122,7 +122,7 @@ class BidListControllerTest {
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
 		doThrow(ServiceException.class).when(bidListService).addItem(any(NewBidListDTO.class));
 		mockMvc.perform(post("/bidList/validate")
-				.flashAttr("bidlist", rightBidListDTO))
+				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/add?error=Unable to process new BidList."));
 	}
@@ -132,7 +132,7 @@ class BidListControllerTest {
 	void validateReturnsFormWithErrorWhenConverterException() throws Exception {
 		doThrow(ConverterException.class).when(bidListService).addItem(any(NewBidListDTO.class));
 		mockMvc.perform(post("/bidList/validate")
-				.flashAttr("bidlist", rightBidListDTO))
+				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/add?error=Unable to process new BidList."));
 	}
@@ -183,7 +183,7 @@ class BidListControllerTest {
 		rightUpdateBidListDTO.setBidQuantity(20d);
 		rightUpdateBidListDTO.setType("type1");
 		mockMvc.perform(post("/bidList/update/1")
-				.flashAttr("bidlist", rightUpdateBidListDTO))
+				.flashAttr("bidList", rightUpdateBidListDTO))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/list?success=BidList updated."));
 	}
@@ -196,7 +196,7 @@ class BidListControllerTest {
 		wrongUpdateBidListDTO.setBidQuantity(0);
 		wrongUpdateBidListDTO.setType("type1");
 		mockMvc.perform(post("/bidList/update/1")
-				.flashAttr("bidlist", wrongUpdateBidListDTO))
+				.flashAttr("bidList", wrongUpdateBidListDTO))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/update/1?error=Quantity must be positive. "));
 	}
@@ -210,7 +210,7 @@ class BidListControllerTest {
 		rightUpdateBidListDTO.setType("type1");
 		doThrow(NotFoundException.class).when(bidListService).updateItem(anyInt(), any(UpdateBidListDTO.class));
 		mockMvc.perform(post("/bidList/update/10")
-				.flashAttr("bidlist", rightUpdateBidListDTO))
+				.flashAttr("bidList", rightUpdateBidListDTO))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/update/10?error=BidList not found."));
 	}

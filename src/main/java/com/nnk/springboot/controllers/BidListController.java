@@ -79,7 +79,7 @@ public class BidListController {
     @PostMapping("/bidList/validate")
     public String validate(
     		HttpServletRequest request, 
-    		@ModelAttribute("bidlist") @Valid NewBidListDTO newBidListDTO, 
+    		@ModelAttribute("bidList") @Valid NewBidListDTO newBidListDTO, 
     		BindingResult result, 
     		Model model) {
     	
@@ -153,7 +153,7 @@ public class BidListController {
     public String updateBid(
     		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
-    		@ModelAttribute("bidlist") @Valid UpdateBidListDTO updateBidListDTO,
+    		@ModelAttribute("bidList") @Valid UpdateBidListDTO updateBidListDTO,
             BindingResult result) {
     	
     	LOGGER.debug("Updating a bidlist");
