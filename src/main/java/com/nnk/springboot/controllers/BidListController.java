@@ -46,7 +46,7 @@ public class BidListController {
     	LOGGER.debug("Getting all bidlists");
     	try {
 			List<BidListDTO> dtos = bidListService.getAllItems();
-			model.addAttribute("bids", dtos);
+			model.addAttribute("bidLists", dtos);
 		} catch (ConverterException e) {
 			LOGGER.debug("Home: ConverterException: " + e.getMessage());
 			return "error/400";
@@ -93,7 +93,7 @@ public class BidListController {
     	
     	try {
 			BidListDTO bidList = bidListService.addItem(newBidListDTO);
-			model.addAttribute("bidlist", bidList);
+			model.addAttribute("bidList", bidList);
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
 			return "redirect:/bidList/add?error=Unable to process new BidList.";
@@ -125,7 +125,7 @@ public class BidListController {
     	
     	try {
 			BidListDTO bidList = bidListService.getItemById(id);
-			model.addAttribute("bidlist", bidList);
+			model.addAttribute("bidList", bidList);
 		} catch (NotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
