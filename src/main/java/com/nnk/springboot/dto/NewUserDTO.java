@@ -23,18 +23,24 @@ public class NewUserDTO implements Serializable {
 	/**
      * Username.
      */
-    @NotBlank(message = "Username is mandatory")
+    @NotBlank(message = "Username is mandatory.")
     private String username;
     
     /**
      * Password.
      */
-    @NotBlank(message = "Password is mandatory")
+    @NotBlank(message = "Password is mandatory.")
     private String password;
     
     /**
      * Fullname.
      */
-    @NotBlank(message = "FullName is mandatory")
+    @NotBlank(message = "Fullname is mandatory.")
     private String fullname;
+    
+    /**
+     * Role.
+     */
+    @NotBlank(message = "Role is mandatory.")
+    private String role;
 }

@@ -27,28 +27,24 @@ public class User {
     /**
      * Username.
      */
-    @NotBlank(message = "Username is mandatory")
     @Column(name = "username")
     private String username;
     
     /**
      * Password.
      */
-    @NotBlank(message = "Password is mandatory")
     @Column(name = "password")
     private String password;
     
     /**
      * Fullname.
      */
-    @NotBlank(message = "FullName is mandatory")
     @Column(name = "fullname")
     private String fullname;
     
     /**
      * Role.
      */
-    @NotBlank(message = "Role is mandatory")
     @Column(name = "role")
     private String role;
 }
