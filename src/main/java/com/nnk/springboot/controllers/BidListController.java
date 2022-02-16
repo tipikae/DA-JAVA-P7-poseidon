@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
-
 @Controller
 public class BidListController {
 
@@ -105,7 +104,7 @@ public class BidListController {
 			return "redirect:/bidList/add?error=Unable to process new BidList.";
 		}
     	
-    	return "redirect:/bidList/add?success=New BidList added.";
+    	return "redirect:/bidList/list?success=New BidList added.";
     }
 
     /**

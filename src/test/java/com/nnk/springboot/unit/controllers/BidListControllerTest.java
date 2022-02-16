@@ -101,7 +101,7 @@ class BidListControllerTest {
 		mockMvc.perform(post("/bidList/validate")
 				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/add?success=New BidList added."));
+			.andExpect(view().name("redirect:/bidList/list?success=New BidList added."));
 	}
 
 	@WithMockUser
