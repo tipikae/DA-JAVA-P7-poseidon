@@ -64,10 +64,12 @@ class UserDTOConverterTest {
 		userDTO1.setId(1);
 		userDTO1.setFullname("fullname1");
 		userDTO1.setUsername("username1");
+		userDTO1.setRole("role1");
 		
 		userDTO2.setId(2);
 		userDTO2.setFullname("fullname2");
 		userDTO2.setUsername("username2");
+		userDTO2.setRole("role2");
 		
 		userDTOs.add(userDTO1);
 		userDTOs.add(userDTO2);
