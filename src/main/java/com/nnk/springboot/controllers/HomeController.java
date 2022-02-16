@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
@@ -18,7 +18,7 @@ public class HomeController {
 	 * @param model
 	 * @return String
 	 */
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String home(Model model) {
 		return "home";
 	}
@@ -29,7 +29,7 @@ public class HomeController {
 	 * @param model
 	 * @return String
 	 */
-	@RequestMapping("/admin/home")
+	@GetMapping("/admin/home")
 	public String adminHome(HttpServletRequest request, Model model) {
 		return "redirect:/bidList/list";
 	}
