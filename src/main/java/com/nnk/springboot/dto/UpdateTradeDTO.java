@@ -25,13 +25,13 @@ public class UpdateTradeDTO implements Serializable {
 	 * Account.
 	 */
 	@Size(max=30, message="{validation.name.size.too_long}")
-	@NotBlank
+	@NotBlank(message = "Account must not be empty.")
 	private String account;
 
 	/**
 	 * Type.
 	 */
 	@Size(max=30, message="{validation.name.size.too_long}")
-	@NotBlank
+	@NotBlank(message = "Type must not be empty.")
 	private String type;
 }
