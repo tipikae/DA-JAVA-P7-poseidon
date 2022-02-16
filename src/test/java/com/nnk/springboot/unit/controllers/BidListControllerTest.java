@@ -185,7 +185,7 @@ class BidListControllerTest {
 		mockMvc.perform(post("/bidList/update/1")
 				.flashAttr("bidList", rightUpdateBidListDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/list?success=BidList updated."));
+			.andExpect(view().name("redirect:/bidList/list?success=BidList has been updated."));
 	}
 
 	@WithMockUser
@@ -223,7 +223,7 @@ class BidListControllerTest {
 	void deleteBidReturnsListWhenOk() throws Exception {
 		mockMvc.perform(get("/bidList/delete/1"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/list"));
+			.andExpect(view().name("redirect:/bidList/list?success=BidList has been deleted."));
 	}
 
 	@WithMockUser

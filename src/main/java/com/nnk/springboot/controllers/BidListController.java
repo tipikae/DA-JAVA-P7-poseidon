@@ -173,7 +173,7 @@ public class BidListController {
 			return "redirect:/bidList/update/" + id + "?error=Unable to process update BidList.";
 		}
     	
-        return "redirect:/bidList/list?success=BidList updated.";
+        return "redirect:/bidList/list?success=BidList has been updated.";
     }
 
     @GetMapping("/bidList/delete/{id}")
@@ -192,6 +192,6 @@ public class BidListController {
 			LOGGER.debug("DeleteBid: Exception: " + e.getMessage());
 			return "redirect:/bidList/delete/" + id + "?error=Unable to process delete BidList.";
 		}
-        return "redirect:/bidList/list";
+        return "redirect:/bidList/list?success=BidList has been deleted.";
     }
 }
