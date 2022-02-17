@@ -16,6 +16,8 @@
 			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
 		</div>
 	</div>
+	<div class="row green" th:text="${#httpServletRequest.getParameter('success')}"></div>
+	<div class="row red" th:text="${#httpServletRequest.getParameter('error')}"></div>
 	<div class="row"><h2>User List</h2></div>
 	<div class="row">
 		<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>

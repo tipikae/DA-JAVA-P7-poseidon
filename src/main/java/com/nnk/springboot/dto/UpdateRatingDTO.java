@@ -6,6 +6,7 @@ package com.nnk.springboot.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -46,6 +47,7 @@ public class UpdateRatingDTO implements Serializable {
 	/**
 	 * Order number.
 	 */
+    @NotNull(message = "Order number is mandatory.")
 	@Positive(message = "Order number must be strictly positive.")
 	private Integer orderNumber;
 }

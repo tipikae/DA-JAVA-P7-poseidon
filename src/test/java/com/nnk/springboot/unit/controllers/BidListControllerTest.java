@@ -113,8 +113,8 @@ class BidListControllerTest {
 		wrongBidListDTO.setType("type1");
 		mockMvc.perform(post("/bidList/validate")
 				.flashAttr("bidList", wrongBidListDTO))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/add?error=Account is mandatory. "));
+			.andExpect(status().isOk())
+			.andExpect(view().name("bidList/add"));
 	}
 
 	@WithMockUser
@@ -124,7 +124,7 @@ class BidListControllerTest {
 		mockMvc.perform(post("/bidList/validate")
 				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/add?error=Unable to process new BidList."));
+			.andExpect(view().name("redirect:/bidList/list?error=Unable to process new BidList."));
 	}
 
 	@WithMockUser
@@ -134,7 +134,7 @@ class BidListControllerTest {
 		mockMvc.perform(post("/bidList/validate")
 				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/add?error=Unable to process new BidList."));
+			.andExpect(view().name("redirect:/bidList/list?error=Unable to process new BidList."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,7 +212,7 @@ class BidListControllerTest {
 		mockMvc.perform(post("/bidList/update/10")
 				.flashAttr("bidList", rightUpdateBidListDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/update/10?error=BidList not found."));
+			.andExpect(view().name("redirect:/bidList/list?error=BidList not found."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,6 +232,6 @@ class BidListControllerTest {
 		doThrow(NotFoundException.class).when(bidListService).deleteItem(anyInt());
 		mockMvc.perform(get("/bidList/delete/10"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/delete/10?error=BidList not found."));
+			.andExpect(view().name("redirect:/bidList/list?error=BidList not found."));
 	}
 }

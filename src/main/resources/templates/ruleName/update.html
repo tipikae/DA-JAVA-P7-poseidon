@@ -60,6 +60,7 @@
 								<p class="text-danger" th:if="${#fields.hasErrors('sqlPart')}" th:errors="*{sqlPart}"></p>
 							</div>
 						</div>
+						<div class="red" th:text="${#httpServletRequest.getParameter('error')}"></div>
 						<div class="form-group">
 							<div class="col-sm-12">
 								<a class="btn btn-danger btn-sm" href="/ruleName/list">Cancel</a>

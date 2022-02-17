@@ -116,8 +116,8 @@ class CurveControllerTest {
 		wrongCurveDTO.setValue(10d);
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", wrongCurveDTO))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Term must be strictly positive. "));
+			.andExpect(status().isOk())
+			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
 	}
 
 	@WithMockUser
@@ -127,7 +127,7 @@ class CurveControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", rightCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new CurvePoint."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new CurvePoint."));
 	}
 
 	@WithMockUser
@@ -137,7 +137,7 @@ class CurveControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", rightCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new CurvePoint."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new CurvePoint."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,7 +215,7 @@ class CurveControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("curvePoint", rightUpdateCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/10?error=CurvePoint not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=CurvePoint not found."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,6 +235,6 @@ class CurveControllerTest {
 		doThrow(NotFoundException.class).when(curveService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/delete/10?error=CurvePoint not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=CurvePoint not found."));
 	}
 }

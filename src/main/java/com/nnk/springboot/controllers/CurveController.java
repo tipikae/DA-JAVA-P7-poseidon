@@ -92,7 +92,7 @@ public class CurveController {
     		StringBuilder sb = new StringBuilder();
     		result.getAllErrors().stream().forEach(e -> sb.append(e.getDefaultMessage() + " "));
 			LOGGER.debug("has errors:" + sb);
-			return "redirect:/curvePoint/add?error=" + sb;
+			return "curvePoint/add";
     	}
     	
     	try {
@@ -101,13 +101,13 @@ public class CurveController {
 	    	return "redirect:/curvePoint/list?success=New CurvePoint added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			return "redirect:/curvePoint/add?error=Unable to process new CurvePoint.";
+			return "redirect:/curvePoint/list?error=Unable to process new CurvePoint.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
-			return "redirect:/curvePoint/add?error=Unable to process new CurvePoint.";
+			return "redirect:/curvePoint/list?error=Unable to process new CurvePoint.";
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
-			return "redirect:/curvePoint/add?error=Unable to process new CurvePoint.";
+			return "redirect:/curvePoint/list?error=Unable to process new CurvePoint.";
 		}	
     }
 
@@ -125,10 +125,6 @@ public class CurveController {
     		Model model) {
     	
     	LOGGER.debug("Getting a curvePoint to update");
-    	if(model.containsAttribute("curvePoint")) {
-    		return "curvePoint/update";
-    	}
-    	
     	try {
 			CurvePointDTO curvePoint = curveService.getItemById(id);
 			model.addAttribute("curvePoint", curvePoint);
@@ -175,10 +171,10 @@ public class CurveController {
 	        return "redirect:/curvePoint/list?success=CurvePoint has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("UpdateCurve: NotFoundException: " + e.getMessage());
-			return "redirect:/curvePoint/update/" + id + "?error=CurvePoint not found.";
+			return "redirect:/curvePoint/list?error=CurvePoint not found.";
 		} catch (Exception e) {
 			LOGGER.debug("UpdateCurve: Exception: " + e.getMessage());
-			return "redirect:/curvePoint/update/" + id + "?error=Unable to process update CurvePoint.";
+			return "redirect:/curvePoint/list?error=Unable to process update CurvePoint.";
 		}
     }
 
@@ -198,13 +194,13 @@ public class CurveController {
     	LOGGER.debug("Deleting a curvePoint");
     	try {
 			curveService.deleteItem(id);
+	        return "redirect:/curvePoint/list?success=CurvePoint has been deleted.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("DeleteCurve: NotFoundException: " + e.getMessage());
-			return "redirect:/curvePoint/delete/" + id + "?error=CurvePoint not found.";
+			return "redirect:/curvePoint/list?error=CurvePoint not found.";
 		} catch (Exception e) {
 			LOGGER.debug("DeleteCurve: Exception: " + e.getMessage());
-			return "redirect:/curvePoint/delete/" + id + "?error=Unable to process delete CurvePoint.";
+			return "redirect:/curvePoint/list?error=Unable to process delete CurvePoint.";
 		}
-        return "redirect:/curvePoint/list?success=CurvePoint has been deleted.";
     }
 }

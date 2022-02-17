@@ -11,6 +11,8 @@
 <div layout:fragment="content">
 	<div class="section">
 		<div class="container">
+			<div class="row green" th:text="${#httpServletRequest.getParameter('success')}"></div>
+			<div class="row red" th:text="${#httpServletRequest.getParameter('error')}"></div>
 			<div class="row"><h2>Rule List</h2></div>
 			<div class="row">
 				<a href="/ruleName/add" class="btn btn-primary btn-sm">Add New</a>

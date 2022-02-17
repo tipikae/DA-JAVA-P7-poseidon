@@ -90,7 +90,7 @@ public class RuleNameController {
     		StringBuilder sb = new StringBuilder();
     		result.getAllErrors().stream().forEach(e -> sb.append(e.getDefaultMessage() + " "));
 			LOGGER.debug("has errors:" + sb);
-			return "redirect:/ruleName/add?error=" + sb;
+			return "ruleName/add";
     	}
     	
     	try {
@@ -99,13 +99,13 @@ public class RuleNameController {
 	        return "redirect:/ruleName/list?success=New RuleName added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			return "redirect:/ruleName/add?error=Unable to process new RuleName.";
+			return "redirect:/ruleName/list?error=Unable to process new RuleName.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
-			return "redirect:/ruleName/add?error=Unable to process new RuleName.";
+			return "redirect:/ruleName/list?error=Unable to process new RuleName.";
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
-			return "redirect:/ruleName/add?error=Unable to process new RuleName.";
+			return "redirect:/ruleName/list?error=Unable to process new RuleName.";
 		}
     }
 
@@ -123,10 +123,6 @@ public class RuleNameController {
     		Model model) {
     	
     	LOGGER.debug("Getting a ruleName to update");
-    	if(model.containsAttribute("ruleName")) {
-    		return "ruleName/update";
-    	}
-    	
     	try {
 			RuleNameDTO ruleName = ruleNameService.getItemById(id);
 			model.addAttribute("ruleName", ruleName);
@@ -173,10 +169,10 @@ public class RuleNameController {
             return "redirect:/ruleName/list?success=RuleName has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateRuleName: NotFoundException: " + e.getMessage());
-			return "redirect:/ruleName/update/" + id + "?error=RuleName not found.";
+			return "redirect:/ruleName/list?error=RuleName not found.";
 		} catch (Exception e) {
 			LOGGER.debug("updateRuleName: Exception: " + e.getMessage());
-			return "redirect:/ruleName/update/" + id + "?error=Unable to process update RuleName.";
+			return "redirect:/ruleName/list?error=Unable to process update RuleName.";
 		}
     }
 
@@ -196,13 +192,13 @@ public class RuleNameController {
     	LOGGER.debug("Deleting a ruleName");
     	try {
     		ruleNameService.deleteItem(id);
+            return "redirect:/ruleName/list?success=RuleName has been deleted.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("deleteRuleName: NotFoundException: " + e.getMessage());
-			return "redirect:/ruleName/delete/" + id + "?error=RuleName not found.";
+			return "redirect:/ruleName/list?error=RuleName not found.";
 		} catch (Exception e) {
 			LOGGER.debug("deleteRuleName: Exception: " + e.getMessage());
-			return "redirect:/ruleName/delete/" + id + "?error=Unable to process delete RuleName.";
+			return "redirect:/ruleName/list?error=Unable to process delete RuleName.";
 		}
-        return "redirect:/ruleName/list?success=RuleName has been deleted.";
     }
 }

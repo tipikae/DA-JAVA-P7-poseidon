@@ -116,8 +116,8 @@ class TradeControllerTest {
 		wrongTradeDTO.setBuyQuantity(10d);
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("trade", wrongTradeDTO))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Account must not be empty. "));
+			.andExpect(status().isOk())
+			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
 	}
 
 	@WithMockUser
@@ -127,7 +127,7 @@ class TradeControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("trade", rightTradeDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new Trade."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new Trade."));
 	}
 
 	@WithMockUser
@@ -137,7 +137,7 @@ class TradeControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("trade", rightTradeDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new Trade."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new Trade."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,7 +214,7 @@ class TradeControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("trade", rightUpdateTradeDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/10?error=Trade not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Trade not found."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,6 +234,6 @@ class TradeControllerTest {
 		doThrow(NotFoundException.class).when(tradeService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/delete/10?error=Trade not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Trade not found."));
 	}
 }

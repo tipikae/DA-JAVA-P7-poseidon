@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -40,6 +41,7 @@ public class UpdateTradeDTO implements Serializable {
 	/**
 	 * Buy quantity.
 	 */
+    @NotNull(message = "Buy quantity is mandatory.")
 	@Positive(message = "Buy quantity must be strictly positive.")
 	@Digits(integer = 10, fraction = 2, message = "Buy quantity must be a decimal number.")
 	private double buyQuantity;
