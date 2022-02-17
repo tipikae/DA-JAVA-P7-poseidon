@@ -59,6 +59,7 @@ class TradeControllerTest {
 		rightTradeDTO = new NewTradeDTO();
 		rightTradeDTO.setAccount("account1");
 		rightTradeDTO.setType("type1");
+		rightTradeDTO.setBuyQuantity(10d);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,6 +113,7 @@ class TradeControllerTest {
 		NewTradeDTO wrongTradeDTO = new NewTradeDTO();
 		wrongTradeDTO.setAccount("");
 		wrongTradeDTO.setType("type1");
+		wrongTradeDTO.setBuyQuantity(10d);
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("trade", wrongTradeDTO))
 			.andExpect(status().is3xxRedirection())
@@ -147,6 +149,7 @@ class TradeControllerTest {
 		TradeDTO tradeDTO = new TradeDTO();
 		tradeDTO.setAccount("account1");
 		tradeDTO.setType("type1");
+		tradeDTO.setBuyQuantity(10d);
 		when(tradeService.getItemById(anyInt())).thenReturn(tradeDTO);
 		mockMvc.perform(get(ROOT_REQUEST + "/update/1"))
 			.andExpect(status().isOk())
@@ -180,6 +183,7 @@ class TradeControllerTest {
 		UpdateTradeDTO rightUpdateTradeDTO = new UpdateTradeDTO();
 		rightUpdateTradeDTO.setAccount("account2");
 		rightUpdateTradeDTO.setType("type1");
+		rightUpdateTradeDTO.setBuyQuantity(10d);
 		mockMvc.perform(post(ROOT_REQUEST + "/update/1")
 				.flashAttr("trade", rightUpdateTradeDTO))
 			.andExpect(status().is3xxRedirection())
@@ -192,6 +196,7 @@ class TradeControllerTest {
 		UpdateTradeDTO wrongUpdateTradeDTO = new UpdateTradeDTO();
 		wrongUpdateTradeDTO.setAccount("account2");
 		wrongUpdateTradeDTO.setType("");
+		wrongUpdateTradeDTO.setBuyQuantity(10d);
 		mockMvc.perform(post(ROOT_REQUEST + "/update/1")
 				.flashAttr("trade", wrongUpdateTradeDTO))
 			.andExpect(status().is3xxRedirection())
@@ -204,6 +209,7 @@ class TradeControllerTest {
 		UpdateTradeDTO rightUpdateTradeDTO = new UpdateTradeDTO();
 		rightUpdateTradeDTO.setAccount("account2");
 		rightUpdateTradeDTO.setType("type1");
+		rightUpdateTradeDTO.setBuyQuantity(10d);
 		doThrow(NotFoundException.class).when(tradeService).updateItem(anyInt(), any(UpdateTradeDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("trade", rightUpdateTradeDTO))

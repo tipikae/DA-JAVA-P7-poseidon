@@ -32,4 +32,9 @@ public class TradeDTO implements Serializable {
 	 * Type.
 	 */
 	private String type;
+	
+	/**
+	 * Buy quantity.
+	 */
+	private double buyQuantity;
 }
