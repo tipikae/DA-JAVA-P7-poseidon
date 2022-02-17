@@ -49,6 +49,7 @@ public class TradeServiceImpl implements ITradeService {
 		Trade trade = new Trade();
 		trade.setAccount(newDTO.getAccount());
 		trade.setType(newDTO.getType());
+		trade.setBuyQuantity(newDTO.getBuyQuantity());
 		
 		return tradeConverter.convertEntityToDTO(tradeRepository.save(trade));
 	}
@@ -83,6 +84,7 @@ public class TradeServiceImpl implements ITradeService {
 		Trade trade = optional.get();
 		trade.setAccount(updatedDTO.getAccount());
 		trade.setType(updatedDTO.getType());
+		trade.setBuyQuantity(updatedDTO.getBuyQuantity());
 		
 		tradeRepository.save(trade);
 	}
