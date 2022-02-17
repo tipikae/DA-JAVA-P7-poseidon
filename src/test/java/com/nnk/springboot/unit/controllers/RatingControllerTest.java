@@ -118,8 +118,8 @@ class RatingControllerTest {
 		wrongRatingDTO.setSandPRating("sand1");
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("rating", wrongRatingDTO))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Fitch must not be empty. "));
+			.andExpect(status().isOk())
+			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
 	}
 
 	@WithMockUser
@@ -129,7 +129,7 @@ class RatingControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("rating", rightRatingDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new Rating."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new Rating."));
 	}
 
 	@WithMockUser
@@ -139,7 +139,7 @@ class RatingControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("rating", rightRatingDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new Rating."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new Rating."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,7 +221,7 @@ class RatingControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("rating", rightUpdateRatingDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/10?error=Rating not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Rating not found."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,6 +241,6 @@ class RatingControllerTest {
 		doThrow(NotFoundException.class).when(ratingService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/delete/10?error=Rating not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Rating not found."));
 	}
 }

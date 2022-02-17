@@ -118,8 +118,8 @@ class UserControllerTest {
 		wrongUserDTO.setRole("role1");
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("user", wrongUserDTO))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Password is mandatory. "));
+			.andExpect(status().isOk())
+			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
 	}
 
 	@WithMockUser
@@ -129,7 +129,7 @@ class UserControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("user", rightUserDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new User."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new User."));
 	}
 
 	@WithMockUser
@@ -139,7 +139,7 @@ class UserControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("user", rightUserDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new User."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new User."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +217,7 @@ class UserControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("user", rightUpdateUserDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/10?error=User not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=User not found."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,6 +237,6 @@ class UserControllerTest {
 		doThrow(NotFoundException.class).when(userService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/delete/10?error=User not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=User not found."));
 	}
 }

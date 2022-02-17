@@ -122,8 +122,8 @@ class RuleNameControllerTest {
 		wrongRuleNameDTO.setTemplate("template1");
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("ruleName", wrongRuleNameDTO))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Description must not be empty. "));
+			.andExpect(status().isOk())
+			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
 	}
 
 	@WithMockUser
@@ -133,7 +133,7 @@ class RuleNameControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("ruleName", rightRuleNameDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new RuleName."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new RuleName."));
 	}
 
 	@WithMockUser
@@ -143,7 +143,7 @@ class RuleNameControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("ruleName", rightRuleNameDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/add?error=Unable to process new RuleName."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new RuleName."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,7 +233,7 @@ class RuleNameControllerTest {
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("ruleName", rightUpdateRuleNameDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/10?error=RuleName not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=RuleName not found."));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,6 +253,6 @@ class RuleNameControllerTest {
 		doThrow(NotFoundException.class).when(ruleNameService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/delete/10?error=RuleName not found."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=RuleName not found."));
 	}
 }

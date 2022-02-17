@@ -90,7 +90,7 @@ public class RatingController {
     		StringBuilder sb = new StringBuilder();
     		result.getAllErrors().stream().forEach(e -> sb.append(e.getDefaultMessage() + " "));
 			LOGGER.debug("has errors:" + sb);
-			return "redirect:/rating/add?error=" + sb;
+			return "rating/add";
     	}
     	
     	try {
@@ -99,13 +99,13 @@ public class RatingController {
 	    	return "redirect:/rating/list?success=New Rating added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			return "redirect:/rating/add?error=Unable to process new Rating.";
+			return "redirect:/rating/list?error=Unable to process new Rating.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
-			return "redirect:/rating/add?error=Unable to process new Rating.";
+			return "redirect:/rating/list?error=Unable to process new Rating.";
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
-			return "redirect:/rating/add?error=Unable to process new Rating.";
+			return "redirect:/rating/list?error=Unable to process new Rating.";
 		}
     }
 
@@ -123,10 +123,6 @@ public class RatingController {
     		Model model) {
     	
     	LOGGER.debug("Getting a rating to update");
-    	if(model.containsAttribute("rating")) {
-    		return "rating/update";
-    	}
-    	
     	try {
 			RatingDTO rating = ratingService.getItemById(id);
 			model.addAttribute("rating", rating);
@@ -173,10 +169,10 @@ public class RatingController {
 	        return "redirect:/rating/list?success=Rating has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateRating: NotFoundException: " + e.getMessage());
-			return "redirect:/rating/update/" + id + "?error=Rating not found.";
+			return "redirect:/rating/list?error=Rating not found.";
 		} catch (Exception e) {
 			LOGGER.debug("updateRating: Exception: " + e.getMessage());
-			return "redirect:/rating/update/" + id + "?error=Unable to process update Rating.";
+			return "redirect:/rating/list?error=Unable to process update Rating.";
 		}
     }
 
@@ -189,13 +185,13 @@ public class RatingController {
     	LOGGER.debug("Deleting a rating");
     	try {
 			ratingService.deleteItem(id);
+	        return "redirect:/rating/list?success=Rating has been deleted.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("deleteRating: NotFoundException: " + e.getMessage());
-			return "redirect:/rating/delete/" + id + "?error=Rating not found.";
+			return "redirect:/rating/list?error=Rating not found.";
 		} catch (Exception e) {
 			LOGGER.debug("deleteRating: Exception: " + e.getMessage());
-			return "redirect:/rating/delete/" + id + "?error=Unable to process delete Rating.";
+			return "redirect:/rating/list?error=Unable to process delete Rating.";
 		}
-        return "redirect:/rating/list?success=Rating has been deleted.";
     }
 }

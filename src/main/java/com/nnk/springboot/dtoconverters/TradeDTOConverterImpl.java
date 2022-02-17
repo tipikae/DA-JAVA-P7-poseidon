@@ -36,6 +36,7 @@ public class TradeDTOConverterImpl implements ITradeDTOConverter {
 		tradeDTO.setTradeId(trade.getTradeId());
 		tradeDTO.setAccount(trade.getAccount());
 		tradeDTO.setType(trade.getType());
+		tradeDTO.setBuyQuantity(trade.getBuyQuantity());
 		
 		return tradeDTO;
 	}

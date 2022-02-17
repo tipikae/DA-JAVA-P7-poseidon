@@ -91,7 +91,7 @@ public class BidListController {
     		StringBuilder sb = new StringBuilder();
     		result.getAllErrors().stream().forEach(e -> sb.append(e.getDefaultMessage() + " "));
 			LOGGER.debug("has errors:" + sb);
-			return "redirect:/bidList/add?error=" + sb;
+			return "bidList/add";
     	}
     	
     	try {
@@ -100,13 +100,13 @@ public class BidListController {
 	    	return "redirect:/bidList/list?success=New BidList added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			return "redirect:/bidList/add?error=Unable to process new BidList.";
+			return "redirect:/bidList/list?error=Unable to process new BidList.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
-			return "redirect:/bidList/add?error=Unable to process new BidList.";
+			return "redirect:/bidList/list?error=Unable to process new BidList.";
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
-			return "redirect:/bidList/add?error=Unable to process new BidList.";
+			return "redirect:/bidList/list?error=Unable to process new BidList.";
 		}
     }
 
@@ -124,11 +124,6 @@ public class BidListController {
     		Model model) {
     	
     	LOGGER.debug("Getting a bidlist to update");
-    	
-    	if(model.containsAttribute("bidList")) {
-    		return "bidList/update";
-    	}
-    	
     	try {
 			BidListDTO bidList = bidListService.getItemById(id);
 			model.addAttribute("bidList", bidList);
@@ -159,7 +154,8 @@ public class BidListController {
     		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		@ModelAttribute("bidList") @Valid UpdateBidListDTO updateBidListDTO,
-            BindingResult result) {
+            BindingResult result, 
+    		Model model) {
     	
     	LOGGER.debug("Updating a bidlist");
     	if(result.hasErrors()) {
@@ -174,10 +170,10 @@ public class BidListController {
 	        return "redirect:/bidList/list?success=BidList has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("UpdateBid: NotFoundException: " + e.getMessage());
-			return "redirect:/bidList/update/" + id + "?error=BidList not found.";
+			return "redirect:/bidList/list?error=BidList not found.";
 		} catch (Exception e) {
 			LOGGER.debug("UpdateBid: Exception: " + e.getMessage());
-			return "redirect:/bidList/update/" + id + "?error=Unable to process update BidList.";
+			return "redirect:/bidList/list?error=Unable to process update BidList.";
 		}
     }
 
@@ -190,13 +186,13 @@ public class BidListController {
     	LOGGER.debug("Deleting a bidlist");
     	try {
 			bidListService.deleteItem(id);
+	        return "redirect:/bidList/list?success=BidList has been deleted.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("DeleteBid: NotFoundException: " + e.getMessage());
-			return "redirect:/bidList/delete/" + id + "?error=BidList not found.";
+			return "redirect:/bidList/list?error=BidList not found.";
 		} catch (Exception e) {
 			LOGGER.debug("DeleteBid: Exception: " + e.getMessage());
-			return "redirect:/bidList/delete/" + id + "?error=Unable to process delete BidList.";
+			return "redirect:/bidList/list?error=Unable to process delete BidList.";
 		}
-        return "redirect:/bidList/list?success=BidList has been deleted.";
     }
 }

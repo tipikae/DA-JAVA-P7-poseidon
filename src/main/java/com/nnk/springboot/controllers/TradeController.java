@@ -91,7 +91,7 @@ public class TradeController {
     		StringBuilder sb = new StringBuilder();
     		result.getAllErrors().stream().forEach(e -> sb.append(e.getDefaultMessage() + " "));
 			LOGGER.debug("has errors:" + sb);
-			return "redirect:/trade/add?error=" + sb;
+			return "trade/add";
     	}
     	
     	try {
@@ -100,13 +100,13 @@ public class TradeController {
 	        return "redirect:/trade/list?success=New Trade added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			return "redirect:/trade/add?error=Unable to process new Trade.";
+			return "redirect:/trade/list?error=Unable to process new Trade.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
-			return "redirect:/trade/add?error=Unable to process new Trade.";
+			return "redirect:/trade/list?error=Unable to process new Trade.";
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
-			return "redirect:/trade/add?error=Unable to process new Trade.";
+			return "redirect:/trade/list?error=Unable to process new Trade.";
 		}
     }
 
@@ -124,10 +124,6 @@ public class TradeController {
     		Model model) {
     	
     	LOGGER.debug("Getting a trade to update");
-    	if(model.containsAttribute("trade")) {
-    		return "trade/update";
-    	}
-    	
     	try {
 			TradeDTO trade = tradeService.getItemById(id);
 			model.addAttribute("trade", trade);
@@ -174,10 +170,10 @@ public class TradeController {
             return "redirect:/trade/list?success=Trade has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateTrade: NotFoundException: " + e.getMessage());
-			return "redirect:/trade/update/" + id + "?error=Trade not found.";
+			return "redirect:/trade/list?error=Trade not found.";
 		} catch (Exception e) {
 			LOGGER.debug("updateTrade: Exception: " + e.getMessage());
-			return "redirect:/trade/update/" + id + "?error=Unable to process update Trade.";
+			return "redirect:/trade/list?error=Unable to process update Trade.";
 		}
     }
 
@@ -197,14 +193,13 @@ public class TradeController {
     	LOGGER.debug("Deleting a trade");
     	try {
     		tradeService.deleteItem(id);
+            return "redirect:/trade/list?success=Trade has been deleted.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("deleteTrade: NotFoundException: " + e.getMessage());
-			return "redirect:/trade/delete/" + id + "?error=Trade not found.";
+			return "redirect:/trade/list?error=Trade not found.";
 		} catch (Exception e) {
 			LOGGER.debug("deleteTrade: Exception: " + e.getMessage());
-			return "redirect:/trade/delete/" + id + "?error=Unable to process delete Trade.";
+			return "redirect:/trade/list?error=Unable to process delete Trade.";
 		}
-    	
-        return "redirect:/trade/list?success=Trade has been deleted.";
     }
 }

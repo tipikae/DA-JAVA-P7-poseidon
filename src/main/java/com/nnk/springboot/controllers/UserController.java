@@ -91,7 +91,7 @@ public class UserController {
     		StringBuilder sb = new StringBuilder();
     		result.getAllErrors().stream().forEach(e -> sb.append(e.getDefaultMessage() + " "));
 			LOGGER.debug("has errors:" + sb);
-			return "redirect:/user/add?error=" + sb;
+			return "user/add";
     	}
     	
     	try {
@@ -100,13 +100,13 @@ public class UserController {
 	    	return "redirect:/user/list?success=New User added.";
 		} catch (ServiceException e) {
 			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			return "redirect:/user/add?error=Unable to process new User.";
+			return "redirect:/user/list?error=Unable to process new User.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
-			return "redirect:/user/add?error=Unable to process new User.";
+			return "redirect:/user/list?error=Unable to process new User.";
 		} catch (Exception e) {
 			LOGGER.debug("Validate: Exception: " + e.getMessage());
-			return "redirect:/user/add?error=Unable to process new User.";
+			return "redirect:/user/list?error=Unable to process new User.";
 		}
     }
 
@@ -125,11 +125,7 @@ public class UserController {
     	
     	LOGGER.debug("Getting a user to update");
 
-		if(model.containsAttribute("user")) {
-			return "user/update";
-		}
-    	
-    	try {
+		try {
 			UserDTO user = userService.getItemById(id);
 			model.addAttribute("user", user);
 			return "user/update";
@@ -175,10 +171,10 @@ public class UserController {
             return "redirect:/user/list?success=User has been updated.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("updateUser: NotFoundException: " + e.getMessage());
-			return "redirect:/user/update/" + id + "?error=User not found.";
+			return "redirect:/user/list?error=User not found.";
 		} catch (Exception e) {
 			LOGGER.debug("updateUser: Exception: " + e.getMessage());
-			return "redirect:/user/update/" + id + "?error=Unable to process update User.";
+			return "redirect:/user/list?error=Unable to process update User.";
 		}
     }
 
@@ -198,13 +194,13 @@ public class UserController {
     	LOGGER.debug("Deleting a user");
     	try {
     		userService.deleteItem(id);
+            return "redirect:/user/list?success=User has been deleted.";
 		} catch (NotFoundException e) {
 			LOGGER.debug("deleteUser: NotFoundException: " + e.getMessage());
-			return "redirect:/user/delete/" + id + "?error=User not found.";
+			return "redirect:/user/list?error=User not found.";
 		} catch (Exception e) {
 			LOGGER.debug("deleteUser: Exception: " + e.getMessage());
-			return "redirect:/user/delete/" + id + "?error=Unable to process delete User.";
+			return "redirect:/user/list?error=Unable to process delete User.";
 		}
-        return "redirect:/user/list?success=User has been deleted.";
     }
 }

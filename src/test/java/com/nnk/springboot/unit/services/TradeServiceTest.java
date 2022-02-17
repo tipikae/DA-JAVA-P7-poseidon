@@ -64,28 +64,35 @@ class TradeServiceTest {
 		
 		rightNewTradeDTO.setAccount("account1");
 		rightNewTradeDTO.setType("type1");
+		rightNewTradeDTO.setBuyQuantity(10d);
 		
 		wrongNewTradeDTO.setAccount("");
 		wrongNewTradeDTO.setType("type0");
+		wrongNewTradeDTO.setBuyQuantity(10d);
 		
 		updatedTradeDTO.setAccount("account1");
 		updatedTradeDTO.setType("type10");
+		updatedTradeDTO.setBuyQuantity(10d);
 		
 		trade1.setTradeId(1);
 		trade1.setAccount("account1");
 		trade1.setType("type1");
+		trade1.setBuyQuantity(10d);
 		
 		trade2.setTradeId(2);
 		trade2.setAccount("account2");
 		trade2.setType("type2");
+		trade2.setBuyQuantity(20d);
 		
 		tradeDTO1.setTradeId(1);
 		tradeDTO1.setAccount("account1");
 		tradeDTO1.setType("type1");
+		tradeDTO1.setBuyQuantity(10d);
 		
 		tradeDTO2.setTradeId(2);
 		tradeDTO2.setAccount("account2");
 		tradeDTO2.setType("type2");
+		tradeDTO2.setBuyQuantity(20d);
 		
 		trades.add(trade1);
 		trades.add(trade2);
