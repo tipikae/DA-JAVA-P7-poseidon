@@ -5,10 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.nnk.springboot.config.H2TestProfileJpaConfig;
 
 /**
  * Created by Khang Nguyen.
@@ -16,8 +13,7 @@ import com.nnk.springboot.config.H2TestProfileJpaConfig;
  * Date: 09/03/2019
  * Time: 11:26 AM
  */
-@SpringBootTest(classes = {Application.class, H2TestProfileJpaConfig.class})
-@ActiveProfiles("test")
+@SpringBootTest
 public class PasswordEncodeTestIT {
 	
 	@MockBean
