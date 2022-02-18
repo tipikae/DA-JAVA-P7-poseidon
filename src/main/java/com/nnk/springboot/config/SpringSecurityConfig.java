@@ -37,16 +37,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.headers()
-		.frameOptions().sameOrigin();
+			.frameOptions().sameOrigin();
 		http.formLogin()
 			.loginPage("/login")
             .successHandler(myAuthenticationSuccessHandler());
 		http.authorizeRequests()
-			.antMatchers("/*")
-			.hasRole("USER");
-		http.authorizeRequests().antMatchers("/*")
+			.antMatchers("/bidList/*", "/curvePoint/*", "/rating/*", "/ruleName/*", "/trade/*", "/error")
+			.hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests()
+			.antMatchers("/admin/home", "/user/*")
+			.hasRole("ADMIN");
+		http.authorizeRequests().antMatchers("/")
 			.permitAll();
-		http.exceptionHandling().accessDeniedPage("/403");
+		http.exceptionHandling().accessDeniedPage("/error");
 	}
 
 	/**

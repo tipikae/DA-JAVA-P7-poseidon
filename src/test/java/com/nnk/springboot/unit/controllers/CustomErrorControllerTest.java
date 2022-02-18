@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.nnk.springboot.controllers.LoginController;
+import com.nnk.springboot.controllers.CustomErrorController;
 
-@WebMvcTest(controllers = LoginController.class)
-class LoginControllerTest {
+@WebMvcTest(controllers = CustomErrorController.class)
+class CustomErrorControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -23,12 +24,13 @@ class LoginControllerTest {
 	private UserDetailsService userDetailsService;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	// login
+	// error
 	////////////////////////////////////////////////////////////////////////////////////////////////////
+	@WithMockUser
 	@Test
-	void loginReturnsLogin() throws Exception {
-		mockMvc.perform(get("/login"))
+	void errorReturnsError() throws Exception {
+		mockMvc.perform(get("/error"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("security/login"));
+			.andExpect(view().name("error/403"));
 	}
 }

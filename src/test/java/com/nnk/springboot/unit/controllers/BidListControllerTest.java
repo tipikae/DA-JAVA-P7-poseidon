@@ -71,6 +71,20 @@ class BidListControllerTest {
 			.andExpect(view().name("bidList/list"));
 	}
 
+	@WithMockUser(roles = {""})
+	@Test
+	void homeReturnsErrorWhenBadRole() throws Exception {
+		mockMvc.perform(get("/bidList/list"))
+			.andExpect(status().is(403));
+	}
+
+	@Test
+	void homeReturnsLoginWhenNoLog() throws Exception {
+		mockMvc.perform(get("/bidList/list"))
+			.andExpect(status().is3xxRedirection());
+
+	}
+
 	@WithMockUser
 	@Test
 	void homeReturnsError400WhenConverterException() throws Exception {

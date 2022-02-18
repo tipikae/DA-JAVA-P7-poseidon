@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.nnk.springboot.controllers.HomeController;
@@ -35,10 +36,18 @@ class HomeControllerTest {
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// adminHome
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
-	void adminHomereturnsBidLists() throws Exception {
+	void adminHomereturnsUserList() throws Exception {
 		mockMvc.perform(get("/admin/home"))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/list"));
+			.andExpect(view().name("redirect:/user/list"));
+	}
+	
+	@WithMockUser(roles = {"USER"})
+	@Test
+	void adminHomereturns403WhenBadRole() throws Exception {
+		mockMvc.perform(get("/admin/home"))
+			.andExpect(status().is(403));
 	}
 }

@@ -58,7 +58,7 @@ class UserControllerTest {
 	private static void setUp() {
 		rightUserDTO = new NewUserDTO();
 		rightUserDTO.setFullname("fullname1");
-		rightUserDTO.setPassword("password1");
+		rightUserDTO.setPassword("Password1@");
 		rightUserDTO.setUsername("username1");
 		rightUserDTO.setRole("role1");
 	}
@@ -66,7 +66,7 @@ class UserControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// home
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void homeReturnsListWhenOk() throws Exception {
 		when(userService.getAllItems()).thenReturn(new ArrayList<>());
@@ -74,8 +74,15 @@ class UserControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(view().name(ROOT_TEMPLATE + "/list"));
 	}
+	
+	@WithMockUser(roles = {"USER"})
+	@Test
+	void homeReturnsErrorWhenBadRole() throws Exception {
+		mockMvc.perform(get(ROOT_REQUEST + "/list"))
+			.andExpect(status().is(403));
+	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void homeReturnsError400WhenConverterException() throws Exception {
 		doThrow(ConverterException.class).when(userService).getAllItems();
@@ -87,7 +94,7 @@ class UserControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// addUserForm
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void addUserFormReturnsForm() throws Exception {
 		mockMvc.perform(get(ROOT_REQUEST + "/add"))
@@ -98,7 +105,7 @@ class UserControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// validate
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void validateReturnsFormWhenOk() throws Exception {
 		when(userService.addItem(any(NewUserDTO.class))).thenReturn(new UserDTO());
@@ -107,14 +114,28 @@ class UserControllerTest {
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=New User added."));
 	}
+	
+	@WithMockUser(roles = {"ADMIN"})
+	@Test
+	void validateReturnsFormWhitErrorWhenBadPassword() throws Exception {
+		NewUserDTO badPwdUserDTO = new NewUserDTO();
+		badPwdUserDTO.setFullname("fullname1");
+		badPwdUserDTO.setPassword("password1");
+		badPwdUserDTO.setUsername("username1");
+		badPwdUserDTO.setRole("role1");
+		mockMvc.perform(post(ROOT_REQUEST + "/validate")
+				.flashAttr("user", badPwdUserDTO))
+			.andExpect(status().isOk())
+			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
+	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void validateReturnsFormWithErrorWhenValidationError() throws Exception {
 		NewUserDTO wrongUserDTO = new NewUserDTO();
 		wrongUserDTO.setFullname("fullname1");
-		wrongUserDTO.setPassword("");
-		wrongUserDTO.setUsername("username1");
+		wrongUserDTO.setPassword("Password1@");
+		wrongUserDTO.setUsername("");
 		wrongUserDTO.setRole("role1");
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("user", wrongUserDTO))
@@ -122,7 +143,7 @@ class UserControllerTest {
 			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
 	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
 		doThrow(ServiceException.class).when(userService).addItem(any(NewUserDTO.class));
@@ -132,7 +153,7 @@ class UserControllerTest {
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new User."));
 	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void validateReturnsFormWithErrorWhenConverterException() throws Exception {
 		doThrow(ConverterException.class).when(userService).addItem(any(NewUserDTO.class));
@@ -145,7 +166,7 @@ class UserControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// showUpdateForm
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void showUpdateFormReturnsFormWhenOk() throws Exception {
 		UserDTO userDTO = new UserDTO();
@@ -159,7 +180,7 @@ class UserControllerTest {
 			.andExpect(view().name(ROOT_TEMPLATE + "/update"));
 	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void showUpdateFormReturnsError404WhenNotFoundException() throws Exception {
 		doThrow(NotFoundException.class).when(userService).getItemById(anyInt());
@@ -168,7 +189,7 @@ class UserControllerTest {
 			.andExpect(view().name("error/404"));
 	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void showUpdateFormReturnsError400WhenConverterException() throws Exception {
 		doThrow(ConverterException.class).when(userService).getItemById(anyInt());
@@ -180,7 +201,7 @@ class UserControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// updateUser
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void updateUserReturnsListWhenOk() throws Exception {
 		UpdateUserDTO rightUpdateUserDTO = new UpdateUserDTO();
@@ -193,7 +214,7 @@ class UserControllerTest {
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=User has been updated."));
 	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void updateUserReturnsFormWithErrorWhenValidationError() throws Exception {
 		UpdateUserDTO wrongUpdateUserDTO = new UpdateUserDTO();
@@ -206,7 +227,7 @@ class UserControllerTest {
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/update/1?error=Fullname is mandatory. "));
 	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void updateUserReturnsError404WhenNotFoundException() throws Exception {
 		UpdateUserDTO rightUpdateUserDTO = new UpdateUserDTO();
@@ -223,7 +244,7 @@ class UserControllerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// deleteUser
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void deleteUserReturnsListWhenOk() throws Exception {
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/1"))
@@ -231,7 +252,7 @@ class UserControllerTest {
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=User has been deleted."));
 	}
 
-	@WithMockUser
+	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void deleteUserReturnsError404WhenNotFoundException() throws Exception {
 		doThrow(NotFoundException.class).when(userService).deleteItem(anyInt());

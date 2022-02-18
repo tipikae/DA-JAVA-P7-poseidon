@@ -1,7 +1,5 @@
 package com.nnk.springboot.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,18 +18,19 @@ public class HomeController {
 	 */
 	@GetMapping("/")
 	public String home(Model model) {
+		LOGGER.debug("Getting home page.");
 		return "home";
 	}
 
 	/**
 	 * Get admin home page
-	 * @param request
 	 * @param model
 	 * @return String
 	 */
 	@GetMapping("/admin/home")
-	public String adminHome(HttpServletRequest request, Model model) {
-		return "redirect:/bidList/list";
+	public String adminHome(Model model) {
+		LOGGER.debug("Getting admin home page.");
+		return "redirect:/user/list";
 	}
 
 
