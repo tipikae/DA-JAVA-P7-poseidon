@@ -58,7 +58,7 @@ class UserControllerTest {
 	private static void setUp() {
 		rightUserDTO = new NewUserDTO();
 		rightUserDTO.setFullname("fullname1");
-		rightUserDTO.setPassword("password1");
+		rightUserDTO.setPassword("Password1@");
 		rightUserDTO.setUsername("username1");
 		rightUserDTO.setRole("role1");
 	}
@@ -114,14 +114,28 @@ class UserControllerTest {
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?success=New User added."));
 	}
+	
+	@WithMockUser(roles = {"ADMIN"})
+	@Test
+	void validateReturnsFormWhitErrorWhenBadPassword() throws Exception {
+		NewUserDTO badPwdUserDTO = new NewUserDTO();
+		badPwdUserDTO.setFullname("fullname1");
+		badPwdUserDTO.setPassword("password1");
+		badPwdUserDTO.setUsername("username1");
+		badPwdUserDTO.setRole("role1");
+		mockMvc.perform(post(ROOT_REQUEST + "/validate")
+				.flashAttr("user", badPwdUserDTO))
+			.andExpect(status().isOk())
+			.andExpect(view().name(ROOT_TEMPLATE + "/add"));
+	}
 
 	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void validateReturnsFormWithErrorWhenValidationError() throws Exception {
 		NewUserDTO wrongUserDTO = new NewUserDTO();
 		wrongUserDTO.setFullname("fullname1");
-		wrongUserDTO.setPassword("");
-		wrongUserDTO.setUsername("username1");
+		wrongUserDTO.setPassword("Password1@");
+		wrongUserDTO.setUsername("");
 		wrongUserDTO.setRole("role1");
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("user", wrongUserDTO))
