@@ -22,18 +22,4 @@ public class LoginController {
         mav.setViewName("security/login");
         return mav;
     }
-
-    /**
-     * Get error 403 page.
-     * @return ModelAndView
-     */
-    @GetMapping("/error")
-    public ModelAndView error() {
-    	LOGGER.debug("Getting error page.");
-        ModelAndView mav = new ModelAndView();
-        String errorMessage= "You are not authorized for the requested data.";
-        mav.addObject("errorMsg", errorMessage);
-        mav.setViewName("error/403");
-        return mav;
-    }
 }
