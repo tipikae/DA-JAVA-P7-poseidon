@@ -77,6 +77,20 @@ class RuleNameControllerTest {
 			.andExpect(view().name(ROOT_TEMPLATE + "/list"));
 	}
 
+	@WithMockUser(roles = {""})
+	@Test
+	void homeReturnsErrorWhenBadRole() throws Exception {
+		mockMvc.perform(get(ROOT_REQUEST + "/list"))
+			.andExpect(status().is(403));
+	}
+
+	@Test
+	void homeReturnsLoginWhenNoLog() throws Exception {
+		mockMvc.perform(get(ROOT_REQUEST + "/list"))
+			.andExpect(status().is3xxRedirection());
+
+	}
+
 	@WithMockUser
 	@Test
 	void homeReturnsError400WhenConverterException() throws Exception {

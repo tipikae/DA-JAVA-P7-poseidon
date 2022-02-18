@@ -33,17 +33,7 @@ class LoginControllerTest {
 	void loginReturnsLogin() throws Exception {
 		mockMvc.perform(get("/login"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("login"));
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	// getAllUsers
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	@Test
-	void getAllUsersReturnsUsers() throws Exception {
-		mockMvc.perform(get("/secure/users"))
-		.andExpect(status().isOk())
-		.andExpect(view().name("user/list"));
+			.andExpect(view().name("security/login"));
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
