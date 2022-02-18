@@ -24,7 +24,7 @@ public class LoginController {
     }
 
     /**
-     * Get error page
+     * Get error 403 page.
      * @return ModelAndView
      */
     @GetMapping("/error")

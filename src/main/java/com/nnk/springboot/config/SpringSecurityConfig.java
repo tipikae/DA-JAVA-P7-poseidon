@@ -42,7 +42,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/login")
             .successHandler(myAuthenticationSuccessHandler());
 		http.authorizeRequests()
-			.antMatchers("/bidList/*", "/curvePoint/*", "/rating/*", "/ruleName/*", "/trade/*")
+			.antMatchers("/bidList/*", "/curvePoint/*", "/rating/*", "/ruleName/*", "/trade/*", "/error")
 			.hasAnyRole("USER", "ADMIN");
 		http.authorizeRequests()
 			.antMatchers("/admin/home", "/user/*")
