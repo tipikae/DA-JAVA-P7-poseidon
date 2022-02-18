@@ -11,5 +11,6 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
   <include file="data/changelog/db.changelog-0.0.1.sql" />
+  <include file="data/changelog/db.changelog-0.0.2.sql" />
 
 </databaseChangeLog>
