@@ -24,7 +24,7 @@ public class LoginController {
     @GetMapping("/login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("login");
+        mav.setViewName("security/login");
         return mav;
     }
 
