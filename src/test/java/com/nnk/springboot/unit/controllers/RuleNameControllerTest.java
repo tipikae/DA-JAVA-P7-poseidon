@@ -26,8 +26,8 @@ import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.dto.UpdateRuleNameDTO;
 import com.nnk.springboot.dtoconverters.IRuleNameDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import com.nnk.springboot.services.IRuleNameService;
 
@@ -143,7 +143,7 @@ class RuleNameControllerTest {
 	@WithMockUser
 	@Test
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
-		doThrow(ServiceException.class).when(ruleNameService).addItem(any(NewRuleNameDTO.class));
+		doThrow(ItemAlreadyExistsException.class).when(ruleNameService).addItem(any(NewRuleNameDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("ruleName", rightRuleNameDTO))
 			.andExpect(status().is3xxRedirection())
@@ -183,7 +183,7 @@ class RuleNameControllerTest {
 	@WithMockUser
 	@Test
 	void showUpdateFormReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(ruleNameService).getItemById(anyInt());
+		doThrow(ItemNotFoundException.class).when(ruleNameService).getItemById(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/update/10"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("error/404"));
@@ -243,7 +243,7 @@ class RuleNameControllerTest {
 		rightUpdateRuleNameDTO.setSqlPart("sqlPart1");
 		rightUpdateRuleNameDTO.setSqlStr("sqlStr1");
 		rightUpdateRuleNameDTO.setTemplate("template1");
-		doThrow(NotFoundException.class).when(ruleNameService).updateItem(anyInt(), any(UpdateRuleNameDTO.class));
+		doThrow(ItemNotFoundException.class).when(ruleNameService).updateItem(anyInt(), any(UpdateRuleNameDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("ruleName", rightUpdateRuleNameDTO))
 			.andExpect(status().is3xxRedirection())
@@ -264,7 +264,7 @@ class RuleNameControllerTest {
 	@WithMockUser
 	@Test
 	void deleteRuleNameReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(ruleNameService).deleteItem(anyInt());
+		doThrow(ItemNotFoundException.class).when(ruleNameService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=RuleName not found."));

@@ -25,8 +25,8 @@ import com.nnk.springboot.dto.UpdateUserDTO;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.dtoconverters.IUserDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.UserServiceImpl;
 
@@ -105,7 +105,8 @@ class UserServiceTest {
 	
 
 	@Test
-	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ItemAlreadyExistsException {
+		when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 		when(passwordEncoder.encode(anyString())).thenReturn("");
 		when(userRepository.save(any(User.class))).thenReturn(user1);
 		when(userConverter.convertEntityToDTO(any(User.class))).thenReturn(userDTO1);
@@ -114,19 +115,20 @@ class UserServiceTest {
 	}
 
 	@Test
-	void addItemThrowsServiceExceptionWhenError() {
-		
+	void addItemThrowsItemAlreadyExistsExceptionWhenUsernameAlreadyExists() {
+		when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(new User()));
+		assertThrows(ItemAlreadyExistsException.class, () -> userService.addItem(rightNewUserDTO));
 	}
 
 	@Test
-	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException {
 		when(userRepository.findAll()).thenReturn(users);
 		when(userConverter.convertListEntityToDTO(users)).thenReturn(userDTOs);
 		assertEquals(users.size(), userService.getAllItems().size());
 	}
 
 	@Test
-	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, ItemNotFoundException {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.of(user1));
 		when(userConverter.convertEntityToDTO(user1)).thenReturn(userDTO1);
 		assertEquals(user1.getId(), userService.getItemById(1).getId());
@@ -135,11 +137,11 @@ class UserServiceTest {
 	@Test
 	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> userService.getItemById(1));
+		assertThrows(ItemNotFoundException.class, () -> userService.getItemById(1));
 	}
 
 	@Test
-	void updateItemWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws ItemNotFoundException {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.of(new User()));
 		userService.updateItem(1, updatedUserDTO);
 		Mockito.verify(userRepository).save(any(User.class));
@@ -148,11 +150,11 @@ class UserServiceTest {
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> userService.updateItem(10, new UpdateUserDTO()));
+		assertThrows(ItemNotFoundException.class, () -> userService.updateItem(10, new UpdateUserDTO()));
 	}
 
 	@Test
-	void deleteItemWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws ItemNotFoundException {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.of(new User()));
 		userService.deleteItem(1);
 		Mockito.verify(userRepository).delete(any(User.class));
@@ -161,6 +163,6 @@ class UserServiceTest {
 	@Test
 	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> userService.deleteItem(10));
+		assertThrows(ItemNotFoundException.class, () -> userService.deleteItem(10));
 	}
 }

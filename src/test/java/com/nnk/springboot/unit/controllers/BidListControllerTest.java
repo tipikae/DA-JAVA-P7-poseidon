@@ -26,8 +26,8 @@ import com.nnk.springboot.dto.NewBidListDTO;
 import com.nnk.springboot.dto.UpdateBidListDTO;
 import com.nnk.springboot.dtoconverters.IBidListDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.services.IBidListService;
 
@@ -134,7 +134,7 @@ class BidListControllerTest {
 	@WithMockUser
 	@Test
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
-		doThrow(ServiceException.class).when(bidListService).addItem(any(NewBidListDTO.class));
+		doThrow(ItemAlreadyExistsException.class).when(bidListService).addItem(any(NewBidListDTO.class));
 		mockMvc.perform(post("/bidList/validate")
 				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
@@ -171,7 +171,7 @@ class BidListControllerTest {
 	@WithMockUser
 	@Test
 	void showUpdateFormReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(bidListService).getItemById(anyInt());
+		doThrow(ItemNotFoundException.class).when(bidListService).getItemById(anyInt());
 		mockMvc.perform(get("/bidList/update/10"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("error/404"));
@@ -222,7 +222,7 @@ class BidListControllerTest {
 		rightUpdateBidListDTO.setAccount("account1");
 		rightUpdateBidListDTO.setBidQuantity(20d);
 		rightUpdateBidListDTO.setType("type1");
-		doThrow(NotFoundException.class).when(bidListService).updateItem(anyInt(), any(UpdateBidListDTO.class));
+		doThrow(ItemNotFoundException.class).when(bidListService).updateItem(anyInt(), any(UpdateBidListDTO.class));
 		mockMvc.perform(post("/bidList/update/10")
 				.flashAttr("bidList", rightUpdateBidListDTO))
 			.andExpect(status().is3xxRedirection())
@@ -243,7 +243,7 @@ class BidListControllerTest {
 	@WithMockUser
 	@Test
 	void deleteBidReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(bidListService).deleteItem(anyInt());
+		doThrow(ItemNotFoundException.class).when(bidListService).deleteItem(anyInt());
 		mockMvc.perform(get("/bidList/delete/10"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/bidList/list?error=BidList not found."));

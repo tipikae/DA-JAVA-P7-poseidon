@@ -18,8 +18,8 @@ import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.dto.UpdateTradeDTO;
 import com.nnk.springboot.dtoconverters.ITradeDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.TradeRepository;
 
 /**
@@ -41,12 +41,8 @@ public class TradeServiceImpl implements ITradeService {
 	private ITradeDTOConverter tradeConverter;
 
 	@Override
-	public TradeDTO addItem(NewTradeDTO newDTO) throws ServiceException, ConverterException {
+	public TradeDTO addItem(NewTradeDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: account=" + newDTO.getAccount() + ", type=" + newDTO.getType());
-		/*if(false) {
-			LOGGER.debug("");
-			throw new ServiceException("");
-		}*/
 		
 		Trade trade = new Trade();
 		trade.setAccount(newDTO.getAccount());
@@ -63,24 +59,24 @@ public class TradeServiceImpl implements ITradeService {
 	}
 
 	@Override
-	public TradeDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+	public TradeDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<Trade> optional = tradeRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("Trade with id=" + id + " not found.");
-			throw new NotFoundException("Trade not found.");
+			throw new ItemNotFoundException("Trade not found.");
 		}
 		
 		return tradeConverter.convertEntityToDTO(optional.get());
 	}
 
 	@Override
-	public void updateItem(Integer id, UpdateTradeDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateTradeDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<Trade> optional = tradeRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("Trade with id=" + id + " not found.");
-			throw new NotFoundException("Trade not found.");
+			throw new ItemNotFoundException("Trade not found.");
 		}
 
 		Trade trade = optional.get();
@@ -92,12 +88,12 @@ public class TradeServiceImpl implements ITradeService {
 	}
 
 	@Override
-	public void deleteItem(Integer id) throws NotFoundException {
+	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<Trade> optional = tradeRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("Trade with id=" + id + " not found.");
-			throw new NotFoundException("Trade not found.");
+			throw new ItemNotFoundException("Trade not found.");
 		}
 
 		tradeRepository.delete(optional.get());

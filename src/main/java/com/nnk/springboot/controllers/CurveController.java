@@ -4,8 +4,8 @@ import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.dto.NewCurvePointDTO;
 import com.nnk.springboot.dto.UpdateCurvePointDTO;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.ICurvePointService;
 
 import org.slf4j.Logger;
@@ -99,8 +99,8 @@ public class CurveController {
 			CurvePointDTO curvePoint = curveService.addItem(newCurvePointDTO);
 			model.addAttribute("curvePoint", curvePoint);
 	    	return "redirect:/curvePoint/list?success=New CurvePoint added.";
-		} catch (ServiceException e) {
-			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
+		} catch (ItemAlreadyExistsException e) {
+			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
 			return "redirect:/curvePoint/list?error=Unable to process new CurvePoint.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
@@ -129,7 +129,7 @@ public class CurveController {
 			CurvePointDTO curvePoint = curveService.getItemById(id);
 			model.addAttribute("curvePoint", curvePoint);
 			return "curvePoint/update";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
 		} catch (ConverterException e) {
@@ -169,7 +169,7 @@ public class CurveController {
     	try {
 			curveService.updateItem(id, updateCurvePointDTO);
 	        return "redirect:/curvePoint/list?success=CurvePoint has been updated.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("UpdateCurve: NotFoundException: " + e.getMessage());
 			return "redirect:/curvePoint/list?error=CurvePoint not found.";
 		} catch (Exception e) {
@@ -195,7 +195,7 @@ public class CurveController {
     	try {
 			curveService.deleteItem(id);
 	        return "redirect:/curvePoint/list?success=CurvePoint has been deleted.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("DeleteCurve: NotFoundException: " + e.getMessage());
 			return "redirect:/curvePoint/list?error=CurvePoint not found.";
 		} catch (Exception e) {

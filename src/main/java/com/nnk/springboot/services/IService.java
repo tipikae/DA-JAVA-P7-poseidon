@@ -6,8 +6,8 @@ package com.nnk.springboot.services;
 import java.util.List;
 
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 
 /**
  * Service generic interface.
@@ -21,10 +21,10 @@ public interface IService<D, N, U> {
 	 * Add an item.
 	 * @param newDTO
 	 * @return D
-	 * @throws ServiceException
+	 * @throws ItemAlreadyExistsException
 	 * @throws ConverterException
 	 */
-	D addItem(N newDTO) throws ServiceException, ConverterException;
+	D addItem(N newDTO) throws ItemAlreadyExistsException, ConverterException;
 	
 	/**
 	 * Get all items.
@@ -37,23 +37,23 @@ public interface IService<D, N, U> {
 	 * Get an item by id.
 	 * @param id
 	 * @return D
-	 * @throws NotFoundException
+	 * @throws ItemNotFoundException
 	 * @throws ConverterException
 	 */
-	D getItemById(Integer id) throws NotFoundException, ConverterException;
+	D getItemById(Integer id) throws ItemNotFoundException, ConverterException;
 	
 	/**
 	 * Update an item.
 	 * @param id
 	 * @param updatedDTO
-	 * @throws NotFoundException
+	 * @throws ItemNotFoundException
 	 */
-	void updateItem(Integer id, U updatedDTO) throws NotFoundException;
+	void updateItem(Integer id, U updatedDTO) throws ItemNotFoundException;
 	
 	/**
 	 * Delete an item.
 	 * @param id
-	 * @throws NotFoundException
+	 * @throws ItemNotFoundException
 	 */
-	void deleteItem(Integer id) throws NotFoundException;
+	void deleteItem(Integer id) throws ItemNotFoundException;
 }

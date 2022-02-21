@@ -23,8 +23,8 @@ import com.nnk.springboot.dto.NewBidListDTO;
 import com.nnk.springboot.dto.UpdateBidListDTO;
 import com.nnk.springboot.dtoconverters.IBidListDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.services.BidListServiceImpl;
 
@@ -103,7 +103,7 @@ class BidListServiceTest {
 	
 
 	@Test
-	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ItemAlreadyExistsException {
 		when(bidListRepository.save(any(BidList.class))).thenReturn(bidList1);
 		when(converterBidList.convertEntityToDTO(any(BidList.class))).thenReturn(bidListDTO1);
 		assertEquals(rightNewBidListDTO.getAccount(), bidListService.addItem(rightNewBidListDTO).getAccount());
@@ -115,14 +115,14 @@ class BidListServiceTest {
 	}
 
 	@Test
-	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException {
 		when(bidListRepository.findAll()).thenReturn(bidLists);
 		when(converterBidList.convertListEntityToDTO(bidLists)).thenReturn(bidListDTOs);
 		assertEquals(bidLists.size(), bidListService.getAllItems().size());
 	}
 
 	@Test
-	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, ItemNotFoundException {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(bidList1));
 		when(converterBidList.convertEntityToDTO(bidList1)).thenReturn(bidListDTO1);
 		assertEquals(bidList1.getBidListId(), bidListService.getItemById(1).getBidListId());
@@ -131,11 +131,11 @@ class BidListServiceTest {
 	@Test
 	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> bidListService.getItemById(1));
+		assertThrows(ItemNotFoundException.class, () -> bidListService.getItemById(1));
 	}
 
 	@Test
-	void updateItemWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws ItemNotFoundException {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(new BidList()));
 		bidListService.updateItem(1, updatedBidListDTO);
 		Mockito.verify(bidListRepository).save(any(BidList.class));
@@ -144,11 +144,11 @@ class BidListServiceTest {
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> bidListService.updateItem(10, new UpdateBidListDTO()));
+		assertThrows(ItemNotFoundException.class, () -> bidListService.updateItem(10, new UpdateBidListDTO()));
 	}
 
 	@Test
-	void deleteItemWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws ItemNotFoundException {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(new BidList()));
 		bidListService.deleteItem(1);
 		Mockito.verify(bidListRepository).delete(any(BidList.class));
@@ -157,7 +157,7 @@ class BidListServiceTest {
 	@Test
 	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(bidListRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> bidListService.deleteItem(10));
+		assertThrows(ItemNotFoundException.class, () -> bidListService.deleteItem(10));
 	}
 
 }

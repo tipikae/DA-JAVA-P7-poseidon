@@ -23,8 +23,8 @@ import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.dto.UpdateRatingDTO;
 import com.nnk.springboot.dtoconverters.IRatingDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RatingRepository;
 import com.nnk.springboot.services.RatingServiceImpl;
 
@@ -110,7 +110,7 @@ class RatingServiceTest {
 	
 
 	@Test
-	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ItemAlreadyExistsException {
 		when(ratingRepository.save(any(Rating.class))).thenReturn(rating1);
 		when(ratingConverter.convertEntityToDTO(any(Rating.class))).thenReturn(ratingDTO1);
 		assertEquals(rightNewRatingDTO.getOrderNumber(), 
@@ -123,14 +123,14 @@ class RatingServiceTest {
 	}
 
 	@Test
-	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException {
 		when(ratingRepository.findAll()).thenReturn(ratings);
 		when(ratingConverter.convertListEntityToDTO(ratings)).thenReturn(ratingDTOs);
 		assertEquals(ratings.size(), ratingService.getAllItems().size());
 	}
 
 	@Test
-	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, ItemNotFoundException {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(rating1));
 		when(ratingConverter.convertEntityToDTO(rating1)).thenReturn(ratingDTO1);
 		assertEquals(rating1.getId(), ratingService.getItemById(1).getId());
@@ -139,11 +139,11 @@ class RatingServiceTest {
 	@Test
 	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ratingService.getItemById(1));
+		assertThrows(ItemNotFoundException.class, () -> ratingService.getItemById(1));
 	}
 
 	@Test
-	void updateItemWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws ItemNotFoundException {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(new Rating()));
 		ratingService.updateItem(1, updatedRatingDTO);
 		Mockito.verify(ratingRepository).save(any(Rating.class));
@@ -152,11 +152,11 @@ class RatingServiceTest {
 	@Test
 	void updateBidListThrowsNotFoundExceptionWhenNotFound() {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ratingService.updateItem(10, new UpdateRatingDTO()));
+		assertThrows(ItemNotFoundException.class, () -> ratingService.updateItem(10, new UpdateRatingDTO()));
 	}
 
 	@Test
-	void deleteItemWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws ItemNotFoundException {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(new Rating()));
 		ratingService.deleteItem(1);
 		Mockito.verify(ratingRepository).delete(any(Rating.class));
@@ -165,7 +165,7 @@ class RatingServiceTest {
 	@Test
 	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ratingService.deleteItem(10));
+		assertThrows(ItemNotFoundException.class, () -> ratingService.deleteItem(10));
 	}
 
 }

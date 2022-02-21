@@ -23,8 +23,8 @@ import com.nnk.springboot.dto.NewCurvePointDTO;
 import com.nnk.springboot.dto.UpdateCurvePointDTO;
 import com.nnk.springboot.dtoconverters.ICurvePointDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import com.nnk.springboot.services.CurvePointServiceImpl;
 
@@ -103,7 +103,7 @@ class CurvePointServiceTest {
 	
 
 	@Test
-	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ItemAlreadyExistsException  {
 		when(curvePointRepository.save(any(CurvePoint.class))).thenReturn(curvePoint1);
 		when(converterCurvePoint.convertEntityToDTO(any(CurvePoint.class))).thenReturn(curvePointDTO1);
 		assertEquals(rightNewCurvePointDTO.getCurveId(), 
@@ -116,14 +116,14 @@ class CurvePointServiceTest {
 	}
 
 	@Test
-	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException {
 		when(curvePointRepository.findAll()).thenReturn(curvePoints);
 		when(converterCurvePoint.convertListEntityToDTO(curvePoints)).thenReturn(curvePointDTOs);
 		assertEquals(curvePoints.size(), curvePointService.getAllItems().size());
 	}
 
 	@Test
-	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, ItemNotFoundException {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(curvePoint1));
 		when(converterCurvePoint.convertEntityToDTO(curvePoint1)).thenReturn(curvePointDTO1);
 		assertEquals(curvePoint1.getId(), curvePointService.getItemById(1).getId());
@@ -132,11 +132,11 @@ class CurvePointServiceTest {
 	@Test
 	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> curvePointService.getItemById(1));
+		assertThrows(ItemNotFoundException.class, () -> curvePointService.getItemById(1));
 	}
 
 	@Test
-	void updateItemWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws ItemNotFoundException {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(new CurvePoint()));
 		curvePointService.updateItem(1, updatedCurvePointDTO);
 		Mockito.verify(curvePointRepository).save(any(CurvePoint.class));
@@ -145,11 +145,11 @@ class CurvePointServiceTest {
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> curvePointService.updateItem(10, new UpdateCurvePointDTO()));
+		assertThrows(ItemNotFoundException.class, () -> curvePointService.updateItem(10, new UpdateCurvePointDTO()));
 	}
 
 	@Test
-	void deleteItemWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws ItemNotFoundException {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.of(new CurvePoint()));
 		curvePointService.deleteItem(1);
 		Mockito.verify(curvePointRepository).delete(any(CurvePoint.class));
@@ -158,7 +158,7 @@ class CurvePointServiceTest {
 	@Test
 	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(curvePointRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> curvePointService.deleteItem(10));
+		assertThrows(ItemNotFoundException.class, () -> curvePointService.deleteItem(10));
 	}
 
 }

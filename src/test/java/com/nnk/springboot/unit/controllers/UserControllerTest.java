@@ -26,8 +26,8 @@ import com.nnk.springboot.dto.UpdateUserDTO;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.dtoconverters.IUserDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.IUserService;
 
@@ -146,11 +146,11 @@ class UserControllerTest {
 	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
-		doThrow(ServiceException.class).when(userService).addItem(any(NewUserDTO.class));
+		doThrow(ItemAlreadyExistsException.class).when(userService).addItem(any(NewUserDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("user", rightUserDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new User."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=User already exists."));
 	}
 
 	@WithMockUser(roles = {"ADMIN"})
@@ -183,7 +183,7 @@ class UserControllerTest {
 	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void showUpdateFormReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(userService).getItemById(anyInt());
+		doThrow(ItemNotFoundException.class).when(userService).getItemById(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/update/10"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("error/404"));
@@ -234,7 +234,7 @@ class UserControllerTest {
 		rightUpdateUserDTO.setFullname("fullname2");
 		rightUpdateUserDTO.setUsername("username1");
 		rightUpdateUserDTO.setRole("role1");
-		doThrow(NotFoundException.class).when(userService).updateItem(anyInt(), any(UpdateUserDTO.class));
+		doThrow(ItemNotFoundException.class).when(userService).updateItem(anyInt(), any(UpdateUserDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("user", rightUpdateUserDTO))
 			.andExpect(status().is3xxRedirection())
@@ -255,7 +255,7 @@ class UserControllerTest {
 	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	void deleteUserReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(userService).deleteItem(anyInt());
+		doThrow(ItemNotFoundException.class).when(userService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=User not found."));

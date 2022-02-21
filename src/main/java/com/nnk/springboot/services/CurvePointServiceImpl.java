@@ -17,8 +17,8 @@ import com.nnk.springboot.dto.NewCurvePointDTO;
 import com.nnk.springboot.dto.UpdateCurvePointDTO;
 import com.nnk.springboot.dtoconverters.ICurvePointDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 
 /**
@@ -40,13 +40,9 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	private ICurvePointDTOConverter converterCurvePoint;
 
 	@Override
-	public CurvePointDTO addItem(NewCurvePointDTO newCurvePoint) throws ServiceException, ConverterException {
+	public CurvePointDTO addItem(NewCurvePointDTO newCurvePoint) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: curveId=" + newCurvePoint.getCurveId() + ", term=" + newCurvePoint.getTerm() 
 				+ ", value=" + newCurvePoint.getValue());
-		/*if(false) {
-			LOGGER.debug("");
-			throw new ServiceException("");
-		}*/
 		
 		CurvePoint curvePoint = new CurvePoint();
 		curvePoint.setCurveId(newCurvePoint.getCurveId());
@@ -64,24 +60,24 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	}
 
 	@Override
-	public CurvePointDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+	public CurvePointDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<CurvePoint> optional = curvePointRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("CurvePoint with id=" + id + " not found.");
-			throw new NotFoundException("CurvePoint not found.");
+			throw new ItemNotFoundException("CurvePoint not found.");
 		}
 		
 		return converterCurvePoint.convertEntityToDTO(optional.get());
 	}
 
 	@Override
-	public void updateItem(Integer id, UpdateCurvePointDTO updatedCurvePoint) throws NotFoundException {
+	public void updateItem(Integer id, UpdateCurvePointDTO updatedCurvePoint) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<CurvePoint> optional = curvePointRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("CurvePoint with id=" + id + " not found.");
-			throw new NotFoundException("CurvePoint not found.");
+			throw new ItemNotFoundException("CurvePoint not found.");
 		}
 
 		CurvePoint curvePoint = optional.get();
@@ -93,12 +89,12 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	}
 
 	@Override
-	public void deleteItem(Integer id) throws NotFoundException {
+	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<CurvePoint> optional = curvePointRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("CurvePoint with id=" + id + " not found.");
-			throw new NotFoundException("CurvePoint not found.");
+			throw new ItemNotFoundException("CurvePoint not found.");
 		}
 
 		curvePointRepository.delete(optional.get());

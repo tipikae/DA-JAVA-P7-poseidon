@@ -4,8 +4,8 @@ import com.nnk.springboot.dto.NewUserDTO;
 import com.nnk.springboot.dto.UpdateUserDTO;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IUserService;
 
 import org.slf4j.Logger;
@@ -98,9 +98,9 @@ public class UserController {
 			UserDTO user = userService.addItem(newUserDTO);
 			model.addAttribute("user", user);
 	    	return "redirect:/user/list?success=New User added.";
-		} catch (ServiceException e) {
-			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
-			return "redirect:/user/list?error=Unable to process new User.";
+		} catch (ItemAlreadyExistsException e) {
+			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
+			return "redirect:/user/list?error=User already exists.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
 			return "redirect:/user/list?error=Unable to process new User.";
@@ -129,7 +129,7 @@ public class UserController {
 			UserDTO user = userService.getItemById(id);
 			model.addAttribute("user", user);
 			return "user/update";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
 		} catch (ConverterException e) {
@@ -169,7 +169,7 @@ public class UserController {
     	try {
     		userService.updateItem(id, updateUserDTO);
             return "redirect:/user/list?success=User has been updated.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateUser: NotFoundException: " + e.getMessage());
 			return "redirect:/user/list?error=User not found.";
 		} catch (Exception e) {
@@ -195,7 +195,7 @@ public class UserController {
     	try {
     		userService.deleteItem(id);
             return "redirect:/user/list?success=User has been deleted.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteUser: NotFoundException: " + e.getMessage());
 			return "redirect:/user/list?error=User not found.";
 		} catch (Exception e) {

@@ -26,8 +26,8 @@ import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.dto.UpdateRatingDTO;
 import com.nnk.springboot.dtoconverters.IRatingDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RatingRepository;
 import com.nnk.springboot.services.IRatingService;
 
@@ -139,7 +139,7 @@ class RatingControllerTest {
 	@WithMockUser
 	@Test
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
-		doThrow(ServiceException.class).when(ratingService).addItem(any(NewRatingDTO.class));
+		doThrow(ItemAlreadyExistsException.class).when(ratingService).addItem(any(NewRatingDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("rating", rightRatingDTO))
 			.andExpect(status().is3xxRedirection())
@@ -177,7 +177,7 @@ class RatingControllerTest {
 	@WithMockUser
 	@Test
 	void showUpdateFormReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(ratingService).getItemById(anyInt());
+		doThrow(ItemNotFoundException.class).when(ratingService).getItemById(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/update/10"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("error/404"));
@@ -231,7 +231,7 @@ class RatingControllerTest {
 		rightUpdateRatingDTO.setMoodysRating("moodys1");
 		rightUpdateRatingDTO.setOrderNumber(2);
 		rightUpdateRatingDTO.setSandPRating("sand1");
-		doThrow(NotFoundException.class).when(ratingService).updateItem(anyInt(), any(UpdateRatingDTO.class));
+		doThrow(ItemNotFoundException.class).when(ratingService).updateItem(anyInt(), any(UpdateRatingDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("rating", rightUpdateRatingDTO))
 			.andExpect(status().is3xxRedirection())
@@ -252,7 +252,7 @@ class RatingControllerTest {
 	@WithMockUser
 	@Test
 	void deleteRatingReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(ratingService).deleteItem(anyInt());
+		doThrow(ItemNotFoundException.class).when(ratingService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Rating not found."));

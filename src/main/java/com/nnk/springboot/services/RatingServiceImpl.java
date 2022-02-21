@@ -18,8 +18,8 @@ import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.dto.UpdateRatingDTO;
 import com.nnk.springboot.dtoconverters.IRatingDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RatingRepository;
 
 /**
@@ -41,13 +41,9 @@ public class RatingServiceImpl implements IRatingService {
 	private IRatingDTOConverter ratingConverter;
 
 	@Override
-	public RatingDTO addItem(NewRatingDTO newDTO) throws ServiceException, ConverterException {
+	public RatingDTO addItem(NewRatingDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: fitch=" + newDTO.getFitchRating() + ", moodys=" + newDTO.getMoodysRating()
 				+ ", sand=" + newDTO.getSandPRating() + ", orderNumber=" + newDTO.getOrderNumber());
-		/*if(false) {
-			LOGGER.debug("");
-			throw new ServiceException("");
-		}*/
 		
 		Rating rating = new Rating();
 		rating.setFitchRating(newDTO.getFitchRating());
@@ -65,24 +61,24 @@ public class RatingServiceImpl implements IRatingService {
 	}
 
 	@Override
-	public RatingDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+	public RatingDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<Rating> optional = ratingRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("Rating with id=" + id + " not found.");
-			throw new NotFoundException("Rating not found.");
+			throw new ItemNotFoundException("Rating not found.");
 		}
 		
 		return ratingConverter.convertEntityToDTO(optional.get());
 	}
 
 	@Override
-	public void updateItem(Integer id, UpdateRatingDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateRatingDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<Rating> optional = ratingRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("Rating with id=" + id + " not found.");
-			throw new NotFoundException("CurvePoint not found.");
+			throw new ItemNotFoundException("CurvePoint not found.");
 		}
 
 		Rating rating = optional.get();
@@ -95,12 +91,12 @@ public class RatingServiceImpl implements IRatingService {
 	}
 
 	@Override
-	public void deleteItem(Integer id) throws NotFoundException {
+	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<Rating> optional = ratingRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("Rating with id=" + id + " not found.");
-			throw new NotFoundException("Rating not found.");
+			throw new ItemNotFoundException("Rating not found.");
 		}
 
 		ratingRepository.delete(optional.get());

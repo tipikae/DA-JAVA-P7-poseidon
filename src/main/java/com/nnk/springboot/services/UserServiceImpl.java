@@ -21,8 +21,8 @@ import com.nnk.springboot.dto.UpdateUserDTO;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.dtoconverters.IUserDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.UserRepository;
 
 /**
@@ -50,13 +50,14 @@ public class UserServiceImpl implements IUserService {
 	private String USER_ROLE;
 
 	@Override
-	public UserDTO addItem(NewUserDTO newDTO) throws ServiceException, ConverterException {
+	public UserDTO addItem(NewUserDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: fullname=" + newDTO.getFullname() + ", password=" + newDTO.getPassword()
 				+ ", username=" + newDTO.getUsername());
-		/*if(false) {
-			LOGGER.debug("");
-			throw new ServiceException("");
-		}*/
+		Optional<User> optional = userRepository.findByUsername(newDTO.getUsername());
+		if(optional.isPresent()) {
+			LOGGER.debug("User with username:" + newDTO.getUsername() + " already exists");
+			throw new ItemAlreadyExistsException("User already exists.");
+		}
 		
 		User user = new User();
 		user.setFullname(newDTO.getFullname());
@@ -74,24 +75,24 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public UserDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+	public UserDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<User> optional = userRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("User with id=" + id + " not found.");
-			throw new NotFoundException("User not found.");
+			throw new ItemNotFoundException("User not found.");
 		}
 		
 		return userConverter.convertEntityToDTO(optional.get());
 	}
 
 	@Override
-	public void updateItem(Integer id, UpdateUserDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateUserDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<User> optional = userRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("User with id=" + id + " not found.");
-			throw new NotFoundException("Trade not found.");
+			throw new ItemNotFoundException("Trade not found.");
 		}
 
 		User user = optional.get();
@@ -102,12 +103,12 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void deleteItem(Integer id) throws NotFoundException {
+	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<User> optional = userRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("User with id=" + id + " not found.");
-			throw new NotFoundException("User not found.");
+			throw new ItemNotFoundException("User not found.");
 		}
 
 		userRepository.delete(optional.get());

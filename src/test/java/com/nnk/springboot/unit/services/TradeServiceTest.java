@@ -23,8 +23,8 @@ import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.dto.UpdateTradeDTO;
 import com.nnk.springboot.dtoconverters.ITradeDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.services.TradeServiceImpl;
 
@@ -103,7 +103,7 @@ class TradeServiceTest {
 	
 
 	@Test
-	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ItemAlreadyExistsException {
 		when(tradeRepository.save(any(Trade.class))).thenReturn(trade1);
 		when(tradeConverter.convertEntityToDTO(any(Trade.class))).thenReturn(tradeDTO1);
 		assertEquals(rightNewTradeDTO.getAccount(), 
@@ -116,14 +116,14 @@ class TradeServiceTest {
 	}
 
 	@Test
-	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException {
 		when(tradeRepository.findAll()).thenReturn(trades);
 		when(tradeConverter.convertListEntityToDTO(trades)).thenReturn(tradeDTOs);
 		assertEquals(trades.size(), tradeService.getAllItems().size());
 	}
 
 	@Test
-	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, ItemNotFoundException {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(trade1));
 		when(tradeConverter.convertEntityToDTO(trade1)).thenReturn(tradeDTO1);
 		assertEquals(trade1.getTradeId(), tradeService.getItemById(1).getTradeId());
@@ -132,11 +132,11 @@ class TradeServiceTest {
 	@Test
 	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> tradeService.getItemById(1));
+		assertThrows(ItemNotFoundException.class, () -> tradeService.getItemById(1));
 	}
 
 	@Test
-	void updateItemWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws ItemNotFoundException {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(new Trade()));
 		tradeService.updateItem(1, updatedTradeDTO);
 		Mockito.verify(tradeRepository).save(any(Trade.class));
@@ -145,11 +145,11 @@ class TradeServiceTest {
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> tradeService.updateItem(10, new UpdateTradeDTO()));
+		assertThrows(ItemNotFoundException.class, () -> tradeService.updateItem(10, new UpdateTradeDTO()));
 	}
 
 	@Test
-	void deleteItemWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws ItemNotFoundException {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(new Trade()));
 		tradeService.deleteItem(1);
 		Mockito.verify(tradeRepository).delete(any(Trade.class));
@@ -158,6 +158,6 @@ class TradeServiceTest {
 	@Test
 	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> tradeService.deleteItem(10));
+		assertThrows(ItemNotFoundException.class, () -> tradeService.deleteItem(10));
 	}
 }

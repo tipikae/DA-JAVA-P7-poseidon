@@ -4,8 +4,8 @@ import com.nnk.springboot.dto.NewRatingDTO;
 import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.dto.UpdateRatingDTO;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IRatingService;
 
 import org.slf4j.Logger;
@@ -97,8 +97,8 @@ public class RatingController {
 			RatingDTO ratingPoint = ratingService.addItem(newRatingDTO);
 			model.addAttribute("rating", ratingPoint);
 	    	return "redirect:/rating/list?success=New Rating added.";
-		} catch (ServiceException e) {
-			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
+		} catch (ItemAlreadyExistsException e) {
+			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
 			return "redirect:/rating/list?error=Unable to process new Rating.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
@@ -127,7 +127,7 @@ public class RatingController {
 			RatingDTO rating = ratingService.getItemById(id);
 			model.addAttribute("rating", rating);
 			return "rating/update";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
 		} catch (ConverterException e) {
@@ -167,7 +167,7 @@ public class RatingController {
     	try {
 			ratingService.updateItem(id, updateRatingDTO);
 	        return "redirect:/rating/list?success=Rating has been updated.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateRating: NotFoundException: " + e.getMessage());
 			return "redirect:/rating/list?error=Rating not found.";
 		} catch (Exception e) {
@@ -186,7 +186,7 @@ public class RatingController {
     	try {
 			ratingService.deleteItem(id);
 	        return "redirect:/rating/list?success=Rating has been deleted.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteRating: NotFoundException: " + e.getMessage());
 			return "redirect:/rating/list?error=Rating not found.";
 		} catch (Exception e) {

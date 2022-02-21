@@ -1,16 +1,16 @@
 package com.nnk.springboot.exceptions;
 
 /**
- * Service Exception.
+ * Item already exists exception.
  * @author tipikae
  * @version 1.0
  *
  */
-public class ServiceException extends PoseidonException {
+public class ItemAlreadyExistsException extends PoseidonException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ServiceException(String arg0) {
+	public ItemAlreadyExistsException(String arg0) {
 		super(arg0);
 	}
 

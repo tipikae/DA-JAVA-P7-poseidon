@@ -4,8 +4,8 @@ import com.nnk.springboot.dto.NewRuleNameDTO;
 import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.dto.UpdateRuleNameDTO;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IRuleNameService;
 
 import org.slf4j.Logger;
@@ -97,8 +97,8 @@ public class RuleNameController {
 			RuleNameDTO ruleName = ruleNameService.addItem(newRuleNameDTO);
 			model.addAttribute("ruleName", ruleName);
 	        return "redirect:/ruleName/list?success=New RuleName added.";
-		} catch (ServiceException e) {
-			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
+		} catch (ItemAlreadyExistsException e) {
+			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
 			return "redirect:/ruleName/list?error=Unable to process new RuleName.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
@@ -127,7 +127,7 @@ public class RuleNameController {
 			RuleNameDTO ruleName = ruleNameService.getItemById(id);
 			model.addAttribute("ruleName", ruleName);
 			return "ruleName/update";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
 		} catch (ConverterException e) {
@@ -167,7 +167,7 @@ public class RuleNameController {
     	try {
     		ruleNameService.updateItem(id, updateRuleNameDTO);
             return "redirect:/ruleName/list?success=RuleName has been updated.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateRuleName: NotFoundException: " + e.getMessage());
 			return "redirect:/ruleName/list?error=RuleName not found.";
 		} catch (Exception e) {
@@ -193,7 +193,7 @@ public class RuleNameController {
     	try {
     		ruleNameService.deleteItem(id);
             return "redirect:/ruleName/list?success=RuleName has been deleted.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteRuleName: NotFoundException: " + e.getMessage());
 			return "redirect:/ruleName/list?error=RuleName not found.";
 		} catch (Exception e) {

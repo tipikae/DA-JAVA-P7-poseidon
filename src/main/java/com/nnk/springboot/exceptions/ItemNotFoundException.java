@@ -6,11 +6,11 @@ package com.nnk.springboot.exceptions;
  * @version 1.0
  *
  */
-public class NotFoundException extends PoseidonException {
+public class ItemNotFoundException extends PoseidonException {
 
 	private static final long serialVersionUID = 1L;
 
-	public NotFoundException(String arg0) {
+	public ItemNotFoundException(String arg0) {
 		super(arg0);
 	}
 

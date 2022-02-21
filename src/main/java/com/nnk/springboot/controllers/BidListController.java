@@ -4,8 +4,8 @@ import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.dto.NewBidListDTO;
 import com.nnk.springboot.dto.UpdateBidListDTO;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IBidListService;
 
 import org.slf4j.Logger;
@@ -98,8 +98,8 @@ public class BidListController {
 			BidListDTO bidList = bidListService.addItem(newBidListDTO);
 			model.addAttribute("bidList", bidList);
 	    	return "redirect:/bidList/list?success=New BidList added.";
-		} catch (ServiceException e) {
-			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
+		} catch (ItemAlreadyExistsException e) {
+			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
 			return "redirect:/bidList/list?error=Unable to process new BidList.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
@@ -128,7 +128,7 @@ public class BidListController {
 			BidListDTO bidList = bidListService.getItemById(id);
 			model.addAttribute("bidList", bidList);
 			return "bidList/update";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
 		} catch (ConverterException e) {
@@ -168,7 +168,7 @@ public class BidListController {
     	try {
 			bidListService.updateItem(id, updateBidListDTO);
 	        return "redirect:/bidList/list?success=BidList has been updated.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("UpdateBid: NotFoundException: " + e.getMessage());
 			return "redirect:/bidList/list?error=BidList not found.";
 		} catch (Exception e) {
@@ -187,7 +187,7 @@ public class BidListController {
     	try {
 			bidListService.deleteItem(id);
 	        return "redirect:/bidList/list?success=BidList has been deleted.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("DeleteBid: NotFoundException: " + e.getMessage());
 			return "redirect:/bidList/list?error=BidList not found.";
 		} catch (Exception e) {

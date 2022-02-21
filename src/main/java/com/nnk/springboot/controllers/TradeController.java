@@ -4,8 +4,8 @@ import com.nnk.springboot.dto.NewTradeDTO;
 import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.dto.UpdateTradeDTO;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.ITradeService;
 
 import org.slf4j.Logger;
@@ -98,8 +98,8 @@ public class TradeController {
 			TradeDTO trade = tradeService.addItem(newTradeDTO);
 			model.addAttribute("trade", trade);
 	        return "redirect:/trade/list?success=New Trade added.";
-		} catch (ServiceException e) {
-			LOGGER.debug("Validate: ServiceException: " + e.getMessage());
+		} catch (ItemAlreadyExistsException e) {
+			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
 			return "redirect:/trade/list?error=Unable to process new Trade.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
@@ -128,7 +128,7 @@ public class TradeController {
 			TradeDTO trade = tradeService.getItemById(id);
 			model.addAttribute("trade", trade);
 			return "trade/update";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
 			return "error/404";
 		} catch (ConverterException e) {
@@ -168,7 +168,7 @@ public class TradeController {
     	try {
     		tradeService.updateItem(id, updateTradeDTO);
             return "redirect:/trade/list?success=Trade has been updated.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateTrade: NotFoundException: " + e.getMessage());
 			return "redirect:/trade/list?error=Trade not found.";
 		} catch (Exception e) {
@@ -194,7 +194,7 @@ public class TradeController {
     	try {
     		tradeService.deleteItem(id);
             return "redirect:/trade/list?success=Trade has been deleted.";
-		} catch (NotFoundException e) {
+		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteTrade: NotFoundException: " + e.getMessage());
 			return "redirect:/trade/list?error=Trade not found.";
 		} catch (Exception e) {

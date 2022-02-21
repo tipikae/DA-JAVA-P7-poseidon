@@ -17,8 +17,8 @@ import com.nnk.springboot.dto.NewBidListDTO;
 import com.nnk.springboot.dto.UpdateBidListDTO;
 import com.nnk.springboot.dtoconverters.IBidListDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.BidListRepository;
 
 /**
@@ -40,13 +40,9 @@ public class BidListServiceImpl implements IBidListService {
 	private IBidListDTOConverter converterBidList;
 
 	@Override
-	public BidListDTO addItem(NewBidListDTO newBidList) throws ServiceException, ConverterException {
+	public BidListDTO addItem(NewBidListDTO newBidList) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: account=" + newBidList.getAccount() + ", type=" + newBidList.getType() 
 			+ ", qty=" + newBidList.getBidQuantity());
-		/*if(false) {
-			LOGGER.debug("");
-			throw new ServiceException("");
-		}*/
 		
 		BidList bidList = new BidList();
 		bidList.setAccount(newBidList.getAccount());
@@ -64,24 +60,24 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public BidListDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+	public BidListDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("BidList with id=" + id + " not found.");
-			throw new NotFoundException("BidList not found.");
+			throw new ItemNotFoundException("BidList not found.");
 		}
 		
 		return converterBidList.convertEntityToDTO(optional.get());
 	}
 
 	@Override
-	public void updateItem(Integer id, UpdateBidListDTO updatedBidList) throws NotFoundException {
+	public void updateItem(Integer id, UpdateBidListDTO updatedBidList) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("BidList with id=" + id + " not found.");
-			throw new NotFoundException("BidList not found.");
+			throw new ItemNotFoundException("BidList not found.");
 		}
 
 		BidList bidList = optional.get();
@@ -93,12 +89,12 @@ public class BidListServiceImpl implements IBidListService {
 	}
 
 	@Override
-	public void deleteItem(Integer id) throws NotFoundException {
+	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<BidList> optional = bidListRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("BidList with id=" + id + " not found.");
-			throw new NotFoundException("BidList not found.");
+			throw new ItemNotFoundException("BidList not found.");
 		}
 
 		bidListRepository.delete(optional.get());

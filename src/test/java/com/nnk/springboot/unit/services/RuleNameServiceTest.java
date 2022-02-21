@@ -23,8 +23,8 @@ import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.dto.UpdateRuleNameDTO;
 import com.nnk.springboot.dtoconverters.IRuleNameDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import com.nnk.springboot.services.RuleNameServiceImpl;
 
@@ -124,7 +124,7 @@ class RuleNameServiceTest {
 	
 
 	@Test
-	void addItemReturnsDTOWhenOk() throws ConverterException, ServiceException {
+	void addItemReturnsDTOWhenOk() throws ConverterException, ItemAlreadyExistsException {
 		when(ruleNameRepository.save(any(RuleName.class))).thenReturn(ruleName1);
 		when(ruleNameConverter.convertEntityToDTO(any(RuleName.class))).thenReturn(ruleNameDTO1);
 		assertEquals(rightNewRuleNameDTO.getDescription(), 
@@ -137,14 +137,14 @@ class RuleNameServiceTest {
 	}
 
 	@Test
-	void getAllItemsReturnsListDTOWhenOk() throws ConverterException, ServiceException {
+	void getAllItemsReturnsListDTOWhenOk() throws ConverterException {
 		when(ruleNameRepository.findAll()).thenReturn(ruleNames);
 		when(ruleNameConverter.convertListEntityToDTO(ruleNames)).thenReturn(ruleNameDTOs);
 		assertEquals(ruleNames.size(), ruleNameService.getAllItems().size());
 	}
 
 	@Test
-	void getItemByIdReturnsDTOWhenOk() throws ConverterException, NotFoundException, ServiceException {
+	void getItemByIdReturnsDTOWhenOk() throws ConverterException, ItemNotFoundException {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(ruleName1));
 		when(ruleNameConverter.convertEntityToDTO(ruleName1)).thenReturn(ruleNameDTO1);
 		assertEquals(ruleName1.getId(), ruleNameService.getItemById(1).getId());
@@ -153,11 +153,11 @@ class RuleNameServiceTest {
 	@Test
 	void getItemByIdThrowsNotFoundExceptionWhenNotFound() {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ruleNameService.getItemById(1));
+		assertThrows(ItemNotFoundException.class, () -> ruleNameService.getItemById(1));
 	}
 
 	@Test
-	void updateItemWhenOk() throws NotFoundException, ServiceException {
+	void updateItemWhenOk() throws ItemNotFoundException {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(new RuleName()));
 		ruleNameService.updateItem(1, updatedRuleNameDTO);
 		Mockito.verify(ruleNameRepository).save(any(RuleName.class));
@@ -166,11 +166,11 @@ class RuleNameServiceTest {
 	@Test
 	void updateItemThrowsNotFoundExceptionWhenNotFound() {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ruleNameService.updateItem(10, new UpdateRuleNameDTO()));
+		assertThrows(ItemNotFoundException.class, () -> ruleNameService.updateItem(10, new UpdateRuleNameDTO()));
 	}
 
 	@Test
-	void deleteItemWhenOk() throws NotFoundException, ServiceException {
+	void deleteItemWhenOk() throws ItemNotFoundException {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.of(new RuleName()));
 		ruleNameService.deleteItem(1);
 		Mockito.verify(ruleNameRepository).delete(any(RuleName.class));
@@ -179,7 +179,7 @@ class RuleNameServiceTest {
 	@Test
 	void deleteItemThrowsNotFoundExceptionWhenNotFound() {
 		when(ruleNameRepository.findById(anyInt())).thenReturn(Optional.empty());
-		assertThrows(NotFoundException.class, () -> ruleNameService.deleteItem(10));
+		assertThrows(ItemNotFoundException.class, () -> ruleNameService.deleteItem(10));
 	}
 
 }

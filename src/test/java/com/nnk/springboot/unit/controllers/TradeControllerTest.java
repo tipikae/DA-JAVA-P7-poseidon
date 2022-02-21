@@ -26,8 +26,8 @@ import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.dto.UpdateTradeDTO;
 import com.nnk.springboot.dtoconverters.ITradeDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.services.ITradeService;
 
@@ -137,7 +137,7 @@ class TradeControllerTest {
 	@WithMockUser
 	@Test
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
-		doThrow(ServiceException.class).when(tradeService).addItem(any(NewTradeDTO.class));
+		doThrow(ItemAlreadyExistsException.class).when(tradeService).addItem(any(NewTradeDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("trade", rightTradeDTO))
 			.andExpect(status().is3xxRedirection())
@@ -173,7 +173,7 @@ class TradeControllerTest {
 	@WithMockUser
 	@Test
 	void showUpdateFormReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(tradeService).getItemById(anyInt());
+		doThrow(ItemNotFoundException.class).when(tradeService).getItemById(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/update/10"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("error/404"));
@@ -224,7 +224,7 @@ class TradeControllerTest {
 		rightUpdateTradeDTO.setAccount("account2");
 		rightUpdateTradeDTO.setType("type1");
 		rightUpdateTradeDTO.setBuyQuantity(10d);
-		doThrow(NotFoundException.class).when(tradeService).updateItem(anyInt(), any(UpdateTradeDTO.class));
+		doThrow(ItemNotFoundException.class).when(tradeService).updateItem(anyInt(), any(UpdateTradeDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("trade", rightUpdateTradeDTO))
 			.andExpect(status().is3xxRedirection())
@@ -245,7 +245,7 @@ class TradeControllerTest {
 	@WithMockUser
 	@Test
 	void deleteTradeReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(tradeService).deleteItem(anyInt());
+		doThrow(ItemNotFoundException.class).when(tradeService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Trade not found."));

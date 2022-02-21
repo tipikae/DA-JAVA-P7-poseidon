@@ -26,8 +26,8 @@ import com.nnk.springboot.dto.NewCurvePointDTO;
 import com.nnk.springboot.dto.UpdateCurvePointDTO;
 import com.nnk.springboot.dtoconverters.ICurvePointDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import com.nnk.springboot.services.ICurvePointService;
 
@@ -137,7 +137,7 @@ class CurveControllerTest {
 	@WithMockUser
 	@Test
 	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
-		doThrow(ServiceException.class).when(curveService).addItem(any(NewCurvePointDTO.class));
+		doThrow(ItemAlreadyExistsException.class).when(curveService).addItem(any(NewCurvePointDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", rightCurveDTO))
 			.andExpect(status().is3xxRedirection())
@@ -174,7 +174,7 @@ class CurveControllerTest {
 	@WithMockUser
 	@Test
 	void showUpdateFormReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(curveService).getItemById(anyInt());
+		doThrow(ItemNotFoundException.class).when(curveService).getItemById(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/update/10"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("error/404"));
@@ -225,7 +225,7 @@ class CurveControllerTest {
 		rightUpdateCurveDTO.setCurveId(20);
 		rightUpdateCurveDTO.setTerm(10d);
 		rightUpdateCurveDTO.setValue(10d);
-		doThrow(NotFoundException.class).when(curveService).updateItem(anyInt(), any(UpdateCurvePointDTO.class));
+		doThrow(ItemNotFoundException.class).when(curveService).updateItem(anyInt(), any(UpdateCurvePointDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("curvePoint", rightUpdateCurveDTO))
 			.andExpect(status().is3xxRedirection())
@@ -246,7 +246,7 @@ class CurveControllerTest {
 	@WithMockUser
 	@Test
 	void deleteCurveReturnsError404WhenNotFoundException() throws Exception {
-		doThrow(NotFoundException.class).when(curveService).deleteItem(anyInt());
+		doThrow(ItemNotFoundException.class).when(curveService).deleteItem(anyInt());
 		mockMvc.perform(get(ROOT_REQUEST + "/delete/10"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=CurvePoint not found."));

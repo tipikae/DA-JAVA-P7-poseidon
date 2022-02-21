@@ -18,8 +18,8 @@ import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.dto.UpdateRuleNameDTO;
 import com.nnk.springboot.dtoconverters.IRuleNameDTOConverter;
 import com.nnk.springboot.exceptions.ConverterException;
-import com.nnk.springboot.exceptions.NotFoundException;
-import com.nnk.springboot.exceptions.ServiceException;
+import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
+import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RuleNameRepository;
 
 /**
@@ -41,14 +41,10 @@ public class RuleNameServiceImpl implements IRuleNameService {
 	private IRuleNameDTOConverter ruleNameConverter;
 
 	@Override
-	public RuleNameDTO addItem(NewRuleNameDTO newDTO) throws ServiceException, ConverterException {
+	public RuleNameDTO addItem(NewRuleNameDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: description=" + newDTO.getDescription() + ", json=" + newDTO.getJson()
 				+ ", name=" + newDTO.getName() + ", sqlPart=" + newDTO.getSqlPart() 
 				+ ", sqlStr=" + newDTO.getSqlStr() + ", template=" + newDTO.getTemplate());
-		/*if(false) {
-			LOGGER.debug("");
-			throw new ServiceException("");
-		}*/
 		
 		RuleName ruleName = new RuleName();
 		ruleName.setDescription(newDTO.getDescription());
@@ -68,24 +64,24 @@ public class RuleNameServiceImpl implements IRuleNameService {
 	}
 
 	@Override
-	public RuleNameDTO getItemById(Integer id) throws NotFoundException, ConverterException {
+	public RuleNameDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
 		Optional<RuleName> optional = ruleNameRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("RuleName with id=" + id + " not found.");
-			throw new NotFoundException("RuleName not found.");
+			throw new ItemNotFoundException("RuleName not found.");
 		}
 		
 		return ruleNameConverter.convertEntityToDTO(optional.get());
 	}
 
 	@Override
-	public void updateItem(Integer id, UpdateRuleNameDTO updatedDTO) throws NotFoundException {
+	public void updateItem(Integer id, UpdateRuleNameDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
 		Optional<RuleName> optional = ruleNameRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("RuleName with id=" + id + " not found.");
-			throw new NotFoundException("RuleName not found.");
+			throw new ItemNotFoundException("RuleName not found.");
 		}
 
 		RuleName ruleName = optional.get();
@@ -100,12 +96,12 @@ public class RuleNameServiceImpl implements IRuleNameService {
 	}
 
 	@Override
-	public void deleteItem(Integer id) throws NotFoundException {
+	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);
 		Optional<RuleName> optional = ruleNameRepository.findById(id);
 		if(!optional.isPresent()) {
 			LOGGER.debug("RuleName with id=" + id + " not found.");
-			throw new NotFoundException("RuleName not found.");
+			throw new ItemNotFoundException("RuleName not found.");
 		}
 
 		ruleNameRepository.delete(optional.get());
