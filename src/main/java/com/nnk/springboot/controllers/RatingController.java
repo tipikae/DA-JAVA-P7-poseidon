@@ -7,6 +7,7 @@ import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IRatingService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -38,18 +40,24 @@ public class RatingController {
 	
 	@Autowired
 	private IRatingService ratingService;
+	
+	@Autowired
+	private IAuthenticationInformation authenticationInfo;
 
 	/**
 	 * Get all ratings.
 	 * @param model
+	 * @param principal
 	 * @return String
 	 */
     @RequestMapping("/rating/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
     	LOGGER.debug("Getting all ratings");
     	try {
 			List<RatingDTO> dtos = ratingService.getAllItems();
+			String username = authenticationInfo.getUsername(principal);
 			model.addAttribute("ratings", dtos);
+			model.addAttribute("username", username);
 			LOGGER.info("Show all Ratings.");
 	        return "rating/list";
 		} catch (ConverterException e) {

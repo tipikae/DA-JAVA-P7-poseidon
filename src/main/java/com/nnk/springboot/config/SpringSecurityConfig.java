@@ -62,7 +62,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .oauth2Login()
             .defaultSuccessUrl("/bidList/list")
-            .failureUrl("/");
+            .failureUrl("/login?error");
 		http.exceptionHandling().accessDeniedPage("/error");
 	}
 

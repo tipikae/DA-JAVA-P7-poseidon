@@ -30,6 +30,7 @@ import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.services.ITradeService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 @WebMvcTest(controllers = TradeController.class)
 class TradeControllerTest {
@@ -48,6 +49,9 @@ class TradeControllerTest {
 	
 	@MockBean
 	private ITradeService tradeService;
+	
+	@MockBean
+	private IAuthenticationInformation authenticationInfo;
 	
 	private static NewTradeDTO rightTradeDTO;
 	

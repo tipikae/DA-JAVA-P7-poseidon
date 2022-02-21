@@ -7,6 +7,7 @@ import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.ITradeService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -38,18 +40,24 @@ public class TradeController {
 	
 	@Autowired
 	private ITradeService tradeService;
+	
+	@Autowired
+	private IAuthenticationInformation authenticationInfo;
 
 	/**
 	 * Get all trades.
 	 * @param model
+	 * @param principal
 	 * @return String
 	 */
     @RequestMapping("/trade/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
     	LOGGER.debug("Getting all trades");
     	try {
 			List<TradeDTO> dtos = tradeService.getAllItems();
+			String username = authenticationInfo.getUsername(principal);
 			model.addAttribute("trades", dtos);
+			model.addAttribute("username", username);
 			LOGGER.info("Show all Trades.");
 	        return "trade/list";
 		} catch (ConverterException e) {

@@ -7,6 +7,7 @@ import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IUserService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -37,19 +39,24 @@ public class UserController {
 	
     @Autowired
     private IUserService userService;
+	
+	@Autowired
+	private IAuthenticationInformation authenticationInfo;
 
     /**
      * Get all users.
-     * @param id
      * @param model
+	 * @param principal
      * @return String
      */
     @GetMapping("/user/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
     	LOGGER.debug("Getting all users.");
 		try {
 			List<UserDTO> dtos = userService.getAllItems();
+			String username = authenticationInfo.getUsername(principal);
 	        model.addAttribute("users", dtos);
+			model.addAttribute("username", username);
 			LOGGER.info("Show all Users.");
 	        return "user/list";
 		} catch (ConverterException e) {

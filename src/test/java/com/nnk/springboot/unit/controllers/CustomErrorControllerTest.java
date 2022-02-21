@@ -13,6 +13,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.nnk.springboot.controllers.CustomErrorController;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 @WebMvcTest(controllers = CustomErrorController.class)
 class CustomErrorControllerTest {
@@ -22,6 +23,9 @@ class CustomErrorControllerTest {
 	
 	@MockBean
 	private UserDetailsService userDetailsService;
+	
+	@MockBean
+	private IAuthenticationInformation authenticationInfo;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	// error

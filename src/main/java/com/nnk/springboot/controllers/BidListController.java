@@ -7,6 +7,7 @@ import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IBidListService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -37,19 +39,25 @@ public class BidListController {
 	
 	@Autowired
 	private IBidListService bidListService;
+	
+	@Autowired
+	private IAuthenticationInformation authenticationInfo;
 
 	/**
 	 * Get all bidLists
 	 * @param model
+	 * @param principal
 	 * @return String
 	 */
     @GetMapping("/bidList/list")
-    public String home(Model model)
+    public String home(Model model, Principal principal)
     {
     	LOGGER.debug("Getting all bidlists");
     	try {
 			List<BidListDTO> dtos = bidListService.getAllItems();
+			String username = authenticationInfo.getUsername(principal);
 			model.addAttribute("bidLists", dtos);
+			model.addAttribute("username", username);
 			LOGGER.info("Show all BidLists.");
 	        return "bidList/list";
 		} catch (ConverterException e) {
@@ -63,7 +71,7 @@ public class BidListController {
 
     /**
      * Get add bidList form.
-     * @param request
+     * @param model
      * @return String
      */
     @GetMapping("/bidList/add")

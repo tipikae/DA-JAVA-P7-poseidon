@@ -7,6 +7,7 @@ import com.nnk.springboot.exceptions.ConverterException;
 import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.services.IRuleNameService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -38,18 +40,24 @@ public class RuleNameController {
 	
 	@Autowired
 	private IRuleNameService ruleNameService;
+	
+	@Autowired
+	private IAuthenticationInformation authenticationInfo;
 
 	/**
 	 * Get all ruleNames.
 	 * @param model
+	 * @param principal
 	 * @return String
 	 */
     @RequestMapping("/ruleName/list")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
     	LOGGER.debug("Getting all ruleNames");
     	try {
 			List<RuleNameDTO> dtos = ruleNameService.getAllItems();
+			String username = authenticationInfo.getUsername(principal);
 			model.addAttribute("ruleNames", dtos);
+			model.addAttribute("username", username);
 			LOGGER.info("Show all RuleNames.");
 	        return "ruleName/list";
 		} catch (ConverterException e) {

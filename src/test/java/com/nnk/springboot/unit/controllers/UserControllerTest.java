@@ -30,6 +30,7 @@ import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.IUserService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 @WebMvcTest(controllers = UserController.class)
 class UserControllerTest {
@@ -48,6 +49,9 @@ class UserControllerTest {
 	
 	@MockBean
 	private IUserService userService;
+	
+	@MockBean
+	private IAuthenticationInformation authenticationInfo;
 	
 	private static NewUserDTO rightUserDTO;
 	

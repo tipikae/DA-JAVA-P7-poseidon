@@ -30,6 +30,7 @@ import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import com.nnk.springboot.services.ICurvePointService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 @WebMvcTest(controllers = CurveController.class)
 class CurveControllerTest {
@@ -48,6 +49,9 @@ class CurveControllerTest {
 	
 	@MockBean
 	private ICurvePointService curveService;
+	
+	@MockBean
+	private IAuthenticationInformation authenticationInfo;
 	
 	private static NewCurvePointDTO rightCurveDTO;
 	

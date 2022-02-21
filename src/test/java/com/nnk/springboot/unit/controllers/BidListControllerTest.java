@@ -30,6 +30,7 @@ import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.services.IBidListService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 @WebMvcTest(controllers = BidListController.class)
 class BidListControllerTest {
@@ -48,6 +49,9 @@ class BidListControllerTest {
 	
 	@MockBean
 	private IBidListService bidListService;
+	
+	@MockBean
+	private IAuthenticationInformation authenticationInfo;
 	
 	private static NewBidListDTO rightBidListDTO;
 	

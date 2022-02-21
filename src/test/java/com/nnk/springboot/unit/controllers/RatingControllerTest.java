@@ -30,6 +30,7 @@ import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RatingRepository;
 import com.nnk.springboot.services.IRatingService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 @WebMvcTest(controllers = RatingController.class)
 class RatingControllerTest {
@@ -48,6 +49,9 @@ class RatingControllerTest {
 	
 	@MockBean
 	private IRatingService ratingService;
+	
+	@MockBean
+	private IAuthenticationInformation authenticationInfo;
 	
 	private static NewRatingDTO rightRatingDTO;
 	

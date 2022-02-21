@@ -30,6 +30,7 @@ import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import com.nnk.springboot.services.IRuleNameService;
+import com.nnk.springboot.util.IAuthenticationInformation;
 
 @WebMvcTest(controllers = RuleNameController.class)
 class RuleNameControllerTest {
@@ -48,6 +49,9 @@ class RuleNameControllerTest {
 	
 	@MockBean
 	private IRuleNameService ruleNameService;
+	
+	@MockBean
+	private IAuthenticationInformation authenticationInfo;
 	
 	private static NewRuleNameDTO rightRuleNameDTO;
 	
