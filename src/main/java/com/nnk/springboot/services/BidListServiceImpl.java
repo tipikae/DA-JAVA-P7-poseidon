@@ -39,6 +39,9 @@ public class BidListServiceImpl implements IBidListService {
 	@Autowired
 	private IBidListDTOConverter converterBidList;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BidListDTO addItem(NewBidListDTO newBidList) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: account=" + newBidList.getAccount() + ", type=" + newBidList.getType() 
@@ -53,12 +56,18 @@ public class BidListServiceImpl implements IBidListService {
 		return converterBidList.convertEntityToDTO(bidListRepository.save(bidList));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<BidListDTO> getAllItems() throws ConverterException {
 		LOGGER.debug("Service: getAllItems");
 		return converterBidList.convertListEntityToDTO(bidListRepository.findAll());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BidListDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
@@ -71,6 +80,9 @@ public class BidListServiceImpl implements IBidListService {
 		return converterBidList.convertEntityToDTO(optional.get());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateItem(Integer id, UpdateBidListDTO updatedBidList) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
@@ -88,6 +100,9 @@ public class BidListServiceImpl implements IBidListService {
 		bidListRepository.save(bidList);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);

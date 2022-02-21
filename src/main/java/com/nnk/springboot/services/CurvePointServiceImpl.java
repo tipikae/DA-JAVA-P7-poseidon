@@ -39,6 +39,9 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	@Autowired
 	private ICurvePointDTOConverter converterCurvePoint;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public CurvePointDTO addItem(NewCurvePointDTO newCurvePoint) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: curveId=" + newCurvePoint.getCurveId() + ", term=" + newCurvePoint.getTerm() 
@@ -53,12 +56,18 @@ public class CurvePointServiceImpl implements ICurvePointService {
 		return converterCurvePoint.convertEntityToDTO(curvePointRepository.save(curvePoint));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<CurvePointDTO> getAllItems() throws ConverterException {
 		LOGGER.debug("Service: getAllItems");
 		return converterCurvePoint.convertListEntityToDTO(curvePointRepository.findAll());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public CurvePointDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
@@ -71,6 +80,9 @@ public class CurvePointServiceImpl implements ICurvePointService {
 		return converterCurvePoint.convertEntityToDTO(optional.get());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateItem(Integer id, UpdateCurvePointDTO updatedCurvePoint) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
@@ -88,6 +100,9 @@ public class CurvePointServiceImpl implements ICurvePointService {
 		curvePointRepository.save(curvePoint);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);

@@ -22,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+/**
+ * Trade controller.
+ * @author tipikae
+ * @version 1.0
+ *
+ */
 @Controller
 public class TradeController {
     
@@ -36,12 +41,11 @@ public class TradeController {
 
 	/**
 	 * Get all trades.
-	 * @param request
 	 * @param model
 	 * @return String
 	 */
     @RequestMapping("/trade/list")
-    public String home(HttpServletRequest request, Model model) {
+    public String home(Model model) {
     	LOGGER.debug("Getting all trades");
     	try {
 			List<TradeDTO> dtos = tradeService.getAllItems();
@@ -59,12 +63,11 @@ public class TradeController {
 
     /**
      * Get add trade form.
-     * @param request
      * @param model
      * @return String
      */
     @GetMapping("/trade/add")
-    public String addTradeForm(HttpServletRequest request, Model model) {
+    public String addTradeForm(Model model) {
     	LOGGER.debug("Getting add trade form");
     	if(!model.containsAttribute("trade")) {
     		model.addAttribute("trade", new TradeDTO());
@@ -75,7 +78,6 @@ public class TradeController {
 
     /**
      * Add a trade.
-     * @param request
      * @param newTradeDTO
      * @param result
      * @param model
@@ -83,7 +85,6 @@ public class TradeController {
      */
     @PostMapping("/trade/validate")
     public String validate(
-    		HttpServletRequest request, 
     		@ModelAttribute("trade") @Valid NewTradeDTO newTradeDTO, 
     		BindingResult result, 
     		Model model) {
@@ -115,14 +116,12 @@ public class TradeController {
 
     /**
      * Get update trade form.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	
@@ -146,7 +145,6 @@ public class TradeController {
 
     /**
      * Update a trade.
-     * @param request
      * @param id
      * @param updateTradeDTO
      * @param result
@@ -155,7 +153,6 @@ public class TradeController {
      */
     @PostMapping("/trade/update/{id}")
     public String updateTrade(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		@ModelAttribute("trade") @Valid UpdateTradeDTO updateTradeDTO,
             BindingResult result, 
@@ -184,14 +181,12 @@ public class TradeController {
 
     /**
      * Delete a trade.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	

@@ -40,6 +40,9 @@ public class RuleNameServiceImpl implements IRuleNameService {
 	@Autowired
 	private IRuleNameDTOConverter ruleNameConverter;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public RuleNameDTO addItem(NewRuleNameDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: description=" + newDTO.getDescription() + ", json=" + newDTO.getJson()
@@ -57,12 +60,18 @@ public class RuleNameServiceImpl implements IRuleNameService {
 		return ruleNameConverter.convertEntityToDTO(ruleNameRepository.save(ruleName));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<RuleNameDTO> getAllItems() throws ConverterException {
 		LOGGER.debug("Service: getAllItems");
 		return ruleNameConverter.convertListEntityToDTO(ruleNameRepository.findAll());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public RuleNameDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
@@ -75,6 +84,9 @@ public class RuleNameServiceImpl implements IRuleNameService {
 		return ruleNameConverter.convertEntityToDTO(optional.get());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateItem(Integer id, UpdateRuleNameDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
@@ -95,6 +107,9 @@ public class RuleNameServiceImpl implements IRuleNameService {
 		ruleNameRepository.save(ruleName);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);

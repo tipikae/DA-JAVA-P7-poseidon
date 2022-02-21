@@ -22,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+/**
+ * RuleName controller.
+ * @author tipikae
+ * @version 1.0
+ *
+ */
 @Controller
 public class RuleNameController {
     
@@ -40,7 +45,7 @@ public class RuleNameController {
 	 * @return String
 	 */
     @RequestMapping("/ruleName/list")
-    public String home(HttpServletRequest request, Model model) {
+    public String home(Model model) {
     	LOGGER.debug("Getting all ruleNames");
     	try {
 			List<RuleNameDTO> dtos = ruleNameService.getAllItems();
@@ -58,12 +63,11 @@ public class RuleNameController {
 
     /**
      * Get add ruleName form.
-     * @param request
      * @param model
      * @return String
      */
     @GetMapping("/ruleName/add")
-    public String addRuleForm(HttpServletRequest request, Model model) {
+    public String addRuleForm(Model model) {
     	LOGGER.debug("Getting add ruleName form");
     	if(!model.containsAttribute("ruleName")) {
     		model.addAttribute("ruleName", new RuleNameDTO());
@@ -74,7 +78,6 @@ public class RuleNameController {
 
     /**
      * Add a ruleName.
-     * @param request
      * @param newRuleNameDTO
      * @param result
      * @param model
@@ -82,7 +85,6 @@ public class RuleNameController {
      */
     @PostMapping("/ruleName/validate")
     public String validate(
-    		HttpServletRequest request, 
     		@ModelAttribute("ruleName") @Valid NewRuleNameDTO newRuleNameDTO, 
     		BindingResult result, 
     		Model model) {
@@ -114,14 +116,12 @@ public class RuleNameController {
 
     /**
      * Get update ruleName form.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	
@@ -145,7 +145,6 @@ public class RuleNameController {
 
     /**
      * Update a ruleName.
-     * @param request
      * @param id
      * @param updateRuleNameDTO
      * @param result
@@ -154,7 +153,6 @@ public class RuleNameController {
      */
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		@ModelAttribute("ruleName") @Valid UpdateRuleNameDTO updateRuleNameDTO,
             BindingResult result, 
@@ -183,14 +181,12 @@ public class RuleNameController {
 
     /**
      * Delete a ruleName.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	

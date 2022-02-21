@@ -7,9 +7,9 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
 
 /**
- * Rating converter interface.
+ * Converter Rating to RatingDTO interface.
  * @author tipikae
- * @v 1.0
+ * @version 1.0
  *
  */
 public interface IRatingDTOConverter extends IDTOConverter<Rating, RatingDTO> {

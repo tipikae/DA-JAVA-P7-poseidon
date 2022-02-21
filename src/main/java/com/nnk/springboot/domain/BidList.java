@@ -2,13 +2,9 @@ package com.nnk.springboot.domain;
 
 import lombok.Data;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
  * BidList entity.
@@ -64,7 +60,6 @@ public class BidList {
     /**
      * Benchmark.
      */
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String benchmark;
 
     /**
@@ -76,38 +71,32 @@ public class BidList {
     /**
      * Commentary.
      */
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String commentary;
 
     /**
      * Security.
      */
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String security;
 
     /**
      * Status.
      */
-    @Size(max = 10, message = "{validation.name.size.too_long}")
     private String status;
 
     /**
      * Trader.
      */
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String trader;
 
     /**
      * Book.
      */
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String book;
 
     /**
      * Creation name.
      */
     @Column(name = "creation_name")
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String creationName;
 
     /**
@@ -120,7 +109,6 @@ public class BidList {
      * Revision name.
      */
     @Column(name = "revision_name")
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String revisionName;
 
     /**
@@ -133,27 +121,23 @@ public class BidList {
      * Deal name.
      */
     @Column(name = "deal_name")
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String dealName;
 
     /**
      * Deal type.
      */
     @Column(name = "deal_type")
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String dealType;
 
     /**
      * Source list id.
      */
     @Column(name = "sourcelist_id")
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String sourceListId;
 
     /**
      * Side.
      */
-    @Size(max = 125, message = "{validation.name.size.too_long}")
     private String side;
     
     public BidList() {}

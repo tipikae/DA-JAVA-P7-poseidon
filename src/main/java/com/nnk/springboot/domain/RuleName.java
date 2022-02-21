@@ -1,12 +1,8 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.Data;
-
-import java.sql.Timestamp;
 
 /**
  * RuleName entity.

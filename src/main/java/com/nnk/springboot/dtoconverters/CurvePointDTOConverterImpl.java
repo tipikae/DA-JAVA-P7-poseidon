@@ -15,7 +15,7 @@ import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.exceptions.ConverterException;
 
 /**
- * CurvePoint converter implementation.
+ * Converter CurvePoint to CurvePointDTO.
  * @author tipikae
  * @version 1.0
  *

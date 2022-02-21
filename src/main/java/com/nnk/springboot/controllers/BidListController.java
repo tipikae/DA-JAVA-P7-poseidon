@@ -21,10 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+/**
+ * BidList controller.
+ * @author tipikae
+ * @version 1.0
+ *
+ */
 @Controller
 public class BidListController {
 
@@ -35,12 +40,11 @@ public class BidListController {
 
 	/**
 	 * Get all bidLists
-	 * @param request
 	 * @param model
 	 * @return String
 	 */
     @GetMapping("/bidList/list")
-    public String home(HttpServletRequest request, Model model)
+    public String home(Model model)
     {
     	LOGGER.debug("Getting all bidlists");
     	try {
@@ -60,11 +64,10 @@ public class BidListController {
     /**
      * Get add bidList form.
      * @param request
-     * @param request
      * @return String
      */
     @GetMapping("/bidList/add")
-    public String addBidForm(HttpServletRequest request, Model model) {
+    public String addBidForm(Model model) {
     	LOGGER.debug("Getting add bidlist form");
     	if(!model.containsAttribute("bidList")) {
     		model.addAttribute("bidList", new BidListDTO());
@@ -75,7 +78,6 @@ public class BidListController {
 
     /**
      * Add a bidList.
-     * @param request
      * @param newBidListDTO
      * @param result
      * @param model
@@ -83,7 +85,6 @@ public class BidListController {
      */
     @PostMapping("/bidList/validate")
     public String validate(
-    		HttpServletRequest request, 
     		@ModelAttribute("bidList") @Valid NewBidListDTO newBidListDTO, 
     		BindingResult result, 
     		Model model) {
@@ -115,14 +116,12 @@ public class BidListController {
 
     /**
      * Show update form.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	
@@ -146,7 +145,6 @@ public class BidListController {
 
     /**
      * Update a bidlist.
-     * @param request
      * @param id
      * @param updateBidListDTO
      * @param result
@@ -155,7 +153,6 @@ public class BidListController {
      */
     @PostMapping("/bidList/update/{id}")
     public String updateBid(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		@ModelAttribute("bidList") @Valid UpdateBidListDTO updateBidListDTO,
             BindingResult result, 
@@ -182,9 +179,14 @@ public class BidListController {
 		}
     }
 
+    /**
+     * Delete a BidList
+     * @param id
+     * @param model
+     * @return String
+     */
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	

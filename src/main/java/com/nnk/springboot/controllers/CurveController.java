@@ -22,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+/**
+ * CurvePoint controller.
+ * @author tipikae
+ * @version 1.0
+ *
+ */
 @Controller
 public class CurveController {
 
@@ -36,12 +41,11 @@ public class CurveController {
 
 	/**
 	 * Get all curvePoints.
-	 * @param request
 	 * @param model
 	 * @return String
 	 */
     @RequestMapping("/curvePoint/list")
-    public String home(HttpServletRequest request, Model model)
+    public String home(Model model)
     {
     	LOGGER.debug("Getting all curvePoints");
     	try {
@@ -60,12 +64,11 @@ public class CurveController {
 
     /**
      * Get add curvePoint form.
-     * @param request
      * @param model
      * @return String
      */
     @GetMapping("/curvePoint/add")
-    public String addCurveForm(HttpServletRequest request, Model model) {
+    public String addCurveForm(Model model) {
     	LOGGER.debug("Getting add curvePoint form");
     	if(!model.containsAttribute("curvePoint")) {
     		model.addAttribute("curvePoint", new CurvePointDTO());
@@ -76,7 +79,6 @@ public class CurveController {
 
     /**
      * Add a curvePoint.
-     * @param request
      * @param newCurvePointDTO
      * @param result
      * @param model
@@ -84,7 +86,6 @@ public class CurveController {
      */
     @PostMapping("/curvePoint/validate")
     public String validate(
-    		HttpServletRequest request, 
     		@ModelAttribute("curvePoint") @Valid NewCurvePointDTO newCurvePointDTO, 
     		BindingResult result, 
     		Model model) {
@@ -116,14 +117,12 @@ public class CurveController {
 
     /**
      * Get update form.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	
@@ -147,7 +146,6 @@ public class CurveController {
 
     /**
      * Update a curvePoint.
-     * @param request
      * @param id
      * @param updateCurvePointDTO
      * @param result
@@ -156,7 +154,6 @@ public class CurveController {
      */
     @PostMapping("/curvePoint/update/{id}")
     public String updateCurve(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		@ModelAttribute("curvePoint") @Valid UpdateCurvePointDTO updateCurvePointDTO,
     		BindingResult result, 
@@ -185,14 +182,12 @@ public class CurveController {
 
     /**
      * Delete a curvePoint.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/curvePoint/delete/{id}")
     public String deleteCurve(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	

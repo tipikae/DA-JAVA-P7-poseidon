@@ -27,12 +27,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService)
 			.passwordEncoder(passwordEncoder());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
@@ -68,6 +74,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 	
+	/**
+	 * Custom auth success handler.
+	 * @return MySimpleUrlAuthSuccessHandler
+	 */
 	@Bean
 	public MySimpleUrlAuthSuccessHandler myAuthenticationSuccessHandler() {
 		return new MySimpleUrlAuthSuccessHandler();

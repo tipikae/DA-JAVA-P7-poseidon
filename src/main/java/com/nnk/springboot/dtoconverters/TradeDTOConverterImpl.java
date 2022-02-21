@@ -15,7 +15,7 @@ import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.exceptions.ConverterException;
 
 /**
- * Trade DTO converter implementation.
+ * Converter Trade to TradeDTO.
  * @author tipikae
  * @version 1.0
  *

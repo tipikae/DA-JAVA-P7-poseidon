@@ -1,7 +1,7 @@
 package com.nnk.springboot.exceptions;
 
 /**
- * Poseidon exception.
+ * Poseidon exception, parent for application's exceptions.
  * @author tipikae
  * @version 1.0
  *

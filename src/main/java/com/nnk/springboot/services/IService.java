@@ -10,7 +10,7 @@ import com.nnk.springboot.exceptions.ItemAlreadyExistsException;
 import com.nnk.springboot.exceptions.ItemNotFoundException;
 
 /**
- * Service generic interface.
+ * Generic service interface.
  * @author tipikae
  * @version 1.0
  *

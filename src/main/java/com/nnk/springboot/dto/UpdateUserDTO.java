@@ -6,6 +6,7 @@ package com.nnk.springboot.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -24,17 +25,20 @@ public class UpdateUserDTO implements Serializable {
      * Username.
      */
     @NotBlank(message = "Username is mandatory.")
+	@Size(max=125, message="{validation.name.size.too_long}")
     private String username;
     
     /**
      * Fullname.
      */
     @NotBlank(message = "Fullname is mandatory.")
+	@Size(max=125, message="{validation.name.size.too_long}")
     private String fullname;
     
     /**
      * Role.
      */
     @NotBlank(message = "Role is mandatory.")
+	@Size(max=125, message="{validation.name.size.too_long}")
     private String role;
 }

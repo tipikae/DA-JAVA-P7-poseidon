@@ -7,7 +7,7 @@ import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameDTO;
 
 /**
- * RuleName DTO converter interface.
+ * Converter RuleName to RuleNameDTO interface.
  * @author tipikae
  * @version 1.0
  *

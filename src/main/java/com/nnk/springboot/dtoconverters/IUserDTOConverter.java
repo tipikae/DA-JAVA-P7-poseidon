@@ -7,7 +7,7 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserDTO;
 
 /**
- * User DTO converter interface.
+ * Converter User to UserDTO interface.
  * @author tipikae
  * @version 1.0
  *

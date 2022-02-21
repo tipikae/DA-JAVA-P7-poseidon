@@ -4,7 +4,7 @@ import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
 
 /**
- * BidList converter interface.
+ * Converter BidList to BidListDTO interface.
  * @author tipikae
  * @version 1.0
  *

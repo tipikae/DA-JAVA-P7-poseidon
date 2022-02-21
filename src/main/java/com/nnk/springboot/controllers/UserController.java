@@ -21,10 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+/**
+ * User controller.
+ * @author tipikae
+ * @version 1.0
+ *
+ */
 @Controller
 public class UserController {
 	
@@ -35,13 +40,12 @@ public class UserController {
 
     /**
      * Get all users.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/user/list")
-    public String home(HttpServletRequest request, Model model) {
+    public String home(Model model) {
     	LOGGER.debug("Getting all users.");
 		try {
 			List<UserDTO> dtos = userService.getAllItems();
@@ -59,12 +63,11 @@ public class UserController {
 
     /**
      * Get add user form.
-     * @param request
      * @param model
      * @return String
      */
     @GetMapping("/user/add")
-    public String addUserForm(HttpServletRequest request, Model model) {
+    public String addUserForm(Model model) {
     	LOGGER.debug("Getting add user form");
     	if(!model.containsAttribute("user")) {
     		model.addAttribute("user", new UserDTO());
@@ -75,7 +78,6 @@ public class UserController {
 
     /**
      * Add a user.
-     * @param request
      * @param newUserDTO
      * @param result
      * @param model
@@ -83,7 +85,6 @@ public class UserController {
      */
     @PostMapping("/user/validate")
     public String validate(
-    		HttpServletRequest request, 
     		@ModelAttribute("user") @Valid NewUserDTO newUserDTO, 
     		BindingResult result, 
     		Model model) {
@@ -115,14 +116,12 @@ public class UserController {
 
     /**
      * Get update user form.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	
@@ -147,7 +146,6 @@ public class UserController {
 
     /**
      * Update a user.
-     * @param request
      * @param id
      * @param updateUserDTO
      * @param result
@@ -156,7 +154,6 @@ public class UserController {
      */
     @PostMapping("/user/update/{id}")
     public String updateUser(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		@ModelAttribute("user") @Valid UpdateUserDTO updateUserDTO,
             BindingResult result, 
@@ -185,14 +182,12 @@ public class UserController {
 
     /**
      * Delete a user.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/user/delete/{id}")
     public String deleteUser(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	

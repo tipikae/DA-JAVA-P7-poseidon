@@ -6,6 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Home controller.
+ * @author tipikae
+ * @version 1.0
+ *
+ */
 @Controller
 public class HomeController {
 	

@@ -12,7 +12,7 @@ import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.exceptions.ConverterException;
 
 /**
- * BidList converter.
+ * Converter BidList to BidListDTO.
  * @author tipikae
  * @version 1.0
  *

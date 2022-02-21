@@ -15,7 +15,7 @@ import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.exceptions.ConverterException;
 
 /**
- * RuleName DTO converter implementation.
+ * Converter RuleName to RuleNameDTO.
  * @author tipikae
  * @version 1.0
  *

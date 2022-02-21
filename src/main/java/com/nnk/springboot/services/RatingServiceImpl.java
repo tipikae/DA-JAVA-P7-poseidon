@@ -40,6 +40,9 @@ public class RatingServiceImpl implements IRatingService {
 	@Autowired
 	private IRatingDTOConverter ratingConverter;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public RatingDTO addItem(NewRatingDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: fitch=" + newDTO.getFitchRating() + ", moodys=" + newDTO.getMoodysRating()
@@ -54,12 +57,18 @@ public class RatingServiceImpl implements IRatingService {
 		return ratingConverter.convertEntityToDTO(ratingRepository.save(rating));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<RatingDTO> getAllItems() throws ConverterException {
 		LOGGER.debug("Service: getAllItems");
 		return ratingConverter.convertListEntityToDTO(ratingRepository.findAll());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public RatingDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
@@ -72,6 +81,9 @@ public class RatingServiceImpl implements IRatingService {
 		return ratingConverter.convertEntityToDTO(optional.get());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateItem(Integer id, UpdateRatingDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
@@ -90,6 +102,9 @@ public class RatingServiceImpl implements IRatingService {
 		ratingRepository.save(rating);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);

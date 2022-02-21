@@ -4,7 +4,7 @@ import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
 
 /**
- * CurvePoint converter interface.
+ * Converter CurvePoint to CurvePointDTO interface.
  * @author tipikae
  * @version 1.0
  *

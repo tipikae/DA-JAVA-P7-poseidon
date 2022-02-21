@@ -15,7 +15,7 @@ import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.exceptions.ConverterException;
 
 /**
- * Rating converter implementation.
+ * Converter Rating to RatingDTO.
  * @author tipikae
  * @version 1.0
  *

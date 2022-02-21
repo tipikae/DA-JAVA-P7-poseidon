@@ -1,8 +1,6 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -70,38 +68,32 @@ public class Trade {
 	/**
 	 * Security.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String security;
 	
 	/**
 	 * Status.
 	 */
-	@Size(max=10, message="{validation.name.size.too_long}")
 	private String status;
 	
 	/**
 	 * Trader.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String trader;
 	
 	/**
 	 * Benchmark.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String benchmark;
 	
 	/**
 	 * Book.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String book;
 	
 	/**
 	 * Creation name.
 	 */
     @Column(name = "creation_name")
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String creationName;
 	
 	/**
@@ -114,7 +106,6 @@ public class Trade {
 	 * Revision name.
 	 */
     @Column(name = "revision_name")
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String revisionName;
 	
 	/**
@@ -127,27 +118,23 @@ public class Trade {
 	 * Deal name.
 	 */
     @Column(name = "deal_name")
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String dealName;
 	
 	/**
 	 * Deal type.
 	 */
     @Column(name = "deal_type")
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String dealType;
 	
 	/**
 	 * Source list id.
 	 */
     @Column(name = "sourcelist_id")
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String sourceListId;
 	
 	/**
 	 * Side.
 	 */
-	@Size(max=125, message="{validation.name.size.too_long}")
 	private String side;
 
 	public Trade() {}

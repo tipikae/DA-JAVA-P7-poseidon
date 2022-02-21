@@ -34,6 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LOGGER.debug("loadUserByUsername: username=" + username);
 		Optional<User> optional = userRepository.findByUsername(username);

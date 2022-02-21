@@ -40,6 +40,9 @@ public class TradeServiceImpl implements ITradeService {
 	@Autowired
 	private ITradeDTOConverter tradeConverter;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public TradeDTO addItem(NewTradeDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: account=" + newDTO.getAccount() + ", type=" + newDTO.getType());
@@ -52,12 +55,18 @@ public class TradeServiceImpl implements ITradeService {
 		return tradeConverter.convertEntityToDTO(tradeRepository.save(trade));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<TradeDTO> getAllItems() throws ConverterException {
 		LOGGER.debug("Service: getAllItems");
 		return tradeConverter.convertListEntityToDTO(tradeRepository.findAll());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public TradeDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
@@ -70,6 +79,9 @@ public class TradeServiceImpl implements ITradeService {
 		return tradeConverter.convertEntityToDTO(optional.get());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateItem(Integer id, UpdateTradeDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
@@ -87,6 +99,9 @@ public class TradeServiceImpl implements ITradeService {
 		tradeRepository.save(trade);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);

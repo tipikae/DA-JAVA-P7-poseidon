@@ -6,14 +6,13 @@ package com.nnk.springboot.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.NewUserDTO;
@@ -49,6 +48,9 @@ public class UserServiceImpl implements IUserService {
 	@Value("${poseidon.user.role}")
 	private String USER_ROLE;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public UserDTO addItem(NewUserDTO newDTO) throws ItemAlreadyExistsException, ConverterException {
 		LOGGER.debug("Service: addItem: fullname=" + newDTO.getFullname() + ", password=" + newDTO.getPassword()
@@ -68,12 +70,18 @@ public class UserServiceImpl implements IUserService {
 		return userConverter.convertEntityToDTO(userRepository.save(user));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<UserDTO> getAllItems() throws ConverterException {
 		LOGGER.debug("Service: getAllItems");
 		return userConverter.convertListEntityToDTO(userRepository.findAll());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public UserDTO getItemById(Integer id) throws ItemNotFoundException, ConverterException {
 		LOGGER.debug("Service: getItemById: id=" + id);
@@ -86,6 +94,9 @@ public class UserServiceImpl implements IUserService {
 		return userConverter.convertEntityToDTO(optional.get());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateItem(Integer id, UpdateUserDTO updatedDTO) throws ItemNotFoundException {
 		LOGGER.debug("Service: updateItem: id=" + id);
@@ -102,6 +113,9 @@ public class UserServiceImpl implements IUserService {
 		userRepository.save(user);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteItem(Integer id) throws ItemNotFoundException {
 		LOGGER.debug("Service: deleteItem: id=" + id);

@@ -22,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+/**
+ * Rating controller.
+ * @author tipikae
+ * @version 1.0
+ *
+ */
 @Controller
 public class RatingController {
     
@@ -40,7 +45,7 @@ public class RatingController {
 	 * @return String
 	 */
     @RequestMapping("/rating/list")
-    public String home(HttpServletRequest request, Model model) {
+    public String home(Model model) {
     	LOGGER.debug("Getting all ratings");
     	try {
 			List<RatingDTO> dtos = ratingService.getAllItems();
@@ -58,12 +63,11 @@ public class RatingController {
 
     /**
      * Get add rating form.
-     * @param request
      * @param model
      * @return String
      */
     @GetMapping("/rating/add")
-    public String addRatingForm(HttpServletRequest request, Model model) {
+    public String addRatingForm(Model model) {
     	LOGGER.debug("Getting add rating form");
     	if(!model.containsAttribute("rating")) {
     		model.addAttribute("rating", new RatingDTO());
@@ -74,7 +78,6 @@ public class RatingController {
 
     /**
      * Add a rating.
-     * @param request
      * @param newRatingDTO
      * @param result
      * @param model
@@ -82,7 +85,6 @@ public class RatingController {
      */
     @PostMapping("/rating/validate")
     public String validate(
-    		HttpServletRequest request, 
     		@ModelAttribute("rating") @Valid NewRatingDTO newRatingDTO, 
     		BindingResult result, 
     		Model model) {
@@ -114,14 +116,12 @@ public class RatingController {
 
     /**
      * Get rating update form.
-     * @param request
      * @param id
      * @param model
      * @return String
      */
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	
@@ -145,7 +145,6 @@ public class RatingController {
 
     /**
      * Update a rating.
-     * @param request
      * @param id
      * @param updateRatingDTO
      * @param result
@@ -154,7 +153,6 @@ public class RatingController {
      */
     @PostMapping("/rating/update/{id}")
     public String updateRating(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		@ModelAttribute("rating") @Valid UpdateRatingDTO updateRatingDTO,
             BindingResult result, 
@@ -181,9 +179,14 @@ public class RatingController {
 		}
     }
 
+    /**
+     * Delete a rating.
+     * @param id
+     * @param model
+     * @return String
+     */
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(
-    		HttpServletRequest request, 
     		@PathVariable("id") @Positive Integer id, 
     		Model model) {
     	

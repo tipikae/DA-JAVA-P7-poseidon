@@ -15,7 +15,7 @@ import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.exceptions.ConverterException;
 
 /**
- * User DTO converter implementation.
+ * Converter User to UserDTO.
  * @author tipikae
  * @version 1.0
  *
