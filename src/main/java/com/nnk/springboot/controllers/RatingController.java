@@ -45,6 +45,8 @@ public class RatingController {
     	try {
 			List<RatingDTO> dtos = ratingService.getAllItems();
 			model.addAttribute("ratings", dtos);
+			LOGGER.info("Show all Ratings.");
+	        return "rating/list";
 		} catch (ConverterException e) {
 			LOGGER.debug("Home: ConverterException: " + e.getMessage());
 			return "error/400";
@@ -52,7 +54,6 @@ public class RatingController {
 			LOGGER.debug("Home: Exception: " + e.getMessage());
 			return "error/400";
 		}
-        return "rating/list";
     }
 
     /**
@@ -67,6 +68,7 @@ public class RatingController {
     	if(!model.containsAttribute("rating")) {
     		model.addAttribute("rating", new RatingDTO());
     	}
+		LOGGER.info("Show add Rating form.");
         return "rating/add";
     }
 
@@ -94,12 +96,13 @@ public class RatingController {
     	}
     	
     	try {
-			RatingDTO ratingPoint = ratingService.addItem(newRatingDTO);
-			model.addAttribute("rating", ratingPoint);
+			RatingDTO rating = ratingService.addItem(newRatingDTO);
+			model.addAttribute("rating", rating);
+			LOGGER.info("New Rating added: id=" + rating.getId());
 	    	return "redirect:/rating/list?success=New Rating added.";
 		} catch (ItemAlreadyExistsException e) {
 			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
-			return "redirect:/rating/list?error=Unable to process new Rating.";
+			return "redirect:/rating/list?error=Rating already exists.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
 			return "redirect:/rating/list?error=Unable to process new Rating.";
@@ -126,6 +129,7 @@ public class RatingController {
     	try {
 			RatingDTO rating = ratingService.getItemById(id);
 			model.addAttribute("rating", rating);
+			LOGGER.info("Show update Rating form.");
 			return "rating/update";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
@@ -166,6 +170,7 @@ public class RatingController {
     	
     	try {
 			ratingService.updateItem(id, updateRatingDTO);
+			LOGGER.info("Rating updated: id=" + id);
 	        return "redirect:/rating/list?success=Rating has been updated.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateRating: NotFoundException: " + e.getMessage());
@@ -185,6 +190,7 @@ public class RatingController {
     	LOGGER.debug("Deleting a rating");
     	try {
 			ratingService.deleteItem(id);
+			LOGGER.info("Rating deleted: id=" + id);
 	        return "redirect:/rating/list?success=Rating has been deleted.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteRating: NotFoundException: " + e.getMessage());

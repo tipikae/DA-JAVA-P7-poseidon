@@ -47,6 +47,8 @@ public class CurveController {
     	try {
 			List<CurvePointDTO> dtos = curveService.getAllItems();
 			model.addAttribute("curvePoints", dtos);
+			LOGGER.info("Show all CurvePoints.");
+	        return "curvePoint/list";
 		} catch (ConverterException e) {
 			LOGGER.debug("Home: ConverterException: " + e.getMessage());
 			return "error/400";
@@ -54,7 +56,6 @@ public class CurveController {
 			LOGGER.debug("Home: Exception: " + e.getMessage());
 			return "error/400";
 		}
-        return "curvePoint/list";
     }
 
     /**
@@ -69,6 +70,7 @@ public class CurveController {
     	if(!model.containsAttribute("curvePoint")) {
     		model.addAttribute("curvePoint", new CurvePointDTO());
     	}
+		LOGGER.info("Show add CurvePoint form.");
         return "curvePoint/add";
     }
 
@@ -98,10 +100,11 @@ public class CurveController {
     	try {
 			CurvePointDTO curvePoint = curveService.addItem(newCurvePointDTO);
 			model.addAttribute("curvePoint", curvePoint);
+			LOGGER.info("New CurvePoint added: id=" + curvePoint.getId());
 	    	return "redirect:/curvePoint/list?success=New CurvePoint added.";
 		} catch (ItemAlreadyExistsException e) {
 			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
-			return "redirect:/curvePoint/list?error=Unable to process new CurvePoint.";
+			return "redirect:/curvePoint/list?error=CurvePoint already exists.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
 			return "redirect:/curvePoint/list?error=Unable to process new CurvePoint.";
@@ -128,6 +131,7 @@ public class CurveController {
     	try {
 			CurvePointDTO curvePoint = curveService.getItemById(id);
 			model.addAttribute("curvePoint", curvePoint);
+			LOGGER.info("Show update CurvePoint form.");
 			return "curvePoint/update";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
@@ -168,6 +172,7 @@ public class CurveController {
     	
     	try {
 			curveService.updateItem(id, updateCurvePointDTO);
+			LOGGER.info("CurvePoint updated: id=" + id);
 	        return "redirect:/curvePoint/list?success=CurvePoint has been updated.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("UpdateCurve: NotFoundException: " + e.getMessage());
@@ -194,6 +199,7 @@ public class CurveController {
     	LOGGER.debug("Deleting a curvePoint");
     	try {
 			curveService.deleteItem(id);
+			LOGGER.info("CurvePoint deleted: id=" + id);
 	        return "redirect:/curvePoint/list?success=CurvePoint has been deleted.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("DeleteCurve: NotFoundException: " + e.getMessage());

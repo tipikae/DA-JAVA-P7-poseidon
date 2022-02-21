@@ -46,6 +46,8 @@ public class UserController {
 		try {
 			List<UserDTO> dtos = userService.getAllItems();
 	        model.addAttribute("users", dtos);
+			LOGGER.info("Show all Users.");
+	        return "user/list";
 		} catch (ConverterException e) {
 			LOGGER.debug("Home: ConverterException: " + e.getMessage());
 			return "error/400";
@@ -53,7 +55,6 @@ public class UserController {
 			LOGGER.debug("Home: Exception: " + e.getMessage());
 			return "error/400";
 		}
-        return "user/list";
     }
 
     /**
@@ -68,6 +69,7 @@ public class UserController {
     	if(!model.containsAttribute("user")) {
     		model.addAttribute("user", new UserDTO());
     	}
+		LOGGER.info("Show add User form.");
         return "user/add";
     }
 
@@ -97,6 +99,7 @@ public class UserController {
     	try {
 			UserDTO user = userService.addItem(newUserDTO);
 			model.addAttribute("user", user);
+			LOGGER.info("New User added: id=" + user.getId());
 	    	return "redirect:/user/list?success=New User added.";
 		} catch (ItemAlreadyExistsException e) {
 			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
@@ -128,6 +131,7 @@ public class UserController {
 		try {
 			UserDTO user = userService.getItemById(id);
 			model.addAttribute("user", user);
+			LOGGER.info("Show update User form.");
 			return "user/update";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
@@ -168,6 +172,7 @@ public class UserController {
     	
     	try {
     		userService.updateItem(id, updateUserDTO);
+			LOGGER.info("User updated: id=" + id);
             return "redirect:/user/list?success=User has been updated.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateUser: NotFoundException: " + e.getMessage());
@@ -194,6 +199,7 @@ public class UserController {
     	LOGGER.debug("Deleting a user");
     	try {
     		userService.deleteItem(id);
+			LOGGER.info("User deleted: id=" + id);
             return "redirect:/user/list?success=User has been deleted.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteUser: NotFoundException: " + e.getMessage());

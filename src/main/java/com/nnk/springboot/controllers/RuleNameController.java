@@ -45,6 +45,8 @@ public class RuleNameController {
     	try {
 			List<RuleNameDTO> dtos = ruleNameService.getAllItems();
 			model.addAttribute("ruleNames", dtos);
+			LOGGER.info("Show all RuleNames.");
+	        return "ruleName/list";
 		} catch (ConverterException e) {
 			LOGGER.debug("Home: ConverterException: " + e.getMessage());
 			return "error/400";
@@ -52,7 +54,6 @@ public class RuleNameController {
 			LOGGER.debug("Home: Exception: " + e.getMessage());
 			return "error/400";
 		}
-        return "ruleName/list";
     }
 
     /**
@@ -67,6 +68,7 @@ public class RuleNameController {
     	if(!model.containsAttribute("ruleName")) {
     		model.addAttribute("ruleName", new RuleNameDTO());
     	}
+		LOGGER.info("Show add RuleName form.");
         return "ruleName/add";
     }
 
@@ -96,10 +98,11 @@ public class RuleNameController {
     	try {
 			RuleNameDTO ruleName = ruleNameService.addItem(newRuleNameDTO);
 			model.addAttribute("ruleName", ruleName);
+			LOGGER.info("New RuleName added: id=" + ruleName.getId());
 	        return "redirect:/ruleName/list?success=New RuleName added.";
 		} catch (ItemAlreadyExistsException e) {
 			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
-			return "redirect:/ruleName/list?error=Unable to process new RuleName.";
+			return "redirect:/ruleName/list?error=RuleName already exists.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
 			return "redirect:/ruleName/list?error=Unable to process new RuleName.";
@@ -126,6 +129,7 @@ public class RuleNameController {
     	try {
 			RuleNameDTO ruleName = ruleNameService.getItemById(id);
 			model.addAttribute("ruleName", ruleName);
+			LOGGER.info("Show update RuleName form.");
 			return "ruleName/update";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
@@ -166,6 +170,7 @@ public class RuleNameController {
     	
     	try {
     		ruleNameService.updateItem(id, updateRuleNameDTO);
+			LOGGER.info("RuleName updated: id=" + id);
             return "redirect:/ruleName/list?success=RuleName has been updated.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateRuleName: NotFoundException: " + e.getMessage());
@@ -192,6 +197,7 @@ public class RuleNameController {
     	LOGGER.debug("Deleting a ruleName");
     	try {
     		ruleNameService.deleteItem(id);
+			LOGGER.info("RuleName deleted: id=" + id);
             return "redirect:/ruleName/list?success=RuleName has been deleted.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteRuleName: NotFoundException: " + e.getMessage());

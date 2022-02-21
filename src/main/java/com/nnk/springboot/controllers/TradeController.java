@@ -46,6 +46,8 @@ public class TradeController {
     	try {
 			List<TradeDTO> dtos = tradeService.getAllItems();
 			model.addAttribute("trades", dtos);
+			LOGGER.info("Show all Trades.");
+	        return "trade/list";
 		} catch (ConverterException e) {
 			LOGGER.debug("Home: ConverterException: " + e.getMessage());
 			return "error/400";
@@ -53,7 +55,6 @@ public class TradeController {
 			LOGGER.debug("Home: Exception: " + e.getMessage());
 			return "error/400";
 		}
-        return "trade/list";
     }
 
     /**
@@ -68,6 +69,7 @@ public class TradeController {
     	if(!model.containsAttribute("trade")) {
     		model.addAttribute("trade", new TradeDTO());
     	}
+		LOGGER.info("Show add Trade form.");
         return "trade/add";
     }
 
@@ -97,10 +99,11 @@ public class TradeController {
     	try {
 			TradeDTO trade = tradeService.addItem(newTradeDTO);
 			model.addAttribute("trade", trade);
+			LOGGER.info("New Trade added: id=" + trade.getTradeId());
 	        return "redirect:/trade/list?success=New Trade added.";
 		} catch (ItemAlreadyExistsException e) {
 			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
-			return "redirect:/trade/list?error=Unable to process new Trade.";
+			return "redirect:/trade/list?error=Trade already exists.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
 			return "redirect:/trade/list?error=Unable to process new Trade.";
@@ -127,6 +130,7 @@ public class TradeController {
     	try {
 			TradeDTO trade = tradeService.getItemById(id);
 			model.addAttribute("trade", trade);
+			LOGGER.info("Show update Trade form.");
 			return "trade/update";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
@@ -167,6 +171,7 @@ public class TradeController {
     	
     	try {
     		tradeService.updateItem(id, updateTradeDTO);
+			LOGGER.info("Trade updated: id=" + id);
             return "redirect:/trade/list?success=Trade has been updated.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("updateTrade: NotFoundException: " + e.getMessage());
@@ -193,6 +198,7 @@ public class TradeController {
     	LOGGER.debug("Deleting a trade");
     	try {
     		tradeService.deleteItem(id);
+			LOGGER.info("Trade deleted: id=" + id);
             return "redirect:/trade/list?success=Trade has been deleted.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("deleteTrade: NotFoundException: " + e.getMessage());

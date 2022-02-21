@@ -46,6 +46,8 @@ public class BidListController {
     	try {
 			List<BidListDTO> dtos = bidListService.getAllItems();
 			model.addAttribute("bidLists", dtos);
+			LOGGER.info("Show all BidLists.");
+	        return "bidList/list";
 		} catch (ConverterException e) {
 			LOGGER.debug("Home: ConverterException: " + e.getMessage());
 			return "error/400";
@@ -53,7 +55,6 @@ public class BidListController {
 			LOGGER.debug("Home: Exception: " + e.getMessage());
 			return "error/400";
 		}
-        return "bidList/list";
     }
 
     /**
@@ -68,6 +69,7 @@ public class BidListController {
     	if(!model.containsAttribute("bidList")) {
     		model.addAttribute("bidList", new BidListDTO());
     	}
+		LOGGER.info("Show add BidList form.");
         return "bidList/add";
     }
 
@@ -97,10 +99,11 @@ public class BidListController {
     	try {
 			BidListDTO bidList = bidListService.addItem(newBidListDTO);
 			model.addAttribute("bidList", bidList);
+			LOGGER.info("New Bidlist added: id=" + bidList.getBidListId());
 	    	return "redirect:/bidList/list?success=New BidList added.";
 		} catch (ItemAlreadyExistsException e) {
 			LOGGER.debug("Validate: ItemAlreadyExistsException: " + e.getMessage());
-			return "redirect:/bidList/list?error=Unable to process new BidList.";
+			return "redirect:/bidList/list?error=BidList already exists.";
 		} catch (ConverterException e) {
 			LOGGER.debug("Validate: ConverterException: " + e.getMessage());
 			return "redirect:/bidList/list?error=Unable to process new BidList.";
@@ -127,6 +130,7 @@ public class BidListController {
     	try {
 			BidListDTO bidList = bidListService.getItemById(id);
 			model.addAttribute("bidList", bidList);
+			LOGGER.info("Show update BidList form.");
 			return "bidList/update";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("ShowUpdateForm: NotFoundException: " + e.getMessage());
@@ -167,6 +171,7 @@ public class BidListController {
     	
     	try {
 			bidListService.updateItem(id, updateBidListDTO);
+			LOGGER.info("Bidlist updated: id=" + id);
 	        return "redirect:/bidList/list?success=BidList has been updated.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("UpdateBid: NotFoundException: " + e.getMessage());
@@ -186,6 +191,7 @@ public class BidListController {
     	LOGGER.debug("Deleting a bidlist");
     	try {
 			bidListService.deleteItem(id);
+			LOGGER.info("Bidlist deleted: id=" + id);
 	        return "redirect:/bidList/list?success=BidList has been deleted.";
 		} catch (ItemNotFoundException e) {
 			LOGGER.debug("DeleteBid: NotFoundException: " + e.getMessage());
