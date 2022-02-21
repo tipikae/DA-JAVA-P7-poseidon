@@ -6,9 +6,12 @@ package com.nnk.springboot.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,7 @@ import com.nnk.springboot.repositories.UserRepository;
  *
  */
 @Service
+@Transactional
 public class UserServiceImpl implements IUserService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -41,6 +45,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Autowired
 	private IUserDTOConverter userConverter;
+	
+	@Value("${poseidon.user.role}")
+	private String USER_ROLE;
 
 	@Override
 	public UserDTO addItem(NewUserDTO newDTO) throws ServiceException, ConverterException {
@@ -54,7 +61,7 @@ public class UserServiceImpl implements IUserService {
 		User user = new User();
 		user.setFullname(newDTO.getFullname());
 		user.setPassword(passwordEncoder.encode(newDTO.getPassword()));
-		user.setRole("USER");
+		user.setRole(USER_ROLE);
 		user.setUsername(newDTO.getUsername());
 		
 		return userConverter.convertEntityToDTO(userRepository.save(user));

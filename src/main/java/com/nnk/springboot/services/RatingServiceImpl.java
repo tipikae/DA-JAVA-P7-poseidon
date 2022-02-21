@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.NewRatingDTO;
@@ -28,6 +29,7 @@ import com.nnk.springboot.repositories.RatingRepository;
  *
  */
 @Service
+@Transactional
 public class RatingServiceImpl implements IRatingService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(RatingServiceImpl.class);

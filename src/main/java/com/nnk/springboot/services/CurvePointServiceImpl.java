@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
@@ -27,6 +28,7 @@ import com.nnk.springboot.repositories.CurvePointRepository;
  *
  */
 @Service
+@Transactional
 public class CurvePointServiceImpl implements ICurvePointService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CurvePointServiceImpl.class);
