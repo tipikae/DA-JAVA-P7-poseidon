@@ -58,10 +58,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authenticated()
 			.and()
 			.formLogin()
-			//.loginPage("/login")
             .successHandler(myAuthenticationSuccessHandler())
             .and()
-            .oauth2Login();
+            .oauth2Login()
+            .defaultSuccessUrl("/bidList/list")
+            .failureUrl("/");
 		http.exceptionHandling().accessDeniedPage("/error");
 	}
 
