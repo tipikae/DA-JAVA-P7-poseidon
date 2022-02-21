@@ -145,7 +145,7 @@ class UserControllerTest {
 
 	@WithMockUser(roles = {"ADMIN"})
 	@Test
-	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
+	void validateReturnsFormWithErrorWhenAlreadyExistsException() throws Exception {
 		doThrow(ItemAlreadyExistsException.class).when(userService).addItem(any(NewUserDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("user", rightUserDTO))

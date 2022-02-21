@@ -136,12 +136,12 @@ class CurveControllerTest {
 
 	@WithMockUser
 	@Test
-	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
+	void validateReturnsFormWithErrorWhenAlreadyExistsException() throws Exception {
 		doThrow(ItemAlreadyExistsException.class).when(curveService).addItem(any(NewCurvePointDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", rightCurveDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new CurvePoint."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=CurvePoint already exists."));
 	}
 
 	@WithMockUser

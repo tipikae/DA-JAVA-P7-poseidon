@@ -142,12 +142,12 @@ class RuleNameControllerTest {
 
 	@WithMockUser
 	@Test
-	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
+	void validateReturnsFormWithErrorWhenAlreadyExistsException() throws Exception {
 		doThrow(ItemAlreadyExistsException.class).when(ruleNameService).addItem(any(NewRuleNameDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("ruleName", rightRuleNameDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new RuleName."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=RuleName already exists."));
 	}
 
 	@WithMockUser

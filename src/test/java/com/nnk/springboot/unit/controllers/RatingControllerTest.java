@@ -138,12 +138,12 @@ class RatingControllerTest {
 
 	@WithMockUser
 	@Test
-	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
+	void validateReturnsFormWithErrorWhenAlreadyExistsException() throws Exception {
 		doThrow(ItemAlreadyExistsException.class).when(ratingService).addItem(any(NewRatingDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("rating", rightRatingDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new Rating."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Rating already exists."));
 	}
 
 	@WithMockUser

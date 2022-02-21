@@ -136,12 +136,12 @@ class TradeControllerTest {
 
 	@WithMockUser
 	@Test
-	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
+	void validateReturnsFormWithErrorWhenAlreadyExistsException() throws Exception {
 		doThrow(ItemAlreadyExistsException.class).when(tradeService).addItem(any(NewTradeDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("trade", rightTradeDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Unable to process new Trade."));
+			.andExpect(view().name("redirect:" + ROOT_REQUEST + "/list?error=Trade already exists."));
 	}
 
 	@WithMockUser

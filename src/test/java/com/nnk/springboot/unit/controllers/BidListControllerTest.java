@@ -133,12 +133,12 @@ class BidListControllerTest {
 
 	@WithMockUser
 	@Test
-	void validateReturnsFormWithErrorWhenServiceException() throws Exception {
+	void validateReturnsFormWithErrorWhenAlreadyExistsException() throws Exception {
 		doThrow(ItemAlreadyExistsException.class).when(bidListService).addItem(any(NewBidListDTO.class));
 		mockMvc.perform(post("/bidList/validate")
 				.flashAttr("bidList", rightBidListDTO))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/bidList/list?error=Unable to process new BidList."));
+			.andExpect(view().name("redirect:/bidList/list?error=BidList already exists."));
 	}
 
 	@WithMockUser
