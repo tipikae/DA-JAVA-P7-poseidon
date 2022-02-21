@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,36 +64,36 @@ class CurvePointServiceTest {
 		curvePointDTOs = new ArrayList<>();
 		
 		rightNewCurvePointDTO.setCurveId(10);
-		rightNewCurvePointDTO.setTerm(10d);
-		rightNewCurvePointDTO.setValue(10d);
+		rightNewCurvePointDTO.setTerm(new BigDecimal(10));
+		rightNewCurvePointDTO.setValue(new BigDecimal(10));
 		
 		wrongNewCurvePointDTO.setCurveId(20);
-		wrongNewCurvePointDTO.setTerm(0d);
-		wrongNewCurvePointDTO.setValue(20d);
+		wrongNewCurvePointDTO.setTerm(new BigDecimal(0));
+		wrongNewCurvePointDTO.setValue(new BigDecimal(20));
 		
 		updatedCurvePointDTO.setCurveId(20);
-		updatedCurvePointDTO.setTerm(50d);
-		updatedCurvePointDTO.setValue(20d);
+		updatedCurvePointDTO.setTerm(new BigDecimal(50));
+		updatedCurvePointDTO.setValue(new BigDecimal(20));
 		
 		curvePoint1.setCurveId(10);
 		curvePoint1.setId(1);
-		curvePoint1.setTerm(10d);
-		curvePoint1.setValue(10d);
+		curvePoint1.setTerm(new BigDecimal(10));
+		curvePoint1.setValue(new BigDecimal(20));
 		
 		curvePoint2.setCurveId(20);
 		curvePoint2.setId(2);
-		curvePoint2.setTerm(20d);
-		curvePoint2.setValue(20d);
+		curvePoint2.setTerm(new BigDecimal(20));
+		curvePoint2.setValue(new BigDecimal(20));
 		
 		curvePointDTO1.setCurveId(10);
 		curvePointDTO1.setId(1);
-		curvePointDTO1.setTerm(10d);
-		curvePointDTO1.setValue(10d);
+		curvePointDTO1.setTerm(new BigDecimal(10));
+		curvePointDTO1.setValue(new BigDecimal(10));
 		
 		curvePointDTO2.setCurveId(20);
 		curvePointDTO2.setId(2);
-		curvePointDTO2.setTerm(20d);
-		curvePointDTO2.setValue(20d);
+		curvePointDTO2.setTerm(new BigDecimal(20));
+		curvePointDTO2.setValue(new BigDecimal(20));
 		
 		curvePoints.add(curvePoint1);
 		curvePoints.add(curvePoint2);

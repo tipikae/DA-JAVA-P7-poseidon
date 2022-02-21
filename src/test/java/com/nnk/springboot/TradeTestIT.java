@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class TradeTestIT {
 	@Transactional
 	@Test
 	public void tradeTest() {
-		Trade trade = new Trade("Trade Account", "Type", 10d);
+		Trade trade = new Trade("Trade Account", "Type", new BigDecimal(10));
 
 		// Save
 		trade = tradeRepository.save(trade);

@@ -3,6 +3,7 @@
  */
 package com.nnk.springboot.dtoconverters;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class CurvePointDTOConverterImpl implements ICurvePointDTOConverter {
 	 */
 	@Override
 	public CurvePointDTO convertEntityToDTO(CurvePoint curvePoint) throws ConverterException {
-		if(curvePoint.getTerm() == 0.0 || curvePoint.getValue() == 0.0) {
+		if(curvePoint.getTerm().compareTo(new BigDecimal(0)) == 0 || 
+				curvePoint.getValue().compareTo(new BigDecimal(0)) == 0) {
 			LOGGER.debug("convertEntityToDTO: ConverterException: term=" 
 					+ curvePoint.getTerm() + ", value=" + curvePoint.getValue());
 			throw new ConverterException("Zero field");

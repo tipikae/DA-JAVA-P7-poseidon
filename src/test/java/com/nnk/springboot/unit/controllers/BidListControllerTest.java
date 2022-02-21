@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -59,7 +60,7 @@ class BidListControllerTest {
 	private static void setUp() {
 		rightBidListDTO = new NewBidListDTO();
 		rightBidListDTO.setAccount("account1");
-		rightBidListDTO.setBidQuantity(10d);
+		rightBidListDTO.setBidQuantity(new BigDecimal(10));
 		rightBidListDTO.setType("type1");
 	}
 
@@ -127,7 +128,7 @@ class BidListControllerTest {
 	void validateReturnsFormWithErrorWhenValidationError() throws Exception {
 		NewBidListDTO wrongBidListDTO = new NewBidListDTO();
 		wrongBidListDTO.setAccount("");
-		wrongBidListDTO.setBidQuantity(10d);
+		wrongBidListDTO.setBidQuantity(new BigDecimal(10));
 		wrongBidListDTO.setType("type1");
 		mockMvc.perform(post("/bidList/validate")
 				.flashAttr("bidList", wrongBidListDTO))
@@ -163,7 +164,7 @@ class BidListControllerTest {
 	void showUpdateFormReturnsFormWhenOk() throws Exception {
 		BidListDTO bidListDTO = new BidListDTO();
 		bidListDTO.setAccount("account1");
-		bidListDTO.setBidQuantity(10d);
+		bidListDTO.setBidQuantity(new BigDecimal(10));
 		bidListDTO.setBidListId(1);
 		bidListDTO.setType("type1");
 		when(bidListService.getItemById(anyInt())).thenReturn(bidListDTO);
@@ -198,7 +199,7 @@ class BidListControllerTest {
 	void updateBidReturnsListWhenOk() throws Exception {
 		UpdateBidListDTO rightUpdateBidListDTO = new UpdateBidListDTO();
 		rightUpdateBidListDTO.setAccount("account1");
-		rightUpdateBidListDTO.setBidQuantity(20d);
+		rightUpdateBidListDTO.setBidQuantity(new BigDecimal(20));
 		rightUpdateBidListDTO.setType("type1");
 		mockMvc.perform(post("/bidList/update/1")
 				.flashAttr("bidList", rightUpdateBidListDTO))
@@ -211,7 +212,7 @@ class BidListControllerTest {
 	void updateBidReturnsFormWithErrorWhenValidationError() throws Exception {
 		UpdateBidListDTO wrongUpdateBidListDTO = new UpdateBidListDTO();
 		wrongUpdateBidListDTO.setAccount("account1");
-		wrongUpdateBidListDTO.setBidQuantity(0);
+		wrongUpdateBidListDTO.setBidQuantity(new BigDecimal(0));
 		wrongUpdateBidListDTO.setType("type1");
 		mockMvc.perform(post("/bidList/update/1")
 				.flashAttr("bidList", wrongUpdateBidListDTO))
@@ -224,7 +225,7 @@ class BidListControllerTest {
 	void updateBidReturnsError404WhenNotFoundException() throws Exception {
 		UpdateBidListDTO rightUpdateBidListDTO = new UpdateBidListDTO();
 		rightUpdateBidListDTO.setAccount("account1");
-		rightUpdateBidListDTO.setBidQuantity(20d);
+		rightUpdateBidListDTO.setBidQuantity(new BigDecimal(20));
 		rightUpdateBidListDTO.setType("type1");
 		doThrow(ItemNotFoundException.class).when(bidListService).updateItem(anyInt(), any(UpdateBidListDTO.class));
 		mockMvc.perform(post("/bidList/update/10")

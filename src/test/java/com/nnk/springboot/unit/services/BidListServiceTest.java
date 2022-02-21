@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,34 +64,34 @@ class BidListServiceTest {
 		bidListDTOs = new ArrayList<>();
 		
 		rightNewBidListDTO.setAccount("account1");
-		rightNewBidListDTO.setBidQuantity(100);
+		rightNewBidListDTO.setBidQuantity(new BigDecimal(100));
 		rightNewBidListDTO.setType("type1");
 		
 		wrongNewBidListDTO.setAccount("account1");
-		wrongNewBidListDTO.setBidQuantity(100);
+		wrongNewBidListDTO.setBidQuantity(new BigDecimal(100));
 		wrongNewBidListDTO.setType("type1");
 		
 		updatedBidListDTO.setAccount("account1");
-		updatedBidListDTO.setBidQuantity(500);
+		updatedBidListDTO.setBidQuantity(new BigDecimal(500));
 		updatedBidListDTO.setType("type1");
 		
 		bidList1.setAccount("account1");
-		bidList1.setBidQuantity(100);
+		bidList1.setBidQuantity(new BigDecimal(100));
 		bidList1.setBidListId(1);
 		bidList1.setType("type1");
 		
 		bidList2.setAccount("account2");
-		bidList2.setBidQuantity(200);
+		bidList2.setBidQuantity(new BigDecimal(200));
 		bidList2.setBidListId(2);
 		bidList2.setType("type2");
 		
 		bidListDTO1.setAccount("account1");
-		bidListDTO1.setBidQuantity(100);
+		bidListDTO1.setBidQuantity(new BigDecimal(100));
 		bidListDTO1.setBidListId(1);
 		bidListDTO1.setType("type1");
 		
 		bidListDTO2.setAccount("account2");
-		bidListDTO2.setBidQuantity(200);
+		bidListDTO2.setBidQuantity(new BigDecimal(200));
 		bidListDTO2.setBidListId(2);
 		bidListDTO2.setType("type2");
 		

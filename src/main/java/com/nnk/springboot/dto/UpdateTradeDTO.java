@@ -4,6 +4,7 @@
 package com.nnk.springboot.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -44,5 +45,5 @@ public class UpdateTradeDTO implements Serializable {
     @NotNull(message = "Buy quantity is mandatory.")
 	@Positive(message = "Buy quantity must be strictly positive.")
 	@Digits(integer = 10, fraction = 2, message = "Buy quantity must be a decimal number.")
-	private double buyQuantity;
+	private BigDecimal buyQuantity;
 }

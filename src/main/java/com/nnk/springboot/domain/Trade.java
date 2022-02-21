@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -39,25 +40,25 @@ public class Trade {
 	 * Buy quantity.
 	 */
     @Column(name = "buy_quantity")
-	private double buyQuantity;
+	private BigDecimal buyQuantity;
 	
 	/**
 	 * Sell quantity.
 	 */
     @Column(name = "sell_quantity")
-	private double sellQuantity;
+	private BigDecimal sellQuantity;
 	
 	/**
 	 * Buy price.
 	 */
     @Column(name = "buy_price")
-	private double buyPrice;
+	private BigDecimal buyPrice;
 	
 	/**
 	 * Sell price.
 	 */
     @Column(name = "sell_price")
-	private double sellPrice;
+	private BigDecimal sellPrice;
 	
 	/**
 	 * Trade date.
@@ -139,7 +140,7 @@ public class Trade {
 
 	public Trade() {}
 
-	public Trade(String account, String type, double buyQuantity) {
+	public Trade(String account, String type, BigDecimal buyQuantity) {
 		this.account = account;
 		this.type = type;
 		this.buyQuantity = buyQuantity;

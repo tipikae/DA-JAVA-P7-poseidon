@@ -1,6 +1,7 @@
 package com.nnk.springboot.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import lombok.Data;
 
@@ -28,10 +29,10 @@ public class CurvePointDTO implements Serializable {
 	/**
 	 * Term.
 	 */
-	private double term;
+	private BigDecimal term;
 	
 	/**
 	 * Value.
 	 */
-	private double value;
+	private BigDecimal value;
 }
