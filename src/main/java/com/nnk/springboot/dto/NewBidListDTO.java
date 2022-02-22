@@ -3,10 +3,8 @@ package com.nnk.springboot.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -41,14 +39,7 @@ public class NewBidListDTO implements Serializable {
      * Bid quantity.
      */
     @NotNull(message = "Bid quantity is mandatory.")
-	@Positive(message = "Quantity must be positive.")
-	@Digits(integer = 10, fraction = 2, message = "Quantity must be a decimal number.")
-    /*@NotBlank(message = "Bid quantity is mandatory.")
-    @Size(max = 30, message = "{validation.name.size.too_long}")
-    @Pattern(
-    	regexp = "^[0-9.,]+$",
-    	message = "Quantity must be an integer or decimal number")
-	@Digits(integer = 10, fraction = 2, message = "Quantity must be a decimal number.")*/
+	@Positive(message = "Bid quantity must be positive.")
 	private BigDecimal bidQuantity;
 	
 }
