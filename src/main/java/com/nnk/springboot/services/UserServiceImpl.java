@@ -47,6 +47,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Value("${poseidon.user.role}")
 	private String USER_ROLE;
+	
+	@Value("${poseidon.admin.role}")
+	private String ADMIN_ROLE;
 
 	/**
 	 * {@inheritDoc}
@@ -64,7 +67,7 @@ public class UserServiceImpl implements IUserService {
 		User user = new User();
 		user.setFullname(newDTO.getFullname());
 		user.setPassword(passwordEncoder.encode(newDTO.getPassword()));
-		user.setRole(USER_ROLE);
+		user.setRole(setRole(newDTO.getRole()));
 		user.setUsername(newDTO.getUsername());
 		
 		return userConverter.convertEntityToDTO(userRepository.save(user));
@@ -109,6 +112,7 @@ public class UserServiceImpl implements IUserService {
 		User user = optional.get();
 		user.setFullname(updatedDTO.getFullname());
 		user.setUsername(updatedDTO.getUsername());
+		user.setRole(setRole(updatedDTO.getRole()));
 		
 		userRepository.save(user);
 	}
@@ -126,6 +130,14 @@ public class UserServiceImpl implements IUserService {
 		}
 
 		userRepository.delete(optional.get());
+	}
+	
+	private String setRole(String roleDTO) {
+		if(roleDTO.equals(ADMIN_ROLE)) {
+			return ADMIN_ROLE;
+		} else {
+			return USER_ROLE;
+		}
 	}
 
 }
