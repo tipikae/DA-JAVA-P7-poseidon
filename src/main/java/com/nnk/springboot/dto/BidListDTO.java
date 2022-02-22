@@ -1,6 +1,7 @@
 package com.nnk.springboot.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import lombok.Data;
 
@@ -33,6 +34,6 @@ public class BidListDTO implements Serializable {
 	/**
 	 * Bid quantity.
 	 */
-	private double bidQuantity;
+	private BigDecimal bidQuantity;
 	
 }

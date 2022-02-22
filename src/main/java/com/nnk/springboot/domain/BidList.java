@@ -2,6 +2,7 @@ package com.nnk.springboot.domain;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.*;
@@ -39,23 +40,23 @@ public class BidList {
      * BiQuantity.
      */
     @Column(name = "bid_quantity")
-    private double bidQuantity;
+    private BigDecimal bidQuantity;
 
     /**
      * AskQuantity.
      */
     @Column(name = "ask_quantity")
-    private double askQuantity;
+    private BigDecimal askQuantity;
 
     /**
      * Bid.
      */
-    private double bid;
+    private BigDecimal bid;
 
     /**
      * Ask.
      */
-    private double ask;
+    private BigDecimal ask;
 
     /**
      * Benchmark.
@@ -142,7 +143,7 @@ public class BidList {
     
     public BidList() {}
     
-    public BidList(String account, String type, double bidQuantity) {
+    public BidList(String account, String type, BigDecimal bidQuantity) {
     	this.account = account;
     	this.type = type;
     	this.bidQuantity = bidQuantity;

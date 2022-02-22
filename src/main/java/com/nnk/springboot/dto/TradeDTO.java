@@ -4,6 +4,7 @@
 package com.nnk.springboot.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import lombok.Data;
 
@@ -36,5 +37,5 @@ public class TradeDTO implements Serializable {
 	/**
 	 * Buy quantity.
 	 */
-	private double buyQuantity;
+	private BigDecimal buyQuantity;
 }

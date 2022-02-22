@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,35 +65,35 @@ class TradeServiceTest {
 		
 		rightNewTradeDTO.setAccount("account1");
 		rightNewTradeDTO.setType("type1");
-		rightNewTradeDTO.setBuyQuantity(10d);
+		rightNewTradeDTO.setBuyQuantity(new BigDecimal(10));
 		
 		wrongNewTradeDTO.setAccount("");
 		wrongNewTradeDTO.setType("type0");
-		wrongNewTradeDTO.setBuyQuantity(10d);
+		wrongNewTradeDTO.setBuyQuantity(new BigDecimal(10));
 		
 		updatedTradeDTO.setAccount("account1");
 		updatedTradeDTO.setType("type10");
-		updatedTradeDTO.setBuyQuantity(10d);
+		updatedTradeDTO.setBuyQuantity(new BigDecimal(10));
 		
 		trade1.setTradeId(1);
 		trade1.setAccount("account1");
 		trade1.setType("type1");
-		trade1.setBuyQuantity(10d);
+		trade1.setBuyQuantity(new BigDecimal(10));
 		
 		trade2.setTradeId(2);
 		trade2.setAccount("account2");
 		trade2.setType("type2");
-		trade2.setBuyQuantity(20d);
+		trade2.setBuyQuantity(new BigDecimal(20));
 		
 		tradeDTO1.setTradeId(1);
 		tradeDTO1.setAccount("account1");
 		tradeDTO1.setType("type1");
-		tradeDTO1.setBuyQuantity(10d);
+		tradeDTO1.setBuyQuantity(new BigDecimal(10));
 		
 		tradeDTO2.setTradeId(2);
 		tradeDTO2.setAccount("account2");
 		tradeDTO2.setType("type2");
-		tradeDTO2.setBuyQuantity(20d);
+		tradeDTO2.setBuyQuantity(new BigDecimal(20));
 		
 		trades.add(trade1);
 		trades.add(trade2);

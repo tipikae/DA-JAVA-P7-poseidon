@@ -44,7 +44,8 @@ public class CurvePointServiceImpl implements ICurvePointService {
 	 */
 	@Override
 	public CurvePointDTO addItem(NewCurvePointDTO newCurvePoint) throws ItemAlreadyExistsException, ConverterException {
-		LOGGER.debug("Service: addItem: curveId=" + newCurvePoint.getCurveId() + ", term=" + newCurvePoint.getTerm() 
+		LOGGER.debug("Service: addItem: curveId=" + newCurvePoint.getCurveId() 
+				+ ", term=" + newCurvePoint.getTerm() 
 				+ ", value=" + newCurvePoint.getValue());
 		
 		CurvePoint curvePoint = new CurvePoint();

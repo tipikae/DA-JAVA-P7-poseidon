@@ -2,6 +2,7 @@ package com.nnk.springboot.unit.dtoconverters;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,17 +41,17 @@ class TradeDTOConverterTest {
 		rightTrade1.setTradeId(1);
 		rightTrade1.setAccount("account1");
 		rightTrade1.setType("type1");
-		rightTrade1.setBuyQuantity(10d);
+		rightTrade1.setBuyQuantity(new BigDecimal(10));
 		
 		rightTrade2.setTradeId(2);
 		rightTrade2.setAccount("account2");
 		rightTrade2.setType("type2");
-		rightTrade2.setBuyQuantity(20d);
+		rightTrade2.setBuyQuantity(new BigDecimal(20));
 		
 		wrongTrade.setTradeId(3);
 		wrongTrade.setAccount("");
 		wrongTrade.setType("type3");
-		wrongTrade.setBuyQuantity(30d);
+		wrongTrade.setBuyQuantity(new BigDecimal(30));
 		
 		rightTrades.add(rightTrade1);
 		rightTrades.add(rightTrade2);
@@ -61,12 +62,12 @@ class TradeDTOConverterTest {
 		tradeDTO1.setTradeId(1);
 		tradeDTO1.setAccount("account1");
 		tradeDTO1.setType("type1");
-		tradeDTO1.setBuyQuantity(10d);
+		tradeDTO1.setBuyQuantity(new BigDecimal(10));
 		
 		tradeDTO2.setTradeId(2);
 		tradeDTO2.setAccount("account2");
 		tradeDTO2.setType("type2");
-		tradeDTO2.setBuyQuantity(20d);
+		tradeDTO2.setBuyQuantity(new BigDecimal(20));
 		
 		tradeDTOs.add(tradeDTO1);
 		tradeDTOs.add(tradeDTO2);

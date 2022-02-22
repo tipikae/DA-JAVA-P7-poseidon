@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,18 +32,18 @@ public class BidTestIT {
 	@Transactional
 	@Test
 	public void bidListTest() {
-		BidList bid = new BidList("Account Test", "Type Test", 10d);
+		BidList bid = new BidList("Account Test", "Type Test", new BigDecimal(10));
 		Integer id;
 
 		// Save
 		bid = bidListRepository.save(bid);
 		assertNotNull(bid.getBidListId());
-		assertEquals(bid.getBidQuantity(), 10d, 10d);
+		assertEquals(bid.getBidQuantity(), new BigDecimal(10));
 
 		// Update
-		bid.setBidQuantity(20d);
+		bid.setBidQuantity(new BigDecimal(20));
 		bid = bidListRepository.save(bid);
-		assertEquals(bid.getBidQuantity(), 20d, 20d);
+		assertEquals(bid.getBidQuantity(), new BigDecimal(20));
 
 		// Find all
 		List<BidList> listResult = bidListRepository.findAll();

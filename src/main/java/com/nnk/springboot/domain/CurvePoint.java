@@ -3,6 +3,8 @@ package com.nnk.springboot.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -39,12 +41,12 @@ public class CurvePoint {
 	/**
 	 * Term.
 	 */
-	private double term;
+	private BigDecimal term;
 	
 	/**
 	 * Value.
 	 */
-	private double value;
+	private BigDecimal value;
 	
 	/**
 	 * Creation date.
@@ -54,7 +56,7 @@ public class CurvePoint {
     
     public CurvePoint() {}
 	
-	public CurvePoint(Integer curveId, double term, double value) {
+	public CurvePoint(Integer curveId, BigDecimal term, BigDecimal value) {
 		this.curveId = curveId;
 		this.term = term;
 		this.value = value;

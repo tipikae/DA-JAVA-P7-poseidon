@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -62,8 +63,8 @@ class CurveControllerTest {
 	private static void setUp() {
 		rightCurveDTO = new NewCurvePointDTO();
 		rightCurveDTO.setCurveId(10);
-		rightCurveDTO.setTerm(10d);
-		rightCurveDTO.setValue(10d);
+		rightCurveDTO.setTerm(new BigDecimal(10));
+		rightCurveDTO.setValue(new BigDecimal(10));
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,8 +131,8 @@ class CurveControllerTest {
 	void validateReturnsFormWithErrorWhenValidationError() throws Exception {
 		NewCurvePointDTO wrongCurveDTO = new NewCurvePointDTO();
 		wrongCurveDTO.setCurveId(10);
-		wrongCurveDTO.setTerm(0);
-		wrongCurveDTO.setValue(10d);
+		wrongCurveDTO.setTerm(new BigDecimal(0));
+		wrongCurveDTO.setValue(new BigDecimal(10));
 		mockMvc.perform(post(ROOT_REQUEST + "/validate")
 				.flashAttr("curvePoint", wrongCurveDTO))
 			.andExpect(status().isOk())
@@ -166,8 +167,8 @@ class CurveControllerTest {
 	void showUpdateFormReturnsFormWhenOk() throws Exception {
 		CurvePointDTO curvePointDTO = new CurvePointDTO();
 		curvePointDTO.setCurveId(10);
-		curvePointDTO.setTerm(10d);
-		curvePointDTO.setValue(10d);
+		curvePointDTO.setTerm(new BigDecimal(10));
+		curvePointDTO.setValue(new BigDecimal(10));
 		curvePointDTO.setId(1);
 		when(curveService.getItemById(anyInt())).thenReturn(curvePointDTO);
 		mockMvc.perform(get(ROOT_REQUEST + "/update/1"))
@@ -201,8 +202,8 @@ class CurveControllerTest {
 	void updateCurveReturnsListWhenOk() throws Exception {
 		UpdateCurvePointDTO rightUpdateCurveDTO = new UpdateCurvePointDTO();
 		rightUpdateCurveDTO.setCurveId(20);
-		rightUpdateCurveDTO.setTerm(10d);
-		rightUpdateCurveDTO.setValue(10d);
+		rightUpdateCurveDTO.setTerm(new BigDecimal(10));
+		rightUpdateCurveDTO.setValue(new BigDecimal(10));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/1")
 				.flashAttr("curvePoint", rightUpdateCurveDTO))
 			.andExpect(status().is3xxRedirection())
@@ -214,8 +215,8 @@ class CurveControllerTest {
 	void updateCurveReturnsFormWithErrorWhenValidationError() throws Exception {
 		UpdateCurvePointDTO wrongUpdateCurveDTO = new UpdateCurvePointDTO();
 		wrongUpdateCurveDTO.setCurveId(20);
-		wrongUpdateCurveDTO.setTerm(10d);
-		wrongUpdateCurveDTO.setValue(0);
+		wrongUpdateCurveDTO.setTerm(new BigDecimal(10));
+		wrongUpdateCurveDTO.setValue(new BigDecimal(0));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/1")
 				.flashAttr("curvePoint", wrongUpdateCurveDTO))
 			.andExpect(status().is3xxRedirection())
@@ -227,8 +228,8 @@ class CurveControllerTest {
 	void updateCurveReturnsError404WhenNotFoundException() throws Exception {
 		UpdateCurvePointDTO rightUpdateCurveDTO = new UpdateCurvePointDTO();
 		rightUpdateCurveDTO.setCurveId(20);
-		rightUpdateCurveDTO.setTerm(10d);
-		rightUpdateCurveDTO.setValue(10d);
+		rightUpdateCurveDTO.setTerm(new BigDecimal(10));
+		rightUpdateCurveDTO.setValue(new BigDecimal(10));
 		doThrow(ItemNotFoundException.class).when(curveService).updateItem(anyInt(), any(UpdateCurvePointDTO.class));
 		mockMvc.perform(post(ROOT_REQUEST + "/update/10")
 				.flashAttr("curvePoint", rightUpdateCurveDTO))

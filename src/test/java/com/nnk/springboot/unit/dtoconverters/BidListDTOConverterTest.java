@@ -2,6 +2,7 @@ package com.nnk.springboot.unit.dtoconverters;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,16 +41,16 @@ class BidListDTOConverterTest {
 		rightBidList1.setAccount("account1");
 		rightBidList1.setBidListId(1);
 		rightBidList1.setType("type1");
-		rightBidList1.setBidQuantity(100);
+		rightBidList1.setBidQuantity(new BigDecimal(100));
 		
 		rightBidList2.setAccount("account2");
 		rightBidList2.setBidListId(2);
 		rightBidList2.setType("type2");
-		rightBidList2.setBidQuantity(200);
+		rightBidList2.setBidQuantity(new BigDecimal(200));
 		
 		wrongBidList.setAccount("");
 		wrongBidList.setType("type");
-		wrongBidList.setBidQuantity(100);
+		wrongBidList.setBidQuantity(new BigDecimal(100));
 		
 		rightBidLists.add(rightBidList1);
 		rightBidLists.add(rightBidList2);
@@ -60,12 +61,12 @@ class BidListDTOConverterTest {
 		bidListDTO1.setAccount("account1");
 		bidListDTO1.setType("type1");
 		bidListDTO1.setBidListId(1);
-		bidListDTO1.setBidQuantity(100);
+		bidListDTO1.setBidQuantity(new BigDecimal(100));
 		
 		bidListDTO2.setAccount("account2");
 		bidListDTO2.setType("type2");
 		bidListDTO2.setBidListId(2);
-		bidListDTO2.setBidQuantity(200);
+		bidListDTO2.setBidQuantity(new BigDecimal(200));
 		
 		bidListDTOs.add(bidListDTO1);
 		bidListDTOs.add(bidListDTO2);

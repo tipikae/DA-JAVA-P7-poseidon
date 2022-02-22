@@ -2,6 +2,7 @@ package com.nnk.springboot.unit.dtoconverters;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,18 +40,18 @@ class CurvePointDTOConverterTest {
 		
 		rightCurvePoint1.setCurveId(10);
 		rightCurvePoint1.setId(1);
-		rightCurvePoint1.setTerm(10d);
-		rightCurvePoint1.setValue(10d);
+		rightCurvePoint1.setTerm(new BigDecimal(10));
+		rightCurvePoint1.setValue(new BigDecimal(10));
 		
 		rightCurvePoint2.setCurveId(20);
 		rightCurvePoint2.setId(2);
-		rightCurvePoint2.setTerm(20d);
-		rightCurvePoint2.setValue(20d);
+		rightCurvePoint2.setTerm(new BigDecimal(20));
+		rightCurvePoint2.setValue(new BigDecimal(20));
 		
 		wrongCurvePoint.setCurveId(30);
 		wrongCurvePoint.setId(3);
-		wrongCurvePoint.setTerm(0d);
-		wrongCurvePoint.setValue(20d);
+		wrongCurvePoint.setTerm(new BigDecimal(0));
+		wrongCurvePoint.setValue(new BigDecimal(20));
 		
 		rightCurvePoints.add(rightCurvePoint1);
 		rightCurvePoints.add(rightCurvePoint2);
@@ -60,13 +61,13 @@ class CurvePointDTOConverterTest {
 		
 		curvePointDTO1.setCurveId(10);
 		curvePointDTO1.setId(1);
-		curvePointDTO1.setTerm(10d);
-		curvePointDTO1.setValue(10d);
+		curvePointDTO1.setTerm(new BigDecimal(10));
+		curvePointDTO1.setValue(new BigDecimal(10));
 		
 		curvePointDTO2.setCurveId(20);
 		curvePointDTO2.setId(2);
-		curvePointDTO2.setTerm(20d);
-		curvePointDTO2.setValue(20d);
+		curvePointDTO2.setTerm(new BigDecimal(20));
+		curvePointDTO2.setValue(new BigDecimal(20));
 		
 		curvePointDTOs.add(curvePointDTO1);
 		curvePointDTOs.add(curvePointDTO2);
