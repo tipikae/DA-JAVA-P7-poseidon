@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com.nnk.springboot.util.AuthenticationInfo;
+import com.nnk.springboot.util.AuthenticationInfoImpl;
 
 @ExtendWith(MockitoExtension.class)
 class AuthenticationInfoTest {
@@ -43,7 +43,12 @@ class AuthenticationInfoTest {
 	@Mock
 	private OidcIdToken idToken;
 	
-	private AuthenticationInfo authInfo = new AuthenticationInfo();
+	private AuthenticationInfoImpl authInfo = new AuthenticationInfoImpl();
+
+	@Test
+	void getUsernameReturnsQuestionMarkWhenBadInstance() {
+		assertEquals("?", authInfo.getUsername(mock(Principal.class)));
+	}
 
 	@Test
 	void getUsernameReturnsUsernameWhenUsernamePasswordAuthenticated() {
