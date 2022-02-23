@@ -70,7 +70,6 @@ public class AuthenticationInfo implements IAuthenticationInformation {
 		} else if(authToken.isAuthenticated()) {
 			LOGGER.debug("getOauth2LoginInfo: authenticated");
 			Map<String,Object> userAttributes = ((DefaultOAuth2User) authToken.getPrincipal()).getAttributes();
-			userAttributes.forEach((key, value) -> LOGGER.debug(key + ": " + value));
 			return (String) userAttributes.get("login");
 		}
 		return "?";
