@@ -70,31 +70,38 @@ class UserServiceTest {
 		rightNewUserDTO.setFullname("fullname1");
 		rightNewUserDTO.setPassword("password1");
 		rightNewUserDTO.setUsername("username1");
+		rightNewUserDTO.setRole("USER");
 		
 		wrongNewUserDTO.setFullname("fullname2");
 		wrongNewUserDTO.setPassword("password2");
 		wrongNewUserDTO.setUsername("");
+		wrongNewUserDTO.setRole("USER");
 		
 		updatedUserDTO.setFullname("fullname1");
 		updatedUserDTO.setUsername("username_updated");
+		updatedUserDTO.setRole("USER");
 		
 		user1.setFullname("fullname1");
 		user1.setId(1);
 		user1.setPassword("password1");
 		user1.setUsername("username1");
+		user1.setRole("USER");
 		
 		user2.setFullname("fullname2");
 		user2.setId(2);
 		user2.setPassword("password2");
 		user2.setUsername("username2");
+		user2.setRole("USER");
 		
 		userDTO1.setFullname("fullname1");
 		userDTO1.setId(1);
 		userDTO1.setUsername("username1");
+		userDTO1.setRole("USER");
 		
 		userDTO2.setFullname("fullname1");
 		userDTO2.setId(1);
 		userDTO2.setUsername("username1");
+		userDTO2.setRole("USER");
 		
 		users.add(user1);
 		users.add(user2);

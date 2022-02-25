@@ -24,9 +24,9 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class AuthenticationInfo implements IAuthenticationInformation {
+public class AuthenticationInfoImpl implements IAuthenticationInformation {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationInfo.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationInfoImpl.class);
 
 	/**
 	 * {@inheritDoc}
@@ -42,7 +42,7 @@ public class AuthenticationInfo implements IAuthenticationInformation {
 			 return getOauth2LoginInfo(principal);
         }
 		
-		return null;
+		return "?";
 	}
 
 	private String getUsernamePasswordLoginInfo(Principal user) {
@@ -70,7 +70,6 @@ public class AuthenticationInfo implements IAuthenticationInformation {
 		} else if(authToken.isAuthenticated()) {
 			LOGGER.debug("getOauth2LoginInfo: authenticated");
 			Map<String,Object> userAttributes = ((DefaultOAuth2User) authToken.getPrincipal()).getAttributes();
-			userAttributes.forEach((key, value) -> LOGGER.debug(key + ": " + value));
 			return (String) userAttributes.get("login");
 		}
 		return "?";
