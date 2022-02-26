@@ -9,15 +9,24 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
+    entrypoint:
+      sh -c "
+        echo 'CREATE DATABASE IF NOT EXISTS poseidon;' > /docker-entrypoint-initdb.d/init.sql;
+        /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
     ports:
       - "3307:3306"
+    volumes:
+      - ~/docker/db:/var/lib/mysql
       
   app:
     container_name: app
     build: .
     image: poseidon
     environment:
-      - "SPRING_PROFILES_ACTIVE=docker"
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/poseidon
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
     ports:
       - "8085:8080"
     depends_on:
