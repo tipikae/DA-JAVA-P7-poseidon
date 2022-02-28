@@ -17,6 +17,11 @@ services:
       - "3307:3306"
     volumes:
       - ~/docker/db:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
       
   app:
     container_name: app
@@ -30,6 +35,7 @@ services:
     ports:
       - "8085:8080"
     depends_on:
-      - "db"
+      db:
+        condition: service_healthy
     
     
